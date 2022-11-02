@@ -36,24 +36,29 @@ body {
     background-color: rgba(70, 50, 70, 0.9);
     color: bisque;
     font-size: larger;
-    text-align: justify;
-    text-indent: 50px;
-    letter-spacing: 2px;
-    line-height: 1.5;
-    word-spacing: 10px;
     text-shadow: 2px 2px 2px black;
     font-family: 'Lucida Typewriter Serif';
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
     font-size: 1em;
-    width: fit-content;
+    width: 40%;
 }
 
+.Label,
+.InputText,
+.InputSelect {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
+.InputText,
+.InputSelect {
+    width: 100%;
+}
 
 .Button {
-    height: 4em;
-    margin-top: 10px;
+    height: 3em;
+    margin-top: 5%;
     width: 100%;
 }
