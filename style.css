@@ -1,0 +1,59 @@
+body {
+    background-image: url("back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    font-size: 100%;
+}
+
+#mainPageHeader {
+    margin: auto;
+    border: 1px hidden;
+    padding: 10px;
+    padding-top: 10%;
+    width: fit-content;
+    text-decoration-line: underline;
+    text-decoration-color: bisque;
+    color: bisque;
+    font-family: 'Lucida Sans';
+}
+
+.NewUserForm {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+    border-left-width: 2px;
+    border-left-style: dotted;
+    border-left-color: darksalmon;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right-width: 2px;
+    border-right-style: dotted;
+    border-right-color: darksalmon;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    background-color: rgba(70, 50, 70, 0.9);
+    color: bisque;
+    font-size: larger;
+    text-align: justify;
+    text-indent: 50px;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    word-spacing: 10px;
+    text-shadow: 2px 2px 2px black;
+    font-family: 'Lucida Typewriter Serif';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-size: 1em;
+    width: fit-content;
+}
+
+
+
+.Button {
+    height: 4em;
+    margin-top: 10px;
+    width: 100%;
+}
