@@ -1,20 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WOW</title>
+</head>
+
+<body>
 <?php
-include_once "AppController.php";
-use Controller\AppController as AC;
 
-class App
-{
-    private $userData = array();
-    
-    public function __construct()
+use Controller\AppController as AppController;
+
+    function run()
     {
-        $this->run();
+        $appController = new AppController();
+        $appController->index();
     }
 
-    private function run()
-    {
-       AC::index();
-    }
-}
-
-$app = new App();
+?>
+</body>
+</html>

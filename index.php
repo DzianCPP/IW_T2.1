@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+
+<html>
+
 <?php
 
-$app = new App();
+header ("Location: system/app.php");
+die();
+
+?>
+
+</html>
