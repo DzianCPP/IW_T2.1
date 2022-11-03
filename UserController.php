@@ -11,7 +11,8 @@ class UserController
     
     public static function newUser()
     {
-        include_once "index.php";
+        header("Location: index.php");
+        die();
     }
 
     private function createUser()
