@@ -5,12 +5,9 @@ class UserController
     public function __construct()
     {
         $this->createUser();
-    }
-    
-    public static function newUser()
-    {
-        header("Location: index.php");
-        die();
+        $appConroller = new AppController();
+        $appConroller->index();
+
     }
 
     private function createUser()
@@ -25,3 +22,5 @@ class UserController
         return $newUser;
     }
 }
+
+$userController = new UserController();
