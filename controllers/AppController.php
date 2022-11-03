@@ -1,11 +1,10 @@
 <?php
 
-namespace Controller;
-
 class AppController {
     public function index()
     {
-        header("Location: view/mainPage.html");
-        die();
+        $filePath = "/opt/lampp/htdocs/intern/view/mainPage.php";
+        $file = fopen($filePath, "r");
+        echo (fread($file, filesize($filePath)));
     }
 }

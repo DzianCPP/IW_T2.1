@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="en-US">
 
     <head>
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <meta charset="utf-8">
-        <link rel="stylesheet" href="assets/css/style.css">
         <title>AddUserApp</title>
     </head>
     
     <body>
     <h1 class="MainPageHeader" id="mainPageHeader">AddUserApp</h1>
     
-    <form class="NewUserForm" method="POST" action="app.php">
+    <form class="NewUserForm" method="POST" action="controllers/UserController.php">
         <label for="email">E-mail</label>
         <br>
         <input type="text" class="InputText" name="email" placeholder="Enter your email">

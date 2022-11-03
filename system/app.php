@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>WOW</title>
-</head>
-
-<body>
 <?php
+require_once "autoload.php";
 
-use Controller\AppController as AppController;
+function run()
+{
+   $appController = new AppController();
+   $appController->index();
+}
 
-    function run()
-    {
-        $appController = new AppController();
-        $appController->index();
-    }
-
-?>
-</body>
-</html>
+run();

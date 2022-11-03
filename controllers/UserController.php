@@ -1,7 +1,5 @@
 <?php
 
-namespace UserController;
-
 class UserController
 {
     public function __construct()
