@@ -19,6 +19,11 @@ class UserController
             $_POST['gender'],
             $_POST['status']
         );
+    
+        foreach ($newUser as $nu)
+        {
+            echo ("<script> console.log($nu); </script>");
+        }
 
         return $newUser;
     }
