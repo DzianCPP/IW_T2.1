@@ -13,8 +13,8 @@ body {
     padding-top: 10%;
     width: fit-content;
     text-decoration-line: underline;
-    text-decoration-color: bisque;
-    color: bisque;
+    text-decoration-color: black;
+    color: rgba(70, 50, 70, 0.9);
     font-family: 'Lucida Sans';
 }
 

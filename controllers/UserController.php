@@ -1,5 +1,7 @@
 <?php
 
+include "../system/autoload.php";
+
 class UserController
 {
     public function __construct()
@@ -7,7 +9,6 @@ class UserController
         $this->createUser();
         $appConroller = new AppController();
         $appConroller->index();
-
     }
 
     private function createUser()
