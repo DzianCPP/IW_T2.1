@@ -6,7 +6,7 @@ body {
     font-size: 100%;
 }
 
-#mainPageHeader {
+.main-page-header {
     margin: auto;
     border: 1px hidden;
     padding: 10% 10px 10px 10px;
