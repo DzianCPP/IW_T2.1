@@ -9,8 +9,7 @@ body {
 #mainPageHeader {
     margin: auto;
     border: 1px hidden;
-    padding: 10px;
-    padding-top: 10%;
+    padding: 10% 10px 10px 10px;
     width: fit-content;
     text-decoration-line: underline;
     text-decoration-color: rgba(70, 50, 70, 0.9);
