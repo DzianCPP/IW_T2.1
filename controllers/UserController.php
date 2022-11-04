@@ -21,7 +21,7 @@ class UserController
         );
 
         foreach ($newUserData as $newUserDataField) {
-            echo ("<script> console.log($newUserDataField); </script>");
+            echo "<script> console.log($newUserDataField); </script>";
         }
 
         return $newUserData;

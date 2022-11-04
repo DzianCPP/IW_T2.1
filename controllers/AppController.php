@@ -6,6 +6,6 @@ class AppController
     {
         $filePath = "../view/mainPage.html";
         $file = fopen($filePath, "r");
-        echo (fread($file, filesize($filePath)));
+        echo fread($file, filesize($filePath));
     }
 }
