@@ -4,7 +4,7 @@
 
 <?php
 
-header ("Location: system/app.php");
+header('Location: system/app.php');
 die();
 
 ?>
