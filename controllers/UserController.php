@@ -13,19 +13,18 @@ class UserController
 
     private function createUser()
     {
-        $newUser = array(
+        $newUserData = array(
             $_POST['email'],
             $_POST['name'],
             $_POST['gender'],
             $_POST['status']
         );
-    
-        foreach ($newUser as $nu)
-        {
-            echo ("<script> console.log($nu); </script>");
+
+        foreach ($newUserData as $newUserDataField) {
+            echo ("<script> console.log($newUserDataField); </script>");
         }
 
-        return $newUser;
+        return $newUserData;
     }
 }
 
