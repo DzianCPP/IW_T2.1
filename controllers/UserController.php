@@ -1,17 +1,10 @@
 <?php
 
-include "../system/autoload.php";
+include AUTOLOAD_PATH;
 
 class UserController
 {
-    public function __construct()
-    {
-        $this->createUser();
-        $appConroller = new AppController();
-        $appConroller->index();
-    }
-
-    private function createUser()
+    public function create()
     {
         $newUserData = array(
             $_POST['email'],
@@ -24,8 +17,10 @@ class UserController
             echo "<script> console.log($newUserDataField); </script>";
         }
 
-        return $newUserData;
+        $this->new();
+    }
+
+    public function new()
+    {
     }
 }
-
-$userController = new UserController();

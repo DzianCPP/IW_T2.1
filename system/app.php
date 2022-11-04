@@ -1,10 +1,16 @@
 <?php
+require_once "base-paths.php";
 require_once "autoload.php";
 
-function run()
+class App
 {
-   $appController = new AppController();
-   $appController->index();
+
+   public function run()
+   {
+      $appController = new AppController();
+      $appController->index();
+   }
 }
 
-run();
+$app = new App();
+$app->run();

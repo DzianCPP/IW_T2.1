@@ -4,9 +4,8 @@ spl_autoload_register('myAutoLoad');
 
 function myAutoLoad($className)
 {
-    $folder = "../controllers/";
     $extension = ".php";
-    $fullPath = $folder . $className . $extension;
+    $fullPath = CONTROLLERS_PATH . $className . $extension;
 
     include $fullPath;
 }

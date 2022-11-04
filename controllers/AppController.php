@@ -4,8 +4,7 @@ class AppController
 {
     public function index()
     {
-        $filePath = "../view/mainPage.html";
-        $file = fopen($filePath, "r");
-        echo fread($file, filesize($filePath));
+        $file = fopen(MAIN_PAGE_HTML_PATH, "r");
+        echo fread($file, filesize(MAIN_PAGE_HTML_PATH));
     }
 }
