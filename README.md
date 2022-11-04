@@ -1,6 +1,6 @@
-Task 2.1
+<b>Task 2.1</b>
 
-Description:
+<b>Description:</b>
 
 The goal of the task is to create a simple page with a form to collect data from a user (email, full name, gender, and status) and to send it via a POST request.
 
