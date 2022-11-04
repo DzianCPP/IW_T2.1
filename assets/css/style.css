@@ -24,13 +24,10 @@ body {
     border-left-width: 2px;
     border-left-style: dotted;
     border-left-color: darksalmon;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
     border-right-width: 2px;
     border-right-style: dotted;
     border-right-color: darksalmon;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     background-color: rgba(70, 50, 70, 0.9);
     color: bisque;
