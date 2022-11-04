@@ -51,6 +51,7 @@ body {
 .input-text,
 .input-select {
     width: 100%;
+    border-radius: 10px;
 }
 
 .form-submit {
