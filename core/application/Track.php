@@ -7,12 +7,14 @@ class Track
     private string $controller = "";
     private string $action = "";
     private array|string $params;
+    private $method;
 
-    public function __construct($controller, $action, $params)
+    public function __construct($controller, $action, $params, $method)
     {
         $this->controller = $controller;
         $this->action = $action;
         $this->params = $params;
+        $this->method =
     }
 
     public function getController(): string

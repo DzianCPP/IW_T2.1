@@ -3,22 +3,17 @@
 namespace core\application;
 use core\controllers\AppController;
 use core\controllers\UserController;
+use core\application\Router;
 
 class Application
 {
-    public function run($controller, $action, $params = ''): void
+    public function run(): void
     {
-        if ($controller === "main" && $action === "index") {
-            $appController = new AppController();
-            $appController->index();
-        }
+        $router = new Router();
+        $track = $router->getTrack();
 
-        elseif ($controller === "user" && $action === "create") {
-            $userController = new UserController();
-            $userController->create();
-        } else {
-            $appController = new AppController();
-            $appController->index();
-        }
+        $controller = $track->getController();
+        $action = $track->getAction();
+        $method = $stack->getMethod();
     }
 }
