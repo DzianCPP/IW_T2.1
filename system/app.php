@@ -2,15 +2,7 @@
 require_once "base-paths.php";
 require_once "autoload.php";
 
-class App
-{
+use core\application\Application;
 
-   public function run()
-   {
-      $appController = new AppController();
-      $appController->index();
-   }
-}
-
-$app = new App();
+$app = new Application();
 $app->run();
