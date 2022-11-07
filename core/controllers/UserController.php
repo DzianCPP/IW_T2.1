@@ -14,12 +14,10 @@ class UserController
     public function new(): void
     {
         echo var_dump(array(
-            $_REQUEST['email'],
-            $_REQUEST['name'],
-            $_REQUEST['gender'],
-            $_REQUEST['status']
+            $_POST['email'],
+            $_POST['name'],
+            $_POST['gender'],
+            $_POST['status']
         ));
-
-        return;
     }
 }
