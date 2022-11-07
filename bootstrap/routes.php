@@ -8,6 +8,6 @@ return [
 
     'user/new' => [
         'controller' => 'user',
-        'action' => 'new'
+        'action' => 'create'
     ]
 ];

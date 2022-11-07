@@ -6,7 +6,6 @@ use core\controllers\UserController;
 
 class Application
 {
-
     public function run($controller, $action, $params = ''): void
     {
         if ($controller === "main" && $action === "index") {
@@ -14,9 +13,12 @@ class Application
             $appController->index();
         }
 
-        if ($controller === "user" && $action === "new") {
+        elseif ($controller === "user" && $action === "create") {
             $userController = new UserController();
-            $userController->new();
+            $userController->create();
+        } else {
+            $appController = new AppController();
+            $appController->index();
         }
     }
 }
