@@ -1,8 +1,6 @@
 <?php
 
 namespace core\controllers;
-require_once "../../system/base-paths.php";
-include AUTOLOAD_PATH;
 
 class UserController
 {
