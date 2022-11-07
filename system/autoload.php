@@ -4,9 +4,8 @@ spl_autoload_register('myAutoLoad');
 
 function myAutoLoad($className)
 {
-    $folder = "/opt/lampp/htdocs/intern/controllers/";
-    $etension = ".php";
-    $fullPath = $folder . $className . $etension;
+    $extension = ".php";
+    $fullPath = CONTROLLERS_PATH . $className . $extension;
 
     include $fullPath;
 }

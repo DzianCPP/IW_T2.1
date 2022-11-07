@@ -1,18 +1,17 @@
 <?php
-
-include "../system/autoload.php";
+require_once "../system/base-paths.php";
+include AUTOLOAD_PATH;
 
 class UserController
 {
-    public function __construct()
+    public function create()
     {
-        $this->createUser();
-        $appConroller = new AppController();
-        $appConroller->index();
+        $this->new();
     }
 
-    private function createUser()
+    public function new()
     {
+<<<<<<< HEAD
         $newUser = array(
             $_REQUEST['email'],
             $_REQUEST['name'],
@@ -20,7 +19,11 @@ class UserController
             $_REQUEST['status']
         );
         return $newUser;
+=======
+        require_once APP_PATH;
+>>>>>>> 5d94b6a1ce0fa13b20eb964e6d661a1a58a82507
     }
 }
 
 $userController = new UserController();
+$userController->create();
