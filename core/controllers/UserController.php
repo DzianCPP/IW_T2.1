@@ -8,16 +8,18 @@ class UserController
 {
     public function create(): void
     {
-        $newUser = $this->new();
+        $this->new();
     }
 
-    public function new(): array
+    public function new(): void
     {
-        return array(
+        echo var_dump(array(
             $_REQUEST['email'],
             $_REQUEST['name'],
             $_REQUEST['gender'],
             $_REQUEST['status']
-        );
+        ));
+
+        return;
     }
 }
