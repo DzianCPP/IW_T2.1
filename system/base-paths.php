@@ -1,7 +1,8 @@
 <?php
 
 define('BASE_PATH', __DIR__ . '/../');
-define('NEW_USER_HTML_PATH', BASE_PATH . 'view/newUserForm.html');
+define('MAIN_PAGE', __DIR__ . '/../view/mainPage.html');
+define('NEW_USER_HTML_PATH', BASE_PATH . '/../view/newUserForm.html');
 define('STYLE_CSS_PATH', BASE_PATH . 'public/assets/css/style.css');
 define('APP_CONTROLLER_PATH', BASE_PATH . 'core/controllers/AppController.php');
 define('APP_PATH', BASE_PATH . 'core/application/Application.php');
