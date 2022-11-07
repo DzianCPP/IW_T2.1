@@ -14,6 +14,7 @@ class Application
 
         $controller = $track->getController();
         $action = $track->getAction();
-        $method = $stack->getMethod();
+        $method = $track->getMethod();
+        $params = $track->getParams();
     }
 }

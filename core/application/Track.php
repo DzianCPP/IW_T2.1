@@ -9,12 +9,12 @@ class Track
     private array|string $params;
     private $method;
 
-    public function __construct($controller, $action, $params, $method)
+    public function __construct($controller, $action, $params)
     {
         $this->controller = $controller;
         $this->action = $action;
         $this->params = $params;
-        $this->method =
+        $this->method = $_SERVER['REQUEST_METHOD'];
     }
 
     public function getController(): string
@@ -30,6 +30,11 @@ class Track
     public function getParams(): array|string
     {
         return $this->params;
+    }
+
+    public function getMethod()
+    {
+        return$this->method;
     }
 
     public function getAllProperties(): array
