@@ -2,10 +2,12 @@
 
 spl_autoload_register('myAutoLoad');
 
-function myAutoLoad($className)
+function myAutoLoad($className): void
 {
     $extension = ".php";
-    $fullPath = CONTROLLERS_PATH . $className . $extension;
+    $fullPathToClass = BASE_PATH . $className . $extension;
 
-    include $fullPath;
+    $fullPathToClass = str_replace("\\", "/", $fullPathToClass);
+
+    include $fullPathToClass;
 }

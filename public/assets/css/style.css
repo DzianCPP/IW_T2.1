@@ -1,8 +1,8 @@
 body {
-    background-image: url("../images/back.jpg");
+    background-image: url('../images/back.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-attachment: scroll;
+    background-attachment: fixed;
     font-size: 100%;
 }
 
@@ -11,8 +11,6 @@ body {
     border: 1px hidden;
     padding: 10% 10px 10px 10px;
     width: fit-content;
-    text-decoration-line: underline;
-    text-decoration-color: rgba(92, 48, 29, 0.9);
     color: rgba(155, 81, 49, 0.9);
     font-family: 'Lucida Sans';
 }
