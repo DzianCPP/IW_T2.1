@@ -2,8 +2,6 @@
 
 namespace core\application;
 
-use \core\application\Track;
-
 class Router
 {
     private Track $track;
@@ -20,7 +18,6 @@ class Router
         if (!array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] === '' || $_SERVER['REQUEST_URI'] === '/') {
             return '';
         }
-        $query_string = $_SERVER['QUERY_STRING'];
         $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
         $questionMarkPosition = strpos($request_route, '?');
 
