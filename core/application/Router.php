@@ -13,7 +13,7 @@ class Router
         $routes = require_once "../bootstrap/routes.php";
         $route = '';
 
-        if (array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] !== '' || $_SERVER['REQUEST_URI'] !== '/') {
+        if (array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] !== '' && $_SERVER['REQUEST_URI'] !== '/') {
             $query_string = $_SERVER['QUERY_STRING'];
             $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
             $questionMarkPosition = strpos($request_route, '?');
