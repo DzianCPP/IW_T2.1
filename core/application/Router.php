@@ -15,21 +15,6 @@ class Router
         $this->setTrack($routes, $route);
     }
 
-    private function setTrack(array $routes, string $route): void
-    {
-        if ($this->methodValid($routes[$route])) {
-            $this->track = new Track($routes[$route]);
-        } else {
-            echo "405 Method Not Allowed";
-            exit;
-        }
-    }
-
-    public function getTrack(): Track
-    {
-        return $this->track;
-    }
-
     private function setRoute(array $routes): string
     {
         if (!array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] === '' || $_SERVER['REQUEST_URI'] === '/') {
@@ -52,6 +37,16 @@ class Router
         return $route;
     }
 
+    private function setTrack(array $routes, string $route): void
+    {
+        if ($this->methodValid($routes[$route])) {
+            $this->track = new Track($routes[$route]);
+        } else {
+            echo "405 Method Not Allowed";
+            exit;
+        }
+    }
+
     private function methodValid(array $route): bool
     {
         if ($_SERVER['REQUEST_METHOD'] === strtoupper($route['method'])) {
@@ -67,5 +62,10 @@ class Router
         }
 
         return false;
+    }
+
+    public function getTrack(): Track
+    {
+        return $this->track;
     }
 }
