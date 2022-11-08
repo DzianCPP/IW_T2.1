@@ -19,7 +19,7 @@ class Router
 
         if (!$this->isRouteValid($route, $routes)) {
             echo "404 Page Not Found";
-            header($_SERVER["SERVER_PROTOCOL"]." 404 Page Not FOund", true, 404);
+            header($_SERVER["SERVER_PROTOCOL"]." 404 Page Not Found", true, 404);
             exit;
         }
 

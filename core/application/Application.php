@@ -11,7 +11,6 @@ class Application
     {
         $router = new Router();
         $track = $router->getTrack();
-        $controllerPath = $track->getControllerPath();
         $controllerName = $track->getControllerName();
         $controllerObject = new $controllerName;
         $actionName = $track->getActionName();
