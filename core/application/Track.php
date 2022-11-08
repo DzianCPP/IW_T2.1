@@ -29,4 +29,14 @@ class Track
     {
         return $this->controllerActionPath;
     }
+
+    public function getController(): string
+    {
+        return $this->controller . ".php";
+    }
+
+    public function getAction(): string
+    {
+        return lcfirst($this->action);
+    }
 }
