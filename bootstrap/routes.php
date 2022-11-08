@@ -29,5 +29,17 @@ return [
         'controller' => 'AppController',
         'action' => 'notFound',
         'method' => 'GET'
+    ],
+
+    'users' => [
+        'controller' => 'UserController',
+        'action' => 'showAll',
+        'method' => 'GET'
+    ],
+
+    'users/id' => [
+        'controller' => 'UserController',
+        'action' => 'showOne',
+        'method' => 'GET'
     ]
 ];
