@@ -4,24 +4,24 @@ return [
     '' => [
         'controller' => 'AppController',
         'action' => 'index',
-        'method' => 'get'
+        'method' => 'GET'
     ],
 
     'public' => [
         'controller' => 'AppController',
         'action' => 'index',
-        'method' => 'get'
+        'method' => 'GET'
     ],
 
     'user/create' => [
         'controller' => 'UserController',
         'action' => 'create',
-        'method' => 'post'
+        'method' => 'POST'
     ],
 
     'user/new' => [
         'controller' => 'UserController',
         'action' => 'new',
-        'method' => 'get'
+        'method' => 'GET'
     ]
 ];
