@@ -14,7 +14,6 @@ class Track
         $this->controller = $route['controller'];
         $this->action = $route['action'];
         $this->method = $route['method'];
-
         $this->setControllerActionPath();
     }
 
@@ -30,13 +29,18 @@ class Track
         return $this->controllerActionPath;
     }
 
-    public function getController(): string
+    public function getControllerPath(): string
     {
-        return $this->controller . ".php";
+        return CONTROLLERS_PATH . $this->controller . ".php";
     }
 
-    public function getAction(): string
+    public function getActionName(): string
     {
         return lcfirst($this->action);
+    }
+
+    public function getControllerName(): string
+    {
+        return "core\controllers\\" . $this->controller;
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 namespace core\application;
+//use core\controllers\AppController;
+//use core\controllers\UserController;
+//use core\application\Router;
 
 class Application
 {
@@ -8,8 +11,11 @@ class Application
     {
         $router = new Router();
         $track = $router->getTrack();
-        $controllerActionPath = $track->getControllerActionPath();
+        $controllerPath = $track->getControllerPath();
+        $controllerName = $track->getControllerName();
+        $controllerObject = new $controllerName;
+        $actionName = $track->getActionName();
 
-        require_once $controllerActionPath;
+        $controllerObject->$actionName();
     }
 }
