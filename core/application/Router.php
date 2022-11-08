@@ -17,6 +17,12 @@ class Router
             $route = $this->setRoute();
         }
 
+        if (!$this->isRouteValid($route, $routes)) {
+            echo "404 Page Not Found";
+            header($_SERVER["SERVER_PROTOCOL"]." 404 Page Not FOund", true, 404);
+            exit;
+        }
+
         $this->setTrack($routes, $route);
     }
 
@@ -53,6 +59,15 @@ class Router
         if ($_SERVER['REQUEST_METHOD'] === strtoupper($route['method'])) {
             return true;
         }
+        return false;
+    }
+
+    private function isRouteValid($route, $routes): bool
+    {
+        if (key_exists($route, $routes)) {
+            return true;
+        }
+
         return false;
     }
 }
