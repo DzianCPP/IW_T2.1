@@ -4,6 +4,7 @@ body {
     background-size: cover;
     background-attachment: scroll;
     font-size: 100%;
+    width: 100%;
 }
 
 .main-page-header {
@@ -15,7 +16,7 @@ body {
     font-family: 'Lucida Typewriter Serif', Lucida, serif;
 }
 
-.new-user-form {
+.main-page-link-div, .new-user-form {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 100px;
@@ -38,6 +39,15 @@ body {
     width: 40%;
 }
 
+.main-page-link-div {
+    text-align: center;
+    margin-top: 150px;
+}
+
+.main-page-link-div:hover {
+    background-color: rgba(155, 81, 49, 0.6);
+}
+
 .form-label,
 .input-text,
 .input-select {
@@ -54,4 +64,17 @@ body {
 .form-submit {
     height: 3em;
     width: 100%;
+}
+
+a {
+    color: rgba(155, 81, 49, 0.9);
+    padding: 3px 10px;
+    background-color: bisque;
+    border-radius: 5px;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #ffede8;
 }
