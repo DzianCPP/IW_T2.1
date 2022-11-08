@@ -49,6 +49,7 @@ class Router
         if ($_SERVER['REQUEST_METHOD'] === strtoupper($route['method'])) {
             return true;
         }
+
         return false;
     }
 
