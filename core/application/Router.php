@@ -1,6 +1,9 @@
 <?php
 
 namespace core\application;
+
+require_once "../../bootstrap/routes.php";
+
 use \core\application\Track;
 
 class Router

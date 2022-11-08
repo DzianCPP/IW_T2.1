@@ -6,7 +6,7 @@ class AppController
 {
     public function index(): void
     {
-        $file = fopen(MAIN_PAGE, "r");
-        echo fread($file, filesize(MAIN_PAGE));
+        $file = fopen(VIEW_PATH . "mainPage.html", "r");
+        echo fread($file, filesize(VIEW_PATH . "mainPage.html"));
     }
 }
