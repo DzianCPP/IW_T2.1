@@ -1,9 +1,6 @@
 <?php
 
 namespace core\application;
-//use core\controllers\AppController;
-//use core\controllers\UserController;
-//use core\application\Router;
 
 class Application
 {
