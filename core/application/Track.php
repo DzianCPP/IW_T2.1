@@ -14,7 +14,11 @@ class Track
         $this->controller = $controller;
         $this->action = $action;
         $this->params = $params;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
+            $this->method = $_SERVER['REQUEST_METHOD'];
+        } else {
+            $this->method = "get";
+        }
     }
 
     public function getController(): string

@@ -2,8 +2,6 @@
 
 namespace core\application;
 
-require_once "../../bootstrap/routes.php";
-
 use \core\application\Track;
 
 class Router
@@ -12,6 +10,8 @@ class Router
 
     public function __construct()
     {
+        $routes = require_once "../bootstrap/routes.php";
+
         if (array_key_exists('REQUEST_URI', $_SERVER)) {
             $request_uri = $_SERVER['REQUEST_URI'];
 

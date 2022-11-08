@@ -2,19 +2,19 @@
 
 return [
     '' => [
-        'controller' => 'main',
+        'controller' => 'AppController',
         'action' => 'index',
         'method' => 'get'
     ],
 
     'user/create' => [
-        'controller' => 'user',
+        'controller' => 'UserController',
         'action' => 'create',
         'method' => 'post'
     ],
 
     'user/new' => [
-        'controller' => 'user',
+        'controller' => 'UserController',
         'action' => 'new',
         'method' => 'get'
     ]
