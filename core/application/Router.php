@@ -16,6 +16,10 @@ class Router
             $route = '';
             if ($this->methodValid($route)) {
                 $this->track = new Track($routes[$route]);
+            } else {
+                echo "405 Method Not Allowed";
+                header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
+                exit;
             }
         } else {
             $query_string = $_SERVER['QUERY_STRING'];
@@ -27,6 +31,10 @@ class Router
             $request_route = rtrim($request_route, '/');
             if ($this->methodValid($routes[$request_route])) {
                 $this->track = new Track($routes[$request_route]);
+            } else {
+                echo "405 Method Not Allowed";
+                header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
+                exit;
             }
         }
     }
