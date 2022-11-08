@@ -14,13 +14,7 @@ class Router
         $route = '';
 
         if (array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] !== '' && $_SERVER['REQUEST_URI'] !== '/') {
-            $query_string = $_SERVER['QUERY_STRING'];
-            $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
-            $questionMarkPosition = strpos($request_route, '?');
-            if ($questionMarkPosition > 0) {
-                $request_route = substr($request_route, 0, $questionMarkPosition);
-            }
-            $route = rtrim($request_route, '/');
+            $route = $this->setRoute();
         }
 
         $this->setTrack($routes, $route);
@@ -40,6 +34,18 @@ class Router
     public function getTrack(): Track
     {
         return $this->track;
+    }
+
+    private function setRoute(): string
+    {
+        $query_string = $_SERVER['QUERY_STRING'];
+        $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
+        $questionMarkPosition = strpos($request_route, '?');
+
+        if ($questionMarkPosition > 0) {
+            $request_route = substr($request_route, 0, $questionMarkPosition);
+        }
+        return rtrim($request_route, '/');
     }
 
     private function methodValid(array $route): bool
