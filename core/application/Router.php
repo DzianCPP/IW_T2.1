@@ -13,15 +13,17 @@ class Router
         $routes = require_once "../bootstrap/routes.php";
 
         if (!array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] === '' || $_SERVER['REQUEST_URI'] === '/') {
-                $this->track = new Track('AppController', 'index', '');
+            $route = '';
+            $this->track = new Track($routes[$route]);
         } else {
-            $request_uri = $_SERVER['REQUEST_URI'];
-            $request_uri = trim($request_uri);
-            $slashPosition = strpos($request_uri, '/', 0);
-            $controller = substr($request_uri, 0, $slashPosition);
-            $action = substr($request_uri, $slashPosition, strlen($request_uri));
-
-            $this->track = new Track($controller, $action, '');
+            $query_string = $_SERVER['QUERY_STRING'];
+            $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
+            $questionMarkPosition = strpos($request_route, '?');
+            if ($questionMarkPosition > 0) {
+                $request_route = substr($request_route, 0, $questionMarkPosition);
+            }
+            $request_route = rtrim($request_route, '/');
+            $this->track = new Track($routes[$request_route]);
         }
     }
 

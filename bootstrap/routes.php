@@ -7,6 +7,12 @@ return [
         'method' => 'get'
     ],
 
+    'public' => [
+        'controller' => 'AppController',
+        'action' => 'index',
+        'method' => 'get'
+    ],
+
     'user/create' => [
         'controller' => 'UserController',
         'action' => 'create',

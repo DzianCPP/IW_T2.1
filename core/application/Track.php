@@ -6,47 +6,27 @@ class Track
 {
     private string $controller = "";
     private string $action = "";
-    private array|string $params;
-    private $method;
+    private $method = '';
+    private string $controllerActionPath;
 
-    public function __construct($controller, $action, $params)
+    public function __construct(array $route)
     {
-        $this->controller = $controller;
-        $this->action = $action;
-        $this->params = $params;
-        if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
-            $this->method = $_SERVER['REQUEST_METHOD'];
-        } else {
-            $this->method = "get";
-        }
+        $this->controller = $route['controller'];
+        $this->action = $route['action'];
+        $this->method = $route['method'];
+
+        $this->setControllerActionPath();
     }
 
-    public function getController(): string
+    private function setControllerActionPath(): void
     {
-        return $this->controller;
+        $this->controllerActionPath = CONTROLLERS_PATH . $this->controller;
+        $this->controllerActionPath .= ucfirst($this->action);
+        $this->controllerActionPath .= ".php";
     }
 
-    public function getAction(): string
+    public function getControllerActionPath(): string
     {
-        return $this->action;
-    }
-
-    public function getParams(): array|string
-    {
-        return $this->params;
-    }
-
-    public function getMethod()
-    {
-        return$this->method;
-    }
-
-    public function getAllProperties(): array
-    {
-        return array(
-            'controller' => $this->controller,
-            'action' => $this->action,
-            'params' => $this->params
-        );
+        return $this->controllerActionPath;
     }
 }

@@ -11,10 +11,8 @@ class Application
     {
         $router = new Router();
         $track = $router->getTrack();
+        $controllerActionPath = $track->getControllerActionPath();
 
-        $controller = $track->getController();
-        $action = $track->getAction();
-        $method = $track->getMethod();
-        $params = $track->getParams();
+        require_once $controllerActionPath;
     }
 }

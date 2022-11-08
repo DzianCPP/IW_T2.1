@@ -16,6 +16,8 @@ class UserController
 
     public function new(): void
     {
-
+        $newUserFormHtml = VIEW_PATH . "newUserForm.html";
+        $file = fopen($newUserFormHtml, "r");
+        echo fread($file, filesize($newUserFormHtml));
     }
 }

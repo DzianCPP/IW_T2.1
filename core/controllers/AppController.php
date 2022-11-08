@@ -2,11 +2,14 @@
 
 namespace core\controllers;
 
+use Couchbase\View;
+
 class AppController
 {
     public function index(): void
     {
-        $file = fopen(VIEW_PATH . "mainPage.html", "r");
-        echo fread($file, filesize(VIEW_PATH . "mainPage.html"));
+        $mainPageHtml = VIEW_PATH . "mainPage.html";
+        $file = fopen($mainPageHtml, "r");
+        echo fread($file, filesize($mainPageHtml));
     }
 }
