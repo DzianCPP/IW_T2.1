@@ -11,16 +11,7 @@ class Router
     public function __construct()
     {
         $routes = require_once "../bootstrap/routes.php";
-        $route = '';
-
-        if (array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] !== '' && $_SERVER['REQUEST_URI'] !== '/') {
-            $route = $this->setRoute();
-        }
-
-        if (!$this->isRouteValid($route, $routes)) {
-            $route = 'notfound';
-        }
-
+        $route = $this->setRoute($routes);
         $this->setTrack($routes, $route);
     }
 
@@ -39,8 +30,11 @@ class Router
         return $this->track;
     }
 
-    private function setRoute(): string
+    private function setRoute(array $routes): string
     {
+        if (!array_key_exists("REQUEST_URI", $_SERVER) || $_SERVER['REQUEST_URI'] === '' || $_SERVER['REQUEST_URI'] === '/') {
+            return '';
+        }
         $query_string = $_SERVER['QUERY_STRING'];
         $request_route = ltrim($_SERVER['REQUEST_URI'], '/');
         $questionMarkPosition = strpos($request_route, '?');
@@ -48,7 +42,14 @@ class Router
         if ($questionMarkPosition > 0) {
             $request_route = substr($request_route, 0, $questionMarkPosition);
         }
-        return rtrim($request_route, '/');
+
+        $route = rtrim($request_route, '/');
+
+        if (!$this->isRouteValid($route, $routes)) {
+            return 'notfound';
+        }
+
+        return $route;
     }
 
     private function methodValid(array $route): bool
