@@ -23,5 +23,11 @@ return [
         'controller' => 'UserController',
         'action' => 'new',
         'method' => 'GET'
+    ],
+
+    'notfound' => [
+        'controller' => 'AppController',
+        'action' => 'notFound',
+        'method' => 'GET'
     ]
 ];

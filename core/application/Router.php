@@ -18,9 +18,7 @@ class Router
         }
 
         if (!$this->isRouteValid($route, $routes)) {
-            echo "404 Page Not Found";
-            header($_SERVER["SERVER_PROTOCOL"]." 404 Page Not Found", true, 404);
-            exit;
+            $route = 'notfound';
         }
 
         $this->setTrack($routes, $route);
@@ -32,7 +30,6 @@ class Router
             $this->track = new Track($routes[$route]);
         } else {
             echo "405 Method Not Allowed";
-            header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
             exit;
         }
     }
