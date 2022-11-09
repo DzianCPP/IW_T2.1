@@ -13,11 +13,11 @@
 
     <form class="new-user-form" method="POST" action="/user/create">
         <div><label for="email">E-mail</label></div>
-       <div><input type="text" class="input-text" name="email" id="email" placeholder="Enter your email"></div>
+       <div><input type="text" class="input-text" name="email" id="email" placeholder="Enter your email" onchange="ifFormValid()"></div>
 
         <div><label class="form-label" for="name">Your first and last name</label></div>
         <div><input type="text" class="input-text" name="name" id="name"
-            placeholder="Enter your first and last name"></div>
+            placeholder="Enter your first and last name" onchange="ifFormValid()"></div>
 
         <div><label class="form-label" for="gender">Gender</label></div>
         <div><select name="gender" id="gender" class="input-select">
@@ -33,8 +33,9 @@
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
         </select></div>
-
-        <button type="submit" class="form-submit" id="submit-button" value="submit">Submit</button>
+        <button type="submit" class="form-submit" id="submit-button" value="submit" disabled>Submit</button>
+        <div><p id="error-field"></p></div>
+        <script type="text/javascript" src="/assets/scripts/ifFormValid.js"></script>
     </form>
 
 </body>
