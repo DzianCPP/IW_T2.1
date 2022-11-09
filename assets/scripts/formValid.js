@@ -1,7 +1,8 @@
 function formValid() {
-    let submitButton = document.getElementById("submit-button");
-    submitButton.disabled = true;
     let errorField = document.getElementById("error-field");
+    let submitButton = document.getElementById("submit-button");
+
+    submitButton.disabled = true;
 
     if (!emailValid()) {
         errorField.innerHTML = "Please, enter a valid email";
@@ -20,32 +21,33 @@ function formValid() {
 
 function emailValid() {
     const email = document.getElementById("email").value;
-    if (!ifEmailFilled() || !emailHasAtChar(email)) {
+    if (!emailFilled() || !emailHasAtChar(email)) {
         return false;
     }
 
     return true;
-}
-function ifEmailFilled() {
-    const emailField = document.getElementById("email");
-    return emailField.value.length !== 0;
 }
 
 function nameValid() {
     const nameFieldText = document.getElementById("name").value;
-    if (!ifNameFilled() || !ifNameHasTwoWords(nameFieldText)) {
+    if (!nameFilled() || !nameHasTwoWords(nameFieldText)) {
         return false;
     }
     return true;
 }
 
-function ifNameFilled() {
+function emailFilled() {
+    const emailField = document.getElementById("email");
+    return emailField.value.length !== 0;
+}
+
+function nameFilled() {
     const nameField = document.getElementById("name");
     nameValue = nameField.value.trim();
     return nameValue.length !== 0;
 }
 
-function ifNameHasTwoWords(fullName) {
+function nameHasTwoWords(fullName) {
     if (fullName.indexOf(" ") === -1) {
         return false;
     }

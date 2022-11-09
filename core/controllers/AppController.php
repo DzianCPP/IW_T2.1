@@ -2,8 +2,6 @@
 
 namespace core\controllers;
 
-use Couchbase\View;
-
 class AppController
 {
     public function index(): void
@@ -16,6 +14,7 @@ class AppController
     public function notFound(): void
     {
         $pageNotFoundHtml = VIEW_PATH . "notFoundPage.html";
+        http_response_code(404);
         $file = fopen($pageNotFoundHtml, "r");
         echo fread($file, filesize($pageNotFoundHtml));
     }
