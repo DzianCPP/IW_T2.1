@@ -43,7 +43,7 @@ function emailFilled() {
 
 function nameFilled() {
     const nameField = document.getElementById("name");
-    nameValue = nameField.value.trim();
+    let nameValue = nameField.value.trim();
     return nameValue.length !== 0;
 }
 
