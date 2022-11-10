@@ -40,6 +40,7 @@ class Router
             $this->track = new Track($routes[$route]);
         } else {
             echo "405 Method Not Allowed";
+            http_response_code(405);
             exit;
         }
     }
