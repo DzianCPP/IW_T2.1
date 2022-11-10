@@ -18,7 +18,13 @@
 }
 
 td {
-    border-left: 2px solid darksalmon;
+    text-shadow: none;
+    border: none;
+}
+
+td:nth-child(even) {
+    background-color: bisque;
+    color: rgba(155, 81, 49, 0.9);
     padding-left: 1%;
 }
 

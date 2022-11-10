@@ -48,4 +48,9 @@ class Users
 
         return $result;
     }
+
+    public function deleteDuplicates(): void
+    {
+        $query = $this->conn->prepare("DELETE FROM usersTable WHERE ")
+    }
 }
