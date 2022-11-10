@@ -15,7 +15,7 @@ class UserController
 
     public function new(): void
     {
-        $newUserFormHtml = VIEW_PATH . "newUserForm.html";
+        $newUserFormHtml = VIEW_PATH . "/forms/newUser.html";
         $file = fopen($newUserFormHtml, "r");
         echo fread($file, filesize($newUserFormHtml));
     }
@@ -24,19 +24,11 @@ class UserController
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
+        $this->render($allUsers);
+    }
 
-        $allUsersTableHtml = VIEW_PATH . "usersTable.html";
-        $file = fopen($allUsersTableHtml, "r");
-        echo fread($file, filesize($allUsersTableHtml));
-
-        foreach ($allUsers as $user) {
-            echo "<tr>" .
-                "<td>" . $user['userID'] . "</td>" .
-                "<td>" . $user['email'] . "</td>" .
-                "<td>" . $user['fullName'] . "</td>" .
-                "<td>" . $user['gender'] . "</td>" .
-                "<td>" . $user['status'] . "</td>" .
-                "</tr>";
-        }
+    private function render(array $allUsers): void
+    {
+        include VIEW_PATH . "/tables/users.html";
     }
 }

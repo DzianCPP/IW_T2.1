@@ -1,7 +1,6 @@
 .all-users-table {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 100px;
     border-left-width: 2px;
     border-left-style: dotted;
     border-left-color: darksalmon;
@@ -14,9 +13,24 @@
     color: bisque;
     text-shadow: 2px 2px 2px rgba(70, 50, 70, 0.9);
     font-family: 'Lucida Typewriter Serif', Lucida, serif;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
     font-size: 1em;
     width: 40%;
+}
+
+td {
+    border-left: 2px solid darksalmon;
+    padding-left: 1%;
+}
+
+.users-page-link-div {
+    width: 10%;
+    margin: 5px auto;
+    padding: 10px;
+    background-color: rgba(155, 81, 49, 0.9);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.users-page-link-div:hover {
+    background-color: rgba(155, 81, 49, 0.6);
 }

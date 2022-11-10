@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/users/table.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta charset="utf-8">
+    <title>AddUserApp</title>
+  </head>
+
+  <body>
+    <table class="all-users-table" id="all-users-table">
+      <tr>
+        <th>ID</th>
+        <th>E-mail</th>
+        <th>Full Name</th>
+        <th>Gender</th>
+        <th>Status</th>
+      </tr>
+
+      <?php foreach ($allUsers as $user) { ?>
+        <tr>
+          <td><?php echo $user['userID']; ?></td>
+          <td><?php echo $user['email']; ?></td>
+          <td><?php echo $user['fullName']; ?></td>
+          <td><?php echo $user['gender']; ?></td>
+          <td><?php echo $user['status']; ?></td>
+        </tr>
+      <?php } ?>
+
+    </table>
+
+    <div class='users-page-link-div'>
+      <a href='/user/new'>Add user</a>
+    </div>
+  </body>
+</html>
