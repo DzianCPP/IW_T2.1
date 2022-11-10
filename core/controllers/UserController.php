@@ -2,16 +2,28 @@
 
 namespace core\controllers;
 
+use core\application\Database;
+use PDO;
+
 class UserController
 {
     public function create(): void
     {
-        echo var_dump(array(
-            $_POST['email'],
-            $_POST['name'],
-            $_POST['gender'],
-            $_POST['status']
-        ));
+        $db = new Database();
+        $dbConn = $db->getConnection();
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $email = $_POST['email'];
+        $fullName = $_POST['name'];
+        $gender = $_POST['gender'];
+        $status = $_POST['status'];
+
+        $query = $dbConn->prepare("INSERT INTO usersTable (email, fullName, gender, status)
+        VALUES ('$email', '$fullName', '$gender', '$status')");
+
+        $query->execute();
+
+        $dbConn = null;
     }
 
     public function new(): void

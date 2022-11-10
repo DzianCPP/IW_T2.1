@@ -5,7 +5,6 @@ namespace core\application;
 class Application
 {
     private Router $router;
-    private Database $database;
 
     public function run(): void
     {

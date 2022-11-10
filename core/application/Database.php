@@ -26,24 +26,6 @@ class Database
     }
 }
 
-$DBConnection = new Database();
-$conn = $DBConnection->getConnection();
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-return $conn;
-
-$query = $conn->prepare("SELECT * FROM usersTable");
-$query->execute();
-
-$fetchMode = $query->setFetchMode(PDO::FETCH_ASSOC);
-$result = $query->fetchAll();
-
-foreach ($result as $row) {
-    echo $row['userID'] . "    " . $row['email'] . "    " . $row['fullName'] . "    " . $row['gender'] . "    " . $row['status'];
-}
-
-$conn = null;
-
-
 
 
 
