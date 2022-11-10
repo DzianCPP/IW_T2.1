@@ -1,29 +1,16 @@
 <?php
 
 namespace core\controllers;
-
-use core\application\Database;
-use PDO;
+use core\models\Users;
 
 class UserController
 {
     public function create(): void
     {
-        $db = new Database();
-        $dbConn = $db->getConnection();
-        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $users = new Users();
+        $users->insertNewUser();
 
-        $email = $_POST['email'];
-        $fullName = $_POST['name'];
-        $gender = $_POST['gender'];
-        $status = $_POST['status'];
-
-        $query = $dbConn->prepare("INSERT INTO usersTable (email, fullName, gender, status)
-        VALUES ('$email', '$fullName', '$gender', '$status')");
-
-        $query->execute();
-
-        $dbConn = null;
+        $this->show();
     }
 
     public function new(): void
@@ -31,5 +18,25 @@ class UserController
         $newUserFormHtml = VIEW_PATH . "newUserForm.html";
         $file = fopen($newUserFormHtml, "r");
         echo fread($file, filesize($newUserFormHtml));
+    }
+
+    public function show(): void
+    {
+        $users = new Users();
+        $allUsers = $users->getAllUsers();
+
+        $allUsersTableHtml = VIEW_PATH . "usersTable.html";
+        $file = fopen($allUsersTableHtml, "r");
+        echo fread($file, filesize($allUsersTableHtml));
+
+        foreach ($allUsers as $user) {
+            echo "<tr>" .
+                "<td>" . $user['userID'] . "</td>" .
+                "<td>" . $user['email'] . "</td>" .
+                "<td>" . $user['fullName'] . "</td>" .
+                "<td>" . $user['gender'] . "</td>" .
+                "<td>" . $user['status'] . "</td>" .
+                "</tr>";
+        }
     }
 }

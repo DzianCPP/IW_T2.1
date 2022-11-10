@@ -31,15 +31,15 @@ return [
         'method' => 'GET'
     ],
 
-    'users' => [
-        'controller' => 'UserController',
-        'action' => 'showAll',
-        'method' => 'GET'
-    ],
-
     'users/id' => [
         'controller' => 'UserController',
         'action' => 'showOne',
         'method' => 'GET'
+    ],
+
+    'users/show' => [
+        'controller' => 'UserController',
+        'action' => 'show',
+        'method' => 'get'
     ]
 ];
