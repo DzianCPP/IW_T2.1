@@ -8,27 +8,36 @@ class UserController
     public function create(): void
     {
         $users = new Users();
-        $users->insertNewUser();
-
-        $this->show();
+        if ($users->insertNewUser()) {
+            $this->show();
+        } else {
+            $email = $_POST['email'];
+            $fullName = $_POST['fullName'];
+            $this->renderNewUserFormAgain($email, $fullName);
+        }
     }
 
     public function new(): void
     {
-        $newUserFormHtml = VIEW_PATH . "/forms/newUser.html";
+        $newUserFormHtml = VIEW_PATH . "/forms/newUser.php";
         $file = fopen($newUserFormHtml, "r");
         echo fread($file, filesize($newUserFormHtml));
     }
 
-    public function show(): void
+    private function show(): void
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
-        $this->render($allUsers);
+        $this->renderAllUsers($allUsers);
     }
 
-    private function render(array $allUsers): void
+    private function renderAllUsers(array $allUsers): void
     {
         include VIEW_PATH . "/tables/users.html";
+    }
+
+    private function renderNewUserFormAgain($email, $fullName): void
+    {
+        include VIEW_PATH . "/forms/newUser.php";
     }
 }

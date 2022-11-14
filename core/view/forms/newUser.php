@@ -9,6 +9,10 @@
 </head>
 
 <body>
+
+<?php echo "Hello"; ?>
+
+
     <h1 class="main-page-header" id="main-page-h1">AddUserApp</h1>
 
     <form class="new-user-form" method="POST" action="/user/create">
