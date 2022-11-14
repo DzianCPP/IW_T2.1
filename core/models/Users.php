@@ -23,7 +23,7 @@ class Users
         $gender = $_POST['gender'];
         $status = $_POST['status'];
 
-        $query = $this->conn->prepare("INSERT INTO usersTable(email, fullName, gender, status)
+        $query = $this->conn->prepare("INSERT INTO usersTable (email, fullName, gender, status)
         VALUES ('$email', '$fullName', '$gender', '$status')");
 
         $query->execute();
@@ -51,6 +51,6 @@ class Users
 
     public function deleteDuplicates(): void
     {
-        $query = $this->conn->prepare("DELETE FROM usersTable WHERE ")
+        $query = $this->conn->prepare("DELETE FROM usersTable WHERE ");
     }
 }
