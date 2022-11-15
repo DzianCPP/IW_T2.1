@@ -12,7 +12,7 @@
     <h1 class="main-page-header" id="main-page-h1">AddUserApp</h1>
 
     <form class="new-user-form" method="POST" action="/user/create">
-        
+
         <?php if ($email === ''): ?>
         <div><label for="email">E-mail</label></div>
        <div><input type="text"
@@ -80,7 +80,15 @@
 
         <button type="submit" class="form-submit" id="submit-button" value="submit" disabled>Submit</button>
 
-        <div><p id="error-field"></p></div>
+        <div>
+            <p id="error-field">
+                <?php
+                    if ($email !== '' || $fullName !== ''):
+                        echo "Not valid information!";
+                    endif;
+                ?>
+            </p>
+        </div>
 
         <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
     </form>

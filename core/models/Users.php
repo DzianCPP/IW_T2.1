@@ -9,25 +9,23 @@ class Users
 {
     private PDO $conn;
     private Database $database;
+    private Validator $validator;
 
     public function __construct()
     {
         $this->database = new Database();
+        $this->validator = new Validator();
         $this->conn = $this->database->getConnection();
     }
 
     public function insertNewUser(): bool
     {
-        $email = $_POST['email'];
-        $fullName = $_POST['name'];
-        $gender = $_POST['gender'];
-        $status = $_POST['status'];
+        $email = $this->validator->makeDataSafe($_POST['email']);
+        $fullName = $this->validator->makeDataSafe($_POST['name']);
+        $gender = $this->validator->makeDataSafe($_POST['gender']);
+        $status = $this->validator->makeDataSafe($_POST['status']);
 
-        if (!$this->emailValid($email)) {
-            return false;
-        }
-
-        if (!$this->nameValid($fullName)) {
+        if (!$this->validator->userDataValid($email, $fullName)) {
             return false;
         }
 
@@ -48,7 +46,7 @@ class Users
         return $result;
     }
 
-    public function getUserbyId(int $id): array
+    public function getUserById(int $id): array
     {
         $query = $this->conn->prepare("SELECT * FROM usersTable WHERE userID = $id");
         $query->execute();
@@ -56,24 +54,5 @@ class Users
         $result = $query->fetchAll();
 
         return $result;
-    }
-
-    private function emailValid(string $email): bool
-    {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-        return true;
-    }
-
-    private function nameValid(string $fullName): bool
-    {
-        $firstName = substr($fullName, 0, strpos($fullName, " ", 0));
-        $lastName = ltrim(substr($fullName, strpos($fullName, " ", 0), strlen($fullName)));
-
-        if (!preg_match("/^[a-z ,.'-]+$/i", $firstName) || !preg_match("/^[a-z ,.'-]+$/i", $lastName)) {
-            return false;
-        }
-        return true;
     }
 }
