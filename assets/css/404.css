@@ -1,0 +1,35 @@
+body {
+    width: 100%;
+    background-color: bisque;
+}
+
+.page-404-div {
+    width: 80%;
+    margin: 150px auto 5px auto;
+    padding: 10px;
+    background-color: darkred;
+    text-align: center;
+    color: bisque;
+    border-radius: 20px;
+}
+
+.page-link-div {
+    width: 50%;
+    margin: 20px auto 5px auto;
+    padding: 10px;
+    background-color: darkred;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#page-link-div:hover {
+    background-color: brown;
+}
+
+a {
+    padding: 3px 3px;
+    text-decoration: none;
+    color: darkred;
+    background-color: bisque;
+    border-radius: 5px;
+}

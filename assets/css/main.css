@@ -1,0 +1,30 @@
+body {
+    width: 100%;
+    background-color: bisque;
+}
+
+.main-link-div {
+    width: 20%;
+    margin: auto;
+    padding: 10px;
+    background-color: darkred;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#main-link-create-div:hover, #main-link-show-div:hover {
+    background-color: brown;
+}
+
+#main-link-create-div {
+    margin-top: 150px;
+    margin-bottom: 20px;
+}
+
+a {
+    padding: 3px 3px;
+    text-decoration: none;
+    color: darkred;
+    background-color: bisque;
+    border-radius: 5px;
+}

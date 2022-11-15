@@ -7,19 +7,19 @@ body {
     width: 100%;
 }
 
-.main-page-header {
+.new-user-h1 {
     margin: auto;
     border: 1px hidden;
     padding: 10% 10px 10px 10px;
     width: fit-content;
-    color: rgba(155, 81, 49, 0.9);
+    color: darkred;
     font-family: 'Lucida Typewriter Serif', Lucida, serif;
 }
 
 .main-page-link-div, .main-page-404-div, .new-user-form {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
     border-left-width: 2px;
     border-left-style: dotted;
     border-left-color: darksalmon;
@@ -28,7 +28,7 @@ body {
     border-right-color: darksalmon;
     border-radius: 10px;
     padding: 10px;
-    background-color: rgba(155, 81, 49, 0.9);
+    background-color: darkred;
     color: bisque;
     text-shadow: 2px 2px 2px rgba(70, 50, 70, 0.9);
     font-family: 'Lucida Typewriter Serif', Lucida, serif;
@@ -49,7 +49,7 @@ body {
 }
 
 .main-page-link-div:hover {
-    background-color: rgba(155, 81, 49, 0.6);
+    background-color: brown;
 }
 
 .form-label,
@@ -70,7 +70,7 @@ body {
     width: 100%;
 }
 
-#main-link-create-user {
+#main-link-create-user, #main-link-show-users {
     color: rgba(155, 81, 49, 0.6);
     background-color: bisque;
     text-shadow: none;
