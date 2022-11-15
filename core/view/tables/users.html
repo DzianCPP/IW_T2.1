@@ -17,15 +17,18 @@
         <th>Full Name</th>
         <th>Gender</th>
         <th>Status</th>
+        <th>Action</th>
       </tr>
 
       <?php foreach ($allUsers as $user) { ?>
+      <?php $userID = $user['userID']; ?>
         <tr>
           <td><?php echo $user['userID']; ?></td>
           <td><?php echo $user['email']; ?></td>
           <td><?php echo $user['fullName']; ?></td>
           <td><?php echo $user['gender']; ?></td>
           <td><?php echo $user['status']; ?></td>
+          <td><a href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a></td>
         </tr>
       <?php } ?>
 

@@ -13,7 +13,7 @@ class Validator
 
     public function userDataValid(string $email, string $fullName): bool
     {
-        if ($this->nameValid($fullName) || $this->emailValid($email)) {
+        if (!$this->nameValid($fullName) || !$this->emailValid($email)) {
             return false;
         }
         return true;

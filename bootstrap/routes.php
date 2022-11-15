@@ -41,5 +41,18 @@ return [
         'controller' => 'UserController',
         'action' => 'show',
         'method' => 'get'
+    ],
+
+    'user/edit' => [
+        'controller' => 'UserController',
+        'action' => 'editUser',
+        'method' => 'get',
+        'params' => 'userID'
+    ],
+
+    'user/edit/save' => [
+        'controller' => 'UserController',
+        'action' => 'saveEditedUser',
+        'method' => 'post'
     ]
 ];

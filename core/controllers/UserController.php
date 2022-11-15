@@ -29,6 +29,20 @@ class UserController
         $this->renderAllUsers($allUsers);
     }
 
+    public function editUser(): void
+    {
+        $users = new Users();
+        $userID = $_GET['userID'];
+        $userID = rtrim($userID, '}');
+        $userID = ltrim($userID, '{');
+        $userToEdit = $users->getUserById($userID);
+        $currentEmail = $userToEdit['email'];
+        $currentFullName = $userToEdit['fullName'];
+        $currentGender = $userToEdit['gender'];
+        $currentStatus = $userToEdit['status'];
+        include VIEW_PATH . "/forms/editUser.html";
+    }
+
     private function renderAllUsers(array $allUsers): void
     {
         include VIEW_PATH . "/tables/users.html";
