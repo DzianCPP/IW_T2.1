@@ -2,6 +2,7 @@
 
 namespace core\controllers;
 use core\models\Users;
+use function MongoDB\BSON\fromJSON;
 
 class UserController
 {
@@ -22,7 +23,7 @@ class UserController
         include VIEW_PATH . "/forms/newUser.html";
     }
 
-    private function show(): void
+    public function show(): void
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
@@ -43,8 +44,19 @@ class UserController
         include VIEW_PATH . "/forms/editUser.html";
     }
 
+    public function update(): void
+    {
+        $jsonString = file_get_contents("php://input");
+        $newUserInfo = json_decode($jsonString, true);
+        $users = new Users();
+        if ($users->editUser($newUserInfo)) {
+            http_response_code(200);
+            $this->show();
+        }
+    }
+
     private function renderAllUsers(array $allUsers): void
     {
-        include VIEW_PATH . "/tables/users.html";
+        include VIEW_PATH . "tables/users.html";
     }
 }

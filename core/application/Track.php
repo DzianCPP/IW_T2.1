@@ -26,6 +26,6 @@ class Track
 
     public function getControllerName(): string
     {
-        return "core\controllers\\" . $this->controller;
+        return $this->controller;
     }
 }

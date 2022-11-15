@@ -1,58 +1,61 @@
 <?php
 
+use core\controllers\AppController;
+use core\controllers\UserController;
+
 return [
     '' => [
-        'controller' => 'AppController',
+        'controller' => AppController::class,
         'action' => 'index',
         'method' => 'GET'
     ],
 
     'public' => [
-        'controller' => 'AppController',
+        'controller' => AppController::class,
         'action' => 'index',
         'method' => 'GET'
     ],
 
     'user/create' => [
-        'controller' => 'UserController',
+        'controller' => UserController::class,
         'action' => 'create',
         'method' => 'POST'
     ],
 
     'user/new' => [
-        'controller' => 'UserController',
+        'controller' => UserController::class,
         'action' => 'new',
         'method' => 'GET'
     ],
 
     'notfound' => [
-        'controller' => 'AppController',
+        'controller' => AppController::class,
         'action' => 'notFound',
         'method' => 'GET'
     ],
 
     'users/id' => [
-        'controller' => 'UserController',
+        'controller' => UserController::class,
         'action' => 'showOne',
         'method' => 'GET'
     ],
 
     'users/show' => [
-        'controller' => 'UserController',
+        'controller' => UserController::class,
         'action' => 'show',
         'method' => 'get'
     ],
 
     'user/edit' => [
-        'controller' => 'UserController',
+        'controller' => UserController::class,
         'action' => 'editUser',
         'method' => 'get',
         'params' => 'userID'
     ],
 
-    'user/edit/save' => [
-        'controller' => 'UserController',
-        'action' => 'saveEditedUser',
-        'method' => 'post'
+    'user/update' => [
+        'controller' => UserController::class,
+        'action' => 'update',
+        'method' => 'put'
     ]
 ];

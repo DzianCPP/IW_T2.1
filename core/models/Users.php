@@ -55,4 +55,17 @@ class Users
 
         return $result[0];
     }
+
+    public function editUser($newUserData): bool
+    {
+        $newEmail = $newUserData['newEmail'];
+        $newFullName = $newUserData['newFullName'];
+        $newGender = $newUserData['newGender'];
+        $newStatus = $newUserData['newStatus'];
+        $userID = $newUserData['newUserID'];
+        $sqlQuery = "UPDATE usersTable SET email='$newEmail', fullName='$newFullName', gender='$newGender', status='$newStatus' WHERE userID='$userID'";
+        $query = $this->conn->prepare($sqlQuery);
+        $query->execute();
+        return true;
+    }
 }
