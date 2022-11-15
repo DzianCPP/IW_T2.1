@@ -70,15 +70,11 @@ body {
     width: 100%;
 }
 
-a {
-    color: rgba(155, 81, 49, 0.9);
-    padding: 3px 10px;
+#main-link-create-user {
+    color: rgba(155, 81, 49, 0.6);
     background-color: bisque;
-    border-radius: 5px;
     text-shadow: none;
     text-decoration: none;
-}
-
-a:hover {
-    background-color: #ffede8;
+    padding: 2px 5px;
+    border-radius: 5px;
 }

@@ -30,7 +30,7 @@ td:nth-child(even) {
 
 .users-page-link-div {
     width: 10%;
-    margin: 5px auto;
+    margin: 10px auto;
     padding: 10px;
     background-color: rgba(155, 81, 49, 0.9);
     border-radius: 10px;
@@ -39,4 +39,24 @@ td:nth-child(even) {
 
 .users-page-link-div:hover {
     background-color: rgba(155, 81, 49, 0.6);
+}
+
+a {
+    width: 30%;
+    height: 50%;
+    color: bisque;
+    padding: 3px 3px;
+    background-color: rgba(155, 81, 49, 0.9);
+    border-radius: 5px;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+#users-link-add-user {
+    background-color: bisque;
+    color: rgba(155, 81, 49, 0.9);
+}
+
+a:hover {
+    background-color: #ff734c;
 }
