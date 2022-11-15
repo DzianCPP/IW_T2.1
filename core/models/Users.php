@@ -68,4 +68,13 @@ class Users
         $query->execute();
         return true;
     }
+
+    public function delete(int $id): bool
+    {
+        $sqlQuery = "DELETE FROM usersTable WHERE userID=$id";
+        $query = $this->conn->prepare($sqlQuery);
+        $query->execute();
+
+        return true;
+    }
 }

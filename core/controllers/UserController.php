@@ -55,6 +55,19 @@ class UserController
         }
     }
 
+    public function deleteUser(): void
+    {
+        $jsonString = file_get_contents("php://input");
+        $id = json_decode($jsonString, true);
+        $id = $id['userID'];
+        $id = ltrim($id, "\"");
+        $id = rtrim($id, "\"");
+        $users = new Users();
+        if ($users->delete($id)) {
+            http_response_code(200);
+        }
+    }
+
     private function renderAllUsers(array $allUsers): void
     {
         include VIEW_PATH . "tables/users.html";

@@ -53,6 +53,13 @@ return [
         'params' => 'userID'
     ],
 
+    'user/delete' => [
+        'controller' => UserController::class,
+        'action' => 'deleteUser',
+        'method' => 'delete',
+        'params' => 'userID'
+    ],
+
     'user/update' => [
         'controller' => UserController::class,
         'action' => 'update',

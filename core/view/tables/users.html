@@ -16,7 +16,7 @@
         <th>Full Name</th>
         <th>Gender</th>
         <th>Status</th>
-        <th>Action</th>
+        <th></th>
       </tr>
 
       <?php foreach ($allUsers as $user) { ?>
@@ -27,7 +27,10 @@
           <td><?php echo $user['fullName']; ?></td>
           <td><?php echo $user['gender']; ?></td>
           <td><?php echo $user['status']; ?></td>
-          <td><a href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a></td>
+          <td>
+            <a href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a>
+            <a id="<?php echo $user['userID']; ?>" onclick="sendDeleteRequest(this.id)">Delete</a>
+          </td>
         </tr>
       <?php } ?>
 
@@ -36,5 +39,7 @@
     <div class='users-page-link-div'>
       <a id="users-link-add-user" href='/user/new'>Add user</a>
     </div>
+
+  <script type="text/javascript" src="/assets/scripts/users/delete.js"></script>
   </body>
 </html>
