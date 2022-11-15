@@ -55,7 +55,7 @@ return [
 
     'user/delete' => [
         'controller' => UserController::class,
-        'action' => 'deleteUser',
+        'action' => 'delete',
         'method' => 'delete',
         'params' => 'userID'
     ],

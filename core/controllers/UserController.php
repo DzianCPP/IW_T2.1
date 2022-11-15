@@ -55,7 +55,7 @@ class UserController
         }
     }
 
-    public function deleteUser(): void
+    public function delete(): void
     {
         $jsonString = file_get_contents("php://input");
         $id = json_decode($jsonString, true);

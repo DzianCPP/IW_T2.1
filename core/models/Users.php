@@ -73,7 +73,9 @@ class Users
     {
         $sqlQuery = "DELETE FROM usersTable WHERE userID=$id";
         $query = $this->conn->prepare($sqlQuery);
-        $query->execute();
+        if (!$query->execute()) {
+            return false;
+        }
 
         return true;
     }
