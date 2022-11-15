@@ -12,16 +12,14 @@ class UserController
             $this->show();
         } else {
             $email = $_POST['email'];
-            $fullName = $_POST['fullName'];
-            $this->renderNewUserFormAgain($email, $fullName);
+            $fullName = $_POST['name'];
+            $this->new($email, $fullName);
         }
     }
 
-    public function new(): void
+    public function new(string $email = '', string $fullName = ''): void
     {
-        $newUserFormHtml = VIEW_PATH . "/forms/newUser.php";
-        $file = fopen($newUserFormHtml, "r");
-        echo fread($file, filesize($newUserFormHtml));
+        include VIEW_PATH . "/forms/newUser.html";
     }
 
     private function show(): void
@@ -34,10 +32,5 @@ class UserController
     private function renderAllUsers(array $allUsers): void
     {
         include VIEW_PATH . "/tables/users.html";
-    }
-
-    private function renderNewUserFormAgain($email, $fullName): void
-    {
-        include VIEW_PATH . "/forms/newUser.php";
     }
 }
