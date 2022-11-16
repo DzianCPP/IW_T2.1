@@ -30,6 +30,15 @@ class UserController
         $this->renderAllUsers($allUsers);
     }
 
+    public function showById(): void
+    {
+        $users = new Users();
+        $userID = $_GET['userID'];
+        $userID = ltrim(rtrim($userID, '}'), '{');
+        $user = $users->getUserById($userID);
+        $this->renderOneUser($user);
+    }
+
     public function editUser(): void
     {
         $users = new Users();
@@ -71,5 +80,10 @@ class UserController
     private function renderAllUsers(array $allUsers): void
     {
         include VIEW_PATH . "tables/users.html";
+    }
+
+    private function renderOneUser(array $user): void
+    {
+        include VIEW_PATH . "tables/one.html";
     }
 }

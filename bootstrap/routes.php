@@ -64,5 +64,12 @@ return [
         'controller' => UserController::class,
         'action' => 'update',
         'method' => 'put'
+    ],
+
+    'user/id' => [
+        'controller' => UserController::class,
+        'action' => 'showById',
+        'method' => 'get',
+        'params' => 'userID'
     ]
 ];

@@ -1,5 +1,10 @@
 <?php
 
+
+//todo move to another folder
+//todo add database folder
+//todo add commands folder to store seeds and migrations
+
 return [
     [
         'email' => 'Gandalf@gmail.com',

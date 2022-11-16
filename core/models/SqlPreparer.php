@@ -1,6 +1,7 @@
 <?php
 
 namespace core\models;
+use PDO;
 
 class SqlPreparer
 {
@@ -30,9 +31,9 @@ class SqlPreparer
 
     public function prepareSelectById(int $id, $conn): bool|\PDOStatement
     {
-        $sqlQuery = $this->sqlQueries["SelectById"];
+        $sqlQuery = $this->sqlQueries["selectById"];
         $query = $conn->prepare($sqlQuery);
-        $query->bindParams(':id', $id);
+        $query->bindParam(1, $id, PDO::PARAM_INT);
         return $query;
     }
 
