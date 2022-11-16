@@ -10,45 +10,50 @@ class Users
     private PDO $conn;
     private Database $database;
     private Validator $validator;
+    private SqlPreparer $sqlPreparer;
+    private array $sqlQueries;
 
     public function __construct()
     {
         $this->database = new Database();
         $this->validator = new Validator();
+        $this->sqlPreparer = new SqlPreparer();
+        $this->sqlQueries = require "sqlQueries.php";
         $this->conn = $this->database->getConnection();
     }
 
     public function insertNewUser(): bool
     {
-        $email = $this->validator->makeDataSafe($_POST['email']);
-        $fullName = $this->validator->makeDataSafe($_POST['name']);
-        $gender = $this->validator->makeDataSafe($_POST['gender']);
-        $status = $this->validator->makeDataSafe($_POST['status']);
+        $params = array (
+                'email' => $this->validator->makeDataSafe($_POST['email']),
+            'fullName' => $this->validator->makeDataSafe($_POST['name']),
+            'gender' => $this->validator->makeDataSafe($_POST['gender']),
+            'status' => $this->validator->makeDataSafe($_POST['status'])
+        );
 
-        if (!$this->validator->userDataValid($email, $fullName)) {
+        if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
             return false;
         }
 
-        $query = $this->conn->prepare("INSERT INTO usersTable (email, fullName, gender, status)
-                                                VALUES ('$email', '$fullName', '$gender', '$status')");
-
-        $query->execute();
+        $query = $this->sqlPreparer->prepareInsertSql($params, $this->conn);
+        if (!$query->execute()) {
+            return false;
+        }
         return true;
     }
 
     public function getAllUsers(): array
     {
-        $query = $this->conn->prepare("SELECT * FROM usersTable");
+        $query = $this->sqlPreparer->prepareSelectAllSql($this->conn);
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
-
         return $result;
     }
 
     public function getUserById(int $id): array
     {
-        $query = $this->conn->prepare("SELECT * FROM usersTable WHERE userID = $id");
+        $query = $this->sqlPreparer->prepareSelectById($id, $this->conn);
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
@@ -58,21 +63,41 @@ class Users
 
     public function editUser($newUserData): bool
     {
-        $newEmail = $newUserData['newEmail'];
-        $newFullName = $newUserData['newFullName'];
-        $newGender = $newUserData['newGender'];
-        $newStatus = $newUserData['newStatus'];
-        $userID = $newUserData['newUserID'];
-        $sqlQuery = "UPDATE usersTable SET email='$newEmail', fullName='$newFullName', gender='$newGender', status='$newStatus' WHERE userID='$userID'";
-        $query = $this->conn->prepare($sqlQuery);
-        $query->execute();
+        $params = array(
+            'newEmail' => $newUserData['newEmail'],
+        'newFullName' => $newUserData['newFullName'],
+        'newGender' => $newUserData['newGender'],
+        'newStatus' => $newUserData['newStatus'],
+        'userID' => $newUserData['newUserID']
+        );
+
+        $query = $this->sqlPreparer->prepareUpdateSql($params, $this->conn);
+        if (!$query->execute()) {
+            return false;
+        }
         return true;
     }
 
     public function delete(int $id): bool
     {
-        $sqlQuery = "DELETE FROM usersTable WHERE userID=$id";
-        $query = $this->conn->prepare($sqlQuery);
+        $query = $this->sqlPreparer->prepareDeleteSql($id, $this->conn);
+        if (!$query->execute()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function seedData(array $data): bool
+    {
+        $params = array (
+                'email' => $data['email'],
+            'fullName' => $data['fullName'],
+            'gender' => $data['gender'],
+            'status' => $data['status']
+        );
+
+        $query = $this->sqlPreparer->prepareInsertSql($params, $this->conn);
         if (!$query->execute()) {
             return false;
         }
