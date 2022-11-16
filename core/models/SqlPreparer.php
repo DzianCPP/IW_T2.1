@@ -53,7 +53,7 @@ class SqlPreparer
     {
         $sqlQuery = $this->sqlQueries["delete"];
         $query = $conn->prepare($sqlQuery);
-        $query->bindParams(":id", $id);
+        $query->bindParam(":id", $id);
         return $query;
     }
 
