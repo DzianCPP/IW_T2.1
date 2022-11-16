@@ -55,4 +55,11 @@ class SqlPreparer
         $query->bindParams(":id", $id);
         return $query;
     }
+
+    public function prepareCheckIfTableEmptySql($conn): bool |\PDOStatement
+    {
+        $sqlQuery = $this->sqlQueries["checkEmpty"];
+        $query = $conn->prepare($sqlQuery);
+        return $query;
+    }
 }

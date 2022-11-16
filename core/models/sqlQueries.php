@@ -6,5 +6,6 @@ return [
     "update" => "UPDATE usersTable SET email=:newEmail, fullName=:newFullName, gender=:newGender, status=:newStatus WHERE userID=:userID",
     "delete" => "DELETE FROM usersTable WHERE userID=:id",
     "selectById" => "SELECT * FROM usersTable WHERE userID=:id",
-    "selectAll" => "SELECT * FROM usersTable"
+    "selectAll" => "SELECT * FROM usersTable",
+    "checkEmpty" => "SELECT COUNT(*) FROM usersTable"
 ];

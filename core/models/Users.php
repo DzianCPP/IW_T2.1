@@ -104,4 +104,16 @@ class Users
 
         return true;
     }
+
+    public function tableEmpty(): bool
+    {
+        $query = $this->sqlPreparer->prepareCheckIfTableEmptySql($this->conn);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll();
+        if ($result[0]['COUNT(*)'] !== 0) {
+            return false;
+        }
+        return true;
+    }
 }
