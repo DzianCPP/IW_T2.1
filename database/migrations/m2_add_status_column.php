@@ -16,7 +16,7 @@ class m2_add_status_column extends MigrationsBase
 
         $query = $conn->prepare($sqlQuery);
         if ($query->execute()) {
-            if ($this->addThisMigrationToHistory($conn)) {
+            if ($this->migrationHistoryHandler->addMigrationToHistory($conn, get_class($this))) {
                 return true;
             }
         }
@@ -33,34 +33,11 @@ class m2_add_status_column extends MigrationsBase
 
         $query = $conn->prepare($sqlQuery);
         if ($query->execute()) {
-            if ($this->removeThisMigrationFromHistory($conn)) {
+            if ($this->migrationHistoryHandler->removeMigrationFromHistory($conn, get_class($this))) {
                 return true;
             }
         }
 
-        return false;
-    }
-
-    private function addThisMigrationToHistory(PDO &$conn): bool
-    {
-        $sqlQuery = "INSERT INTO migrationHistory(migrationIndex, migrationName) VALUES ('m1', 'm2_add_status_column')";
-
-        $query = $conn->prepare($sqlQuery);
-
-        if ($query->execute()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function removeThisMigrationFromHistory(PDO &$conn): bool
-    {
-        $sqlQuery = "DELETE FROM migrationHistory WHERE migrationIndex='m1'";
-        $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-            return true;
-        }
         return false;
     }
 }
