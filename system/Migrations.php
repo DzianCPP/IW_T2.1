@@ -8,36 +8,77 @@ use Exception;
 class Migrations
 {
 
+    private array $migrations = [];
+
     public function run(int $databaseVersion = -1): bool
     {
         $db = new Database();
         $conn = $db->getConnection();
-        $migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
+        $this->migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
 
-        if ($databaseVersion > count($migrations)) {
+        if ($databaseVersion > count($this->migrations)) {
             echo "No such version of the database.\n";
             return false;
         }
         if ($databaseVersion === -1) {
-            $databaseVersion = count($migrations);
+            $databaseVersion = count($this->migrations);
         }
 
-        if (!$this->migrationHistoryExists($conn)) {
-            $fullMigrationName = "database\migrations\\" . $migrations[0]['m0'];
-            $migrationObject = new $fullMigrationName();
-            if (!$migrationObject->up()) {
-                return false;
+        $completedMigrations = $this->getCompletedMigrations($conn);
+
+        if ($databaseVersion < count($completedMigrations)) {
+            if ($this->rollback($databaseVersion, $completedMigrations)) {
+                return true;
+            }
+        } else {
+            if ($this->update($conn, $databaseVersion, $completedMigrations)) {
+                return true;
             }
         }
-        for ($i = 1; $i <= $databaseVersion; ++$i) {
-            $completedMigrations = $this->getCompletedMigrations($conn);
-            $migration = $migrations[$i];
+
+        return false;
+    }
+
+    private function rollback(int $databaseVersion, array $completedMigrations): bool
+    {
+        for ($i = count($completedMigrations) - 1; $i >= $databaseVersion; --$i) {
+            $migration = $this->migrations[$i];
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
             if ($migrationIndex === $completedMigrations[$i-1]['migrationIndex']) {
                 continue;
             }
+
+            $fullMigrationName = "database\migrations\\" . $migrationName;
+
+            $migrationObject = new $fullMigrationName();
+            if ($migrationObject->down()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function update(PDO $conn, int $databaseVersion, array $completedMigrations): bool
+    {
+        if (!$this->migrationHistoryExists($conn)) {
+            $fullMigrationName = "database\migrations\\" . $this->migrations[0]['m0'];
+            $migrationObject = new $fullMigrationName();
+            if (!$migrationObject->up()) {
+                return false;
+            }
+        }
+
+        for ($i = 1; $i <= $databaseVersion; ++$i) {
+            $migration = $this->migrations[$i];
+            $migrationIndex = "m" . (string)$i;
+            $migrationName = $migration[$migrationIndex];
+
+            if ($migrationIndex === $completedMigrations[$i-1]['migrationIndex']) {
+                continue;
+            }
+
             $fullMigrationName = "database\migrations\\" . $migrationName;
 
             $migrationObject = new $fullMigrationName();
@@ -46,7 +87,7 @@ class Migrations
             }
         }
 
-            return true;
+        return true;
     }
 
     private function migrationHistoryExists(PDO &$conn): bool

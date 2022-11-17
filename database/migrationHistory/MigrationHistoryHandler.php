@@ -21,7 +21,7 @@ class MigrationHistoryHandler
     {
         $migrationName = ltrim($this->getMigrationName($className), "\\");
         $migrationIndex = $this->getMigrationIndex($migrationName);
-        $sqlQuery = "DELETE FROM migrationHistory WHERE migrationIndex=$migrationIndex";
+        $sqlQuery = "DELETE FROM migrationHistory WHERE migrationIndex='$migrationIndex'";
         if (!$this->executeQuery($conn, $sqlQuery)) {
             return false;
         }
