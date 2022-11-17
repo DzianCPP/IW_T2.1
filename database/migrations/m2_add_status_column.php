@@ -5,7 +5,7 @@ namespace database\migrations;
 use core\application\Database;
 use PDO;
 
-class m1_add_status_column
+class m2_add_status_column extends MigrationsBase
 {
     public function up(): bool
     {
@@ -43,7 +43,7 @@ class m1_add_status_column
 
     private function addThisMigrationToHistory(PDO &$conn): bool
     {
-        $sqlQuery = "INSERT INTO migrationHistory(migrationIndex, migrationName) VALUES ('m1', 'm1_add_status_column')";
+        $sqlQuery = "INSERT INTO migrationHistory(migrationIndex, migrationName) VALUES ('m1', 'm2_add_status_column')";
 
         $query = $conn->prepare($sqlQuery);
 
