@@ -5,6 +5,8 @@ use core\application\Database;
 use PDO;
 use Exception;
 
+require "../vendor/autoload.php";
+
 class Migrations
 {
 
