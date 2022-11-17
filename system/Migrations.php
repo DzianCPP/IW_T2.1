@@ -13,6 +13,11 @@ class Migrations
         $db = new Database();
         $conn = $db->getConnection();
         $migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
+
+        if ($databaseVersion > count($migrations)) {
+            echo "No such version of the database.\n";
+            return false;
+        }
         if ($databaseVersion === -1) {
             $databaseVersion = count($migrations);
         }
