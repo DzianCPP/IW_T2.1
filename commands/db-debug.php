@@ -6,4 +6,4 @@ require_once BASE_PATH . 'vendor/autoload.php';
 use system\Migrations;
 
 $migrations = new Migrations();
-$migrations->run(5);
+$migrations->run(2);

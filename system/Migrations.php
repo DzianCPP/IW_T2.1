@@ -24,6 +24,14 @@ class Migrations
             $databaseVersion = count($this->migrations);
         }
 
+        if (!$this->migrationHistoryExists($conn)) {
+            $fullMigrationName = "database\migrations\\" . $this->migrations[0]['m0'];
+            $migrationObject = new $fullMigrationName();
+            if (!$migrationObject->up()) {
+                return false;
+            }
+        }
+
         $completedMigrations = $this->getCompletedMigrations($conn);
 
         if ($databaseVersion < count($completedMigrations)) {
@@ -62,14 +70,6 @@ class Migrations
 
     private function update(PDO $conn, int $databaseVersion, array $completedMigrations): bool
     {
-        if (!$this->migrationHistoryExists($conn)) {
-            $fullMigrationName = "database\migrations\\" . $this->migrations[0]['m0'];
-            $migrationObject = new $fullMigrationName();
-            if (!$migrationObject->up()) {
-                return false;
-            }
-        }
-
         for ($i = 1; $i <= $databaseVersion; ++$i) {
             $migration = $this->migrations[$i];
             $migrationIndex = "m" . (string)$i;
