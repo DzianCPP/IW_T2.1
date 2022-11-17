@@ -5,5 +5,7 @@ require_once BASE_PATH . 'vendor/autoload.php';
 
 use system\Migrations;
 
+$dbVersion = getopt("v:");
+
 $migrations = new Migrations();
-$migrations->run($argc);
+$migrations->run((int)$dbVersion);

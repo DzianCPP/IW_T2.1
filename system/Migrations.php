@@ -24,15 +24,13 @@ class Migrations
                 return false;
             }
         }
-
-        $completedMigrations = $this->getCompletedMigrations($conn);
-
-        for ($i = 1; $i < $databaseVersion; ++$i) {
+        for ($i = 1; $i <= $databaseVersion; ++$i) {
+            $completedMigrations = $this->getCompletedMigrations($conn);
             $migration = $migrations[$i];
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
-            if ($migrationIndex === $completedMigrations[$i]['migrationIndex']) {
+            if ($migrationIndex === $completedMigrations[$i-1]['migrationIndex']) {
                 continue;
             }
             $fullMigrationName = "database\migrations\\" . $migrationName;
