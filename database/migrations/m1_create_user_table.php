@@ -12,14 +12,14 @@ class m1_create_user_table extends MigrationsBase
         $db = new Database;
         $conn = $db->getConnection();
 
-        $sqlQueryCreateUsersTable = "CREATE TABLE IF NOT EXISTS usersTable(
+        $sqlQuery = "CREATE TABLE usersTable(
                         userID int(20) NOT NULL AUTO_INCREMENT,
                         email varchar(255) NOT NULL,
                         fullName varchar(255) default NULL,
                         gender varchar(25) NOT NULL,
                         PRIMARY KEY(userID))";
 
-        $query = $conn->prepare($sqlQueryCreateUsersTable);
+        $query = $conn->prepare($sqlQuery);
         if ($query->execute()) {
             if ($this->migrationHistoryHandler->addMigrationToHistory($conn, get_class($this))) {
                 return true;

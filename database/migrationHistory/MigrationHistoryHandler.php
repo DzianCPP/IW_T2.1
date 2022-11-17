@@ -7,8 +7,9 @@ class MigrationHistoryHandler
 {
     public function addMigrationToHistory(PDO &$conn, string $className): bool
     {
-        $migrationIndex = $this->getMigrationIndex($className);
-        $sqlQuery = "INSERT INTO migrationHistory (migrationIndex, migrationName) VALUES $migrationIndex, $className)";
+        $migrationName = ltrim($this->getMigrationName($className), "\\");
+        $migrationIndex = $this->getMigrationIndex($migrationName);
+        $sqlQuery = "INSERT INTO migrationHistory (migrationIndex, migrationName) VALUES ('$migrationIndex', '$migrationName')";
 
         if (!$this->executeQuery($conn, $sqlQuery)) {
             return false;
@@ -18,7 +19,8 @@ class MigrationHistoryHandler
 
     public function removeMigrationFromHistory(PDO &$conn, string $className): bool
     {
-        $migrationIndex = $this->getMigrationIndex($className);
+        $migrationName = ltrim($this->getMigrationName($className), "\\");
+        $migrationIndex = $this->getMigrationIndex($migrationName);
         $sqlQuery = "DELETE FROM migrationHistory WHERE migrationIndex=$migrationIndex";
         if (!$this->executeQuery($conn, $sqlQuery)) {
             return false;
@@ -30,6 +32,11 @@ class MigrationHistoryHandler
     private function getMigrationIndex(string $className): string
     {
         return substr($className, 0, strpos($className, "_", 0));
+    }
+
+    private function getMigrationName(string $className): string
+    {
+        return substr($className, strrpos($className, "\\"), strlen($className));
     }
 
     private function executeQuery(PDO &$conn, string $sqlQuery): bool

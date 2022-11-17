@@ -12,10 +12,11 @@ class m0_create_migration_history extends MigrationsBase
         $db = new Database;
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE migrationHistory(migrationID int(10) NOT NULL AUTO_INCREMENT,
-)                                                   migrationIndex varchar (10) NOT NULL,
-                                                    migrationName varchar(100) NOT NULL,
-                                                    PRIMARY KEY (migrationID))";
+        $sqlQuery = "CREATE TABLE migrationHistory(
+                     migrationID int(10) NOT NULL AUTO_INCREMENT,
+                     migrationIndex varchar(10) NOT NULL,
+                     migrationName varchar(100) NOT NULL,
+                     PRIMARY KEY (migrationID))";
 
         $query = $conn->prepare($sqlQuery);
         if ($query->execute()) {

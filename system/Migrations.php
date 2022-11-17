@@ -5,16 +5,17 @@ use core\application\Database;
 use PDO;
 use Exception;
 
-require "../vendor/autoload.php";
-
 class Migrations
 {
 
-    public function run(): bool
+    public function run(int $databaseVersion = -1): bool
     {
         $db = new Database();
         $conn = $db->getConnection();
-        $migrations = require "../bootstrap/migrationsList.php";
+        $migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
+        if ($databaseVersion === -1) {
+            $databaseVersion = count($migrations);
+        }
 
         if (!$this->migrationHistoryExists($conn)) {
             $fullMigrationName = "database\migrations\\" . $migrations[0]['m0'];
@@ -26,7 +27,7 @@ class Migrations
 
         $completedMigrations = $this->getCompletedMigrations($conn);
 
-        for ($i = 1; $i < count($migrations); ++$i) {
+        for ($i = 1; $i < $databaseVersion; ++$i) {
             $migration = $migrations[$i];
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
