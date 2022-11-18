@@ -10,4 +10,6 @@ HTML, CSS, php, js, json
 <b>How to launch the project (Linux):</b>
 
 1) Run "composer install"
-2)  
+2) Fill in the .env file with your credentials (example provided in .env_example)
+3) To migrate DB to the latest version go to the root directory of the project and run "php commands/migrateDB.php"
+4) To seed test data into DB run script "php commands/seedUsers.php"
