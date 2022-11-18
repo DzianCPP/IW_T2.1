@@ -20,6 +20,7 @@ class Migrations
             echo "No such version of the database.\n";
             return false;
         }
+
         if ($databaseVersion === -1) {
             $databaseVersion = count($this->migrations);
         }
@@ -34,8 +35,8 @@ class Migrations
 
         $completedMigrations = $this->getCompletedMigrations($conn);
 
-        if ($databaseVersion < count($completedMigrations)) {
-            if ($this->rollback($databaseVersion, $completedMigrations)) {
+        if ($databaseVersion < (count($completedMigrations)-1)) {
+            if ($this->rollback($conn, $databaseVersion, $completedMigrations)) {
                 return true;
             }
         } else {
@@ -47,30 +48,28 @@ class Migrations
         return false;
     }
 
-    private function rollback(int $databaseVersion, array $completedMigrations): bool
+    private function rollback(PDO $conn, int $databaseVersion, array $completedMigrations): bool
     {
-        for ($i = count($completedMigrations) - 1; $i >= $databaseVersion; --$i) {
+        for ($i = count($completedMigrations) - 1; $i > $databaseVersion; --$i) {
+            $completedMigrations = $this->getCompletedMigrations($conn);
             $migration = $this->migrations[$i];
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
-            if ($migrationIndex === $completedMigrations[$i-1]['migrationIndex']) {
-                continue;
-            }
-
             $fullMigrationName = "database\migrations\\" . $migrationName;
 
             $migrationObject = new $fullMigrationName();
-            if ($migrationObject->down()) {
-                return true;
+            if (!$migrationObject->down()) {
+                continue;
             }
         }
-        return false;
+        return true;
     }
 
     private function update(PDO $conn, int $databaseVersion, array $completedMigrations): bool
     {
         for ($i = 1; $i <= $databaseVersion; ++$i) {
+            $completedMigrations = $this->getCompletedMigrations($conn);
             $migration = $this->migrations[$i];
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
@@ -83,7 +82,7 @@ class Migrations
 
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->up()) {
-                return false;
+                continue;
             }
         }
 

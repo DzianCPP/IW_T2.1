@@ -20,13 +20,12 @@ class m1_create_user_table extends MigrationsBase
                         PRIMARY KEY(userID))";
 
         $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-            if ($this->migrationHistoryHandler->addMigrationToHistory($conn, get_class($this))) {
-                return true;
-            }
+
+        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public function down(): bool
@@ -37,12 +36,14 @@ class m1_create_user_table extends MigrationsBase
         $sqlQuery = "DROP TABLE usersTable";
 
         $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-            if ($this->migrationHistoryHandler->removeMigrationFromHistory($conn, get_class($this))) {
-                return true;
-            }
+
+        try {
+            $query->execute();
+            $this->migrationHistoryHandler->removeMigrationFromHistory($conn, get_class($this));
+        } catch (\PDOException $e) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

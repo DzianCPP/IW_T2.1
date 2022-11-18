@@ -19,27 +19,28 @@ class m0_create_migration_history extends MigrationsBase
                      PRIMARY KEY (migrationID))";
 
         $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-            if ($this->migrationHistoryHandler->addMigrationToHistory($conn, get_class($this))) {
-                return true;
-            }
+
+        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public function down(): bool
     {
         $db = new Database();
         $conn = $db->getConnection();
-
         $sqlQuery = "DROP TABLE migrationHistory";
 
         $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-                return true;
+
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

@@ -15,13 +15,12 @@ class m2_add_status_column extends MigrationsBase
         $sqlQuery = "ALTER TABLE usersTable ADD status varchar(10) NOT NULL";
 
         $query = $conn->prepare($sqlQuery);
-        if ($query->execute()) {
-            if ($this->migrationHistoryHandler->addMigrationToHistory($conn, get_class($this))) {
-                return true;
-            }
+
+        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public function down(): bool
