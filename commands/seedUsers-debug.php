@@ -5,11 +5,5 @@ require_once BASE_PATH . 'vendor/autoload.php';
 
 use core\application\UsersSeeder;
 
-$count = getopt("c:");
-
 $usersSeeder = new UsersSeeder();
-if (array_key_exists("c", $count)) {
-    $usersSeeder->run($count["c"]);
-} else {
-    $usersSeeder->run();
-}
+$usersSeeder->run(12);

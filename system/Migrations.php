@@ -68,7 +68,7 @@ class Migrations
 
     private function update(PDO $conn, int $databaseVersion, array $completedMigrations): bool
     {
-        for ($i = 1; $i <= $databaseVersion; ++$i) {
+        for ($i = 1; $i < $databaseVersion; ++$i) {
             $completedMigrations = $this->getCompletedMigrations($conn);
             $migration = $this->migrations[$i];
             $migrationIndex = "m" . (string)$i;

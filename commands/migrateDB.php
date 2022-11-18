@@ -8,4 +8,8 @@ use system\Migrations;
 $dbVersion = getopt("v:");
 
 $migrations = new Migrations();
-$migrations->run($dbVersion["v"]);
+if (array_key_exists("v", $dbVersion)) {
+    $migrations->run($dbVersion["v"]);
+} else {
+    $migrations->run();
+}
