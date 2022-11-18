@@ -50,6 +50,7 @@ a {
     border-radius: 5px;
     text-shadow: none;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #users-link-add-user {

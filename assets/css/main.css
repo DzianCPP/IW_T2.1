@@ -12,19 +12,30 @@ body {
     border-radius: 10px;
 }
 
-#main-link-create-div:hover, #main-link-show-div:hover {
-    background-color: brown;
-}
-
 #main-link-create-div {
     margin-top: 150px;
     margin-bottom: 20px;
 }
 
+.input-text {
+    width: 50%;
+    margin: 10px auto 0px auto;
+    padding-left: 5px;
+    border-radius: 10px;
+    background-color: bisque;
+    border: 1px dotted darkred;
+}
+
 a {
     padding: 3px 3px;
+    width: 80%;
     text-decoration: none;
     color: darkred;
     background-color: bisque;
     border-radius: 5px;
+}
+
+a:hover {
+    background-color: azure;
+    cursor: pointer;
 }
