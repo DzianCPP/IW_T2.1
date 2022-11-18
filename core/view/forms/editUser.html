@@ -23,7 +23,9 @@
           value="<?php echo $currentEmail; ?>">
   </div>
 
-  <div><label class="form-label" for="name">Your first and last name</label></div>
+  <div>
+    <label class="form-label" for="name">Your first and last name</label>
+  </div>
   <div>
     <input type="text"
            class="input-text"
@@ -50,14 +52,23 @@
       <option value="inactive">Inactive</option>
     </select></div>
 
-  <button type="button" class="form-submit" id="submit-button" value="submit" disabled onclick="sendPutRequest()">Submit</button>
+  <button type="button"
+          class="form-submit"
+          id="submit-button"
+          value="submit"
+          disabled
+          onclick="sendPutRequest()">Submit
+  </button>
 
   <div>
     <p id="error-field"></p>
   </div>
 
   <div>
-    <input type="hidden" value="<?php echo $userID ?>" name="user-id" id="user-id">
+    <input type="hidden"
+           value="<?php echo $userID ?>"
+           name="user-id"
+           id="user-id">
   </div>
 
   <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
