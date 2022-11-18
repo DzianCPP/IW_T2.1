@@ -2,7 +2,15 @@
 
 <b>Description:</b>
 
-The goal of the task is to create a simple page with a form to collect data from a user (email, full name, gender, and status) and to send it via a POST request.
+The goal of the task is to create a simple page with a form to collect data from a user
+(email, full name, gender, and status) and to send it via a POST request.
+
+Other app's features:
+- Add user
+- View all users
+- View one user (by ID)
+- Edit users' information
+- Delete user (by ID)
 
 Tech stack:
 HTML, CSS, php, js, json
