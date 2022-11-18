@@ -1,6 +1,8 @@
 <?php
 
-require "names.php";
+namespace database\seeds\users;
+
+require "usersNames.php";
 
 class UserFactory
 {

@@ -14,5 +14,5 @@ function getRandomSurname(): string
 
 function getRandomFullName(): string
 {
-    return getRandomName() . " " . getRandomSurname();
+    return getRandomName() . " usersNames.php" . getRandomSurname();
 }
