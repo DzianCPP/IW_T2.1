@@ -7,7 +7,7 @@ The goal of the task is to create a simple page with a form to collect data from
 Tech stack:
 HTML, CSS, php, js, json
 
-<b>How to launch the project (Linux):</b>
+<b>How to launch the project:</b>
 
 1) Run "composer install"
 2) Fill in the .env file with your credentials (example provided in .env_example)
