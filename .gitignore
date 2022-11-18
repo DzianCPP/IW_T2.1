@@ -2,6 +2,5 @@
 /ApacheFolder/
 /public/images/
 /vendor/
-composer.json
 composer.lock
 .env
