@@ -35,6 +35,28 @@ a {
     border-radius: 5px;
 }
 
+button {
+    width: 30%;
+    background-color: lightpink;
+    color: darkslategray;
+    border: none;
+    border-radius: 10px;
+}
+
+button:enabled {
+    background-color: bisque;
+    color: darkred;
+}
+
+p {
+    color: bisque;
+}
+
+button:enabled:hover {
+    background-color: azure;
+    cursor: pointer;
+}
+
 a:hover {
     background-color: azure;
     cursor: pointer;
