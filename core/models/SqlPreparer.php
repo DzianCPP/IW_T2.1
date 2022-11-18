@@ -41,11 +41,11 @@ class SqlPreparer
     {
         $sqlQuery = $this->sqlQueries["update"];
         $query = $conn->prepare($sqlQuery);
-        $query->bindParams(':newEmail', $params['newEmail']);
-        $query->bindParams(':newFullName', $params['newFullName']);
-        $query->bindParams(':newGender', $params['newGender']);
-        $query->bindParams(':newStatus', $params['newStatus']);
-        $query->bindParams(':userID', $params['userID']);
+        $query->bindParam(':newEmail', $params['newEmail']);
+        $query->bindParam(':newFullName', $params['newFullName']);
+        $query->bindParam(':newGender', $params['newGender']);
+        $query->bindParam(':newStatus', $params['newStatus']);
+        $query->bindParam(':userID', $params['userID']);
         return $query;
     }
 
