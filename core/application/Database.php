@@ -2,7 +2,6 @@
 
 namespace core\application;
 use PDO;
-use Dotenv\Dotenv;
 
 class Database
 {
@@ -20,7 +19,7 @@ class Database
 
     private function __construct()
     {
-        $this->env = $this->getDotEnv();
+        $this->env = DotEnver::getDotEnv();
         $dbHostName = $this->env['DB_HOST_NAME'];
         $dbPassword = $this->env['DB_PASSWORD'];
         $dbUserName = $this->env['DB_USER_NAME'];
@@ -33,13 +32,6 @@ class Database
     public function &getConnection(): PDO
     {
         return $this->connection;
-    }
-
-    private function getDotEnv(): array
-    {
-        $dotenv = Dotenv::createImmutable(BASE_PATH);
-        $dotenv->safeLoad();
-        return $_ENV;
     }
 }
 
