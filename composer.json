@@ -22,7 +22,6 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.5",
-      "ext-pdo": "*",
-        "twbs/bootstrap": "5.2.2"
+      "ext-pdo": "*"
     }
 }
