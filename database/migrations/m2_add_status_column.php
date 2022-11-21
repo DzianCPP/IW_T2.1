@@ -9,14 +9,11 @@ class m2_add_status_column extends MigrationsBase
 {
     public function up(): bool
     {
-        $db = new Database;
-        $conn = $db->getConnection();
-
         $sqlQuery = "ALTER TABLE usersTable ADD status varchar(10) NOT NULL";
 
-        $query = $conn->prepare($sqlQuery);
+        $query = $this->conn->prepare($sqlQuery);
 
-        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
+        if (!$this->trySqlQuery($query, $this->conn, get_class($this))) {
             return false;
         }
 
@@ -25,14 +22,11 @@ class m2_add_status_column extends MigrationsBase
 
     public function down(): bool
     {
-        $db = new Database();
-        $conn = $db->getConnection();
-
         $sqlQuery = "ALTER TABLE usersTable DROP status";
 
-        $query = $conn->prepare($sqlQuery);
+        $query = $this->conn->prepare($sqlQuery);
         if ($query->execute()) {
-            if ($this->migrationHistoryHandler->removeMigrationFromHistory($conn, get_class($this))) {
+            if ($this->migrationHistoryHandler->removeMigrationFromHistory($this->conn, get_class($this))) {
                 return true;
             }
         }

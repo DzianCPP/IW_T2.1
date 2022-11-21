@@ -15,7 +15,7 @@ class Users
 
     public function __construct()
     {
-        $this->database = new Database();
+        $this->database = Database::getInstance();
         $this->validator = new Validator();
         $this->sqlPreparer = new SqlPreparer();
         $this->sqlQueries = require "sqlQueries.php";

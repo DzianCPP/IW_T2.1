@@ -8,8 +8,17 @@ class Database
 {
     private PDO $connection;
     private array $env = [];
+    private static Database $db;
 
-    public function __construct()
+    public static function getInstance(): Database
+    {
+        if (Database::$db === null) {
+            Database::$db = new Database();
+        }
+        return Database::$db;
+    }
+
+    private function __construct()
     {
         $this->env = $this->getDotEnv();
         $dbHostName = $this->env['DB_HOST_NAME'];
