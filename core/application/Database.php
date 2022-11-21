@@ -8,14 +8,14 @@ class Database
 {
     private PDO $connection;
     private array $env = [];
-    private static Database $db;
+    private static $instance = null;
 
     public static function getInstance(): Database
     {
-        if (Database::$db === null) {
-            Database::$db = new Database();
+        if (self::$instance === null) {
+            self::$instance = new Database();
         }
-        return Database::$db;
+        return self::$instance;
     }
 
     private function __construct()
