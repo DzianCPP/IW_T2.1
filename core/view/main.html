@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Title</title>
 </head>
 
 <body>
-  <div class="main-link-div" id="main-link-create-div">
-    <a id="main-link-create" href="/user/new">Create user</a>
-  </div>
+  <div class="container mh-100">
+    <div class="align-middle">
 
-<div class="main-link-div" id="main-link-show-div">
-  <a id="main-link-show" href="/users/show">Show all users</a>
-  <br>
-  <input type="text" class="input-text" id="main-input-userID"
-         placeholder="User's ID" onchange="userIdValid()">
-  <button id="main-page-find-button" onclick="findUserById()"
-          disabled>Find</button>
-  <p id="main-error-field"></p>
-</div>
+      <div class="row mw-100 mb-1" id="main-link-create-div">
+        <a class="btn btn-dark" id="main-link-create" href="/user/new">Create user</a>
+      </div>
+
+      <div class="row mw-100 mb-1" id="main-link-show-div">
+        <a class="btn btn-dark" id="main-link-show" href="/users/show">Show all users</a>
+      </div>
+
+      <div class="row mw-100 mb-1">
+        <input type="text" class="form-control mb-1" id="main-input-userID"
+             placeholder="User's ID" onchange="userIdValid()">
+        <button class="btn btn-dark" id="main-page-find-button" onclick="findUserById()"
+                disabled>Find</button>
+      </div>
+
+      <div class="row">
+        <div class="alert alert-danger" id="error-field-div" hidden>
+          <strong id="main-error-field"></strong>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script type="text/javascript" src="/assets/scripts/users/find.js"></script>
   <script type="text/javascript" src="/assets/scripts/userIdValid.js"></script>
+
 </body>
 </html>
