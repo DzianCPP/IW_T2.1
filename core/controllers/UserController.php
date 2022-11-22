@@ -79,7 +79,7 @@ class UserController
 
     private function renderAllUsers(array $allUsers): void
     {
-        include VIEW_PATH . "tables/users.html";
+        require VIEW_PATH . "tables/users.html";
     }
 
     private function renderOneUser(array $user): void

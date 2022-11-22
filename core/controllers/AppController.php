@@ -6,9 +6,7 @@ class AppController
 {
     public function index(): void
     {
-        $mainPageHtml = VIEW_PATH . "main.html";
-        $file = fopen($mainPageHtml, "r");
-        echo fread($file, filesize($mainPageHtml));
+        require VIEW_PATH . "main.html";
     }
 
     public function notFound(): void
