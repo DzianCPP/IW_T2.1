@@ -1,5 +1,0 @@
-RewriteEngine On
-AddType application/x-httpd-php .html .html .php
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* public/index.php
