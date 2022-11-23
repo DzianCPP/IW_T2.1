@@ -11,9 +11,7 @@ class AppController
 
     public function notFound(): void
     {
-        $pageNotFoundHtml = VIEW_PATH . "404.html";
         http_response_code(404);
-        $file = fopen($pageNotFoundHtml, "r");
-        echo fread($file, filesize($pageNotFoundHtml));
+        include VIEW_PATH . "404.html";
     }
 }
