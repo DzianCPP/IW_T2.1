@@ -48,6 +48,7 @@ class Users
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
+
         return $result;
     }
 
@@ -75,6 +76,7 @@ class Users
         if (!$query->execute()) {
             return false;
         }
+
         return true;
     }
 
@@ -114,6 +116,7 @@ class Users
         if ($result[0]['COUNT(*)'] !== 0) {
             return false;
         }
+
         return true;
     }
 }

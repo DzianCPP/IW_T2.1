@@ -8,6 +8,7 @@ class Validator
     {
         $data = trim($data);
         $data = stripslashes($data);
+
         return htmlspecialchars($data);
     }
 
@@ -16,6 +17,7 @@ class Validator
         if (!$this->nameValid($fullName) || !$this->emailValid($email)) {
             return false;
         }
+
         return true;
     }
 
@@ -28,6 +30,7 @@ class Validator
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
+
         return true;
     }
 
@@ -39,6 +42,7 @@ class Validator
         if (!preg_match("/^[a-z ,.'-]+$/i", $firstName) || !preg_match("/^[a-z ,.'-]+$/i", $lastName)) {
             return false;
         }
+
         return true;
     }
 }
