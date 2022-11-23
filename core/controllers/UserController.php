@@ -46,11 +46,7 @@ class UserController extends BaseController
         $userID = rtrim($userID, '}');
         $userID = ltrim($userID, '{');
         $userToEdit = $users->getUserById($userID);
-        $currentEmail = $userToEdit['email'];
-        $currentFullName = $userToEdit['fullName'];
-        $currentGender = $userToEdit['gender'];
-        $currentStatus = $userToEdit['status'];
-        include VIEW_PATH . "/forms/editUser.html";
+        $this->render("forms/editUser", $userToEdit[0]);
     }
 
     public function update(): void
@@ -76,14 +72,4 @@ class UserController extends BaseController
             http_response_code(200);
         }
     }
-
-//    private function renderAllUsers(array $allUsers): void
-//    {
-//        require VIEW_PATH . "tables/users.html";
-//    }
-//
-//    private function renderOneUser(array $user): void
-//    {
-//        include VIEW_PATH . "tables/one.html";
-//    }
 }

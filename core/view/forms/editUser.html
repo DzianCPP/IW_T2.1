@@ -19,7 +19,7 @@
           id="email"
           placeholder="Enter your email"
           onchange="formValid()"
-          value="<?php echo $currentEmail; ?>">
+          value="<?php echo $dataToRender['email'];; ?>">
   </div>
 
   <div>
@@ -32,7 +32,7 @@
            id="name"
            placeholder="Enter your first and last name"
            onchange="formValid()"
-           value="<?php echo $currentFullName; ?>">
+           value="<?php echo $dataToRender['fullName']; ?>">
   </div>
 
   <div><label class="form-label" for="gender">Gender</label></div>
