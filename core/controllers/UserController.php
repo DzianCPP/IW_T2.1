@@ -20,14 +20,14 @@ class UserController extends BaseController
 
     public function new(string $email = '', string $fullName = ''): void
     {
-        $this->render("forms/newUser");
+        $this->render("main", "forms/new");
     }
 
     public function show(): void
     {
-        $users = new Users();
-        $allUsers = $users->getAllUsers();
-        $this->render("tables/users", $allUsers);
+        $usersModel = new Users();
+        $allUsers = $usersModel->getAllUsers();
+        $this->render("main", "tables/users", $allUsers);
     }
 
     public function showById(): void
@@ -36,7 +36,7 @@ class UserController extends BaseController
         $userID = $_GET['userID'];
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
-        $this->render("tables/users", $user);
+        $this->render("main", "tables/users", $user);
     }
 
     public function editUser(): void
@@ -46,7 +46,7 @@ class UserController extends BaseController
         $userID = rtrim($userID, '}');
         $userID = ltrim($userID, '{');
         $userToEdit = $users->getUserById($userID);
-        $this->render("forms/editUser", $userToEdit[0]);
+        $this->render("main", "forms/edit", $userToEdit[0]);
     }
 
     public function update(): void

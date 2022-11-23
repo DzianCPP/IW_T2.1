@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en-US">
+<?php
+    if ($data === null):
+        $email = $fullName = '';
+    endif;
+?>
 
-<head>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <meta charset="utf-8">
-    <title>AddUserApp</title>
-</head>
-
-<body>
-    <h1 class="new-user-h1" id="main-page-h1">AddUserApp</h1>
+<div class="main-div">
+<h1 class="new-user-h1" id="main-page-h1">Add User App</h1>
 
     <form class="new-user-form" method="POST" action="/user/create">
 
@@ -91,7 +88,4 @@
 
         <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
     </form>
-
-</body>
-
-</html>
+</div>
