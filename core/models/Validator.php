@@ -4,6 +4,8 @@ namespace core\models;
 
 class Validator
 {
+    private string $nameRegEx = "/^[a-z ,.'-]+$/i";
+
     public function makeDataSafe($data): string
     {
         $data = trim($data);
@@ -39,7 +41,7 @@ class Validator
         $firstName = substr($fullName, 0, strpos($fullName, " ", 0));
         $lastName = ltrim(substr($fullName, strpos($fullName, " ", 0), strlen($fullName)));
 
-        if (!preg_match("/^[a-z ,.'-]+$/i", $firstName) || !preg_match("/^[a-z ,.'-]+$/i", $lastName)) {
+        if (!preg_match($this->nameRegEx, $firstName) || !preg_match($this->nameRegEx, $lastName)) {
             return false;
         }
 

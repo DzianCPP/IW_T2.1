@@ -1,4 +1,6 @@
 <?php include "components/header.html"; ?>
+<?php $genders = require "components/genders.php"; ?>
+<?php $statuses = require "components/status.php"; ?>
 
 <?php $user = $userToEdit; ?>
 <div class="main-div">
@@ -32,17 +34,20 @@
       <div><label class="form-label" for="gender">Gender</label></div>
 
       <div><select name="new-gender" id="gender" class="input-select">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="transgender">Transgender</option>
-        <option value="non-binary">Non-binary</option>
-        <option value="other">Other</option>
+              <?php foreach ($genders as $gender): ?>
+                  <option value="<?php echo $gender; ?>">
+                      <?php echo ucfirst($gender); ?>
+                  </option>
+              <?php endforeach; ?>
       </select></div>
 
       <div><label class="form-label" for="status">Status</label>
         <select name="new-status" class="input-select" id="status">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+            <?php foreach ($statuses as $status): ?>
+                <option value="<?php echo $status; ?>">
+                    <?php echo ucfirst($status); ?>
+                </option>
+            <?php endforeach; ?>
         </select></div>
 
       <button type="button"
