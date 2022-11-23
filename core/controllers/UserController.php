@@ -8,8 +8,8 @@ class UserController extends BaseController
 {
     public function create(): void
     {
-        $users = new Users();
-        if ($users->insertNewUser()) {
+        $this->setModel();
+        if ($this->users->insertNewUser()) {
             $this->show();
         } else {
             $email = $_POST['email'];
@@ -20,14 +20,21 @@ class UserController extends BaseController
 
     public function new(string $email = '', string $fullName = ''): void
     {
-        $this->render("main", "forms/new");
+        $this->setView(VIEW_PATH);
+        $data = array(
+            "email" => $email,
+            "fullName" => $fullName
+        );
+
+        $this->view->render("new", $data);
     }
 
     public function show(): void
     {
-        $usersModel = new Users();
-        $allUsers = $usersModel->getAllUsers();
-        $this->render("main", "tables/users", $allUsers);
+        $users = new Users();
+        $allUsers = $users->getAllUsers();
+        $this->setView(VIEW_PATH);
+        $this->view->render("users", array("allUsers" => $allUsers));
     }
 
     public function showById(): void
@@ -36,17 +43,19 @@ class UserController extends BaseController
         $userID = $_GET['userID'];
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
-        $this->render("main", "tables/users", $user);
+        $this->setView(VIEW_PATH);
+        $this->view->render("users", array("allUsers" => $user));
     }
 
     public function editUser(): void
     {
         $users = new Users();
+        $this->setView(VIEW_PATH);
         $userID = $_GET['userID'];
         $userID = rtrim($userID, '}');
         $userID = ltrim($userID, '{');
         $userToEdit = $users->getUserById($userID);
-        $this->render("main", "forms/edit", $userToEdit[0]);
+        $this->view->render("edit", array("userToEdit" => $userToEdit));
     }
 
     public function update(): void

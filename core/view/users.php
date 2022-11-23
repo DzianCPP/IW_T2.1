@@ -1,3 +1,5 @@
+<?php include "components/header.html"; ?>
+
 <div class="main-div">
     <table class="all-users-table" id="all-users-table">
             <tr>
@@ -9,7 +11,7 @@
                 <th></th>
             </tr>
 
-            <?php foreach ($data as $user): ?>
+            <?php foreach ($allUsers as $user): ?>
                 <?php $userID = $user['userID']; ?>
                 <tr>
                     <td><?php echo $user['userID']; ?></td>
@@ -43,3 +45,5 @@
 
     <script type="text/javascript" src="/assets/scripts/users/delete.js"></script>
 </div>
+
+<?php include "components/footer.html"; ?>

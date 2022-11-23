@@ -1,3 +1,5 @@
+<?php include "components/header.html"; ?>
+
 <div class="main-div">
     <div class="main-page-form">
     <div class="link-div" id="main-link-create-div">
@@ -18,3 +20,5 @@
     <script type="text/javascript" src="/assets/scripts/userIdValid.js"></script>
     </div>
 </div>
+
+<?php include "components/footer.html"; ?>

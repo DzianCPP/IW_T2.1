@@ -1,12 +1,22 @@
 <?php
 
 namespace core\controllers;
+use core\view\View;
+use core\models\Model;
+use core\models\Users;
 
 class BaseController
 {
-    protected function render(string $templateName, string $view, $data = null): void
+    protected Users $users;
+    protected View $view;
+
+    protected function setView(string $templatePath): void
     {
-        $view = VIEW_PATH . $view . ".php";
-        include LAYOUTS_PATH . $templateName . ".html";
+        $this->view = new View($templatePath);
+    }
+
+    protected function setModel(): void
+    {
+        $this->users = new Users();
     }
 }

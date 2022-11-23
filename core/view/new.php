@@ -1,8 +1,4 @@
-<?php
-    if ($data === null):
-        $email = $fullName = '';
-    endif;
-?>
+<?php include "components/header.html"; ?>
 
 <div class="main-div">
 <h1 class="new-user-h1" id="main-page-h1">Add User App</h1>
@@ -89,3 +85,5 @@
         <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
     </form>
 </div>
+
+<?php include "components/footer.html"; ?>

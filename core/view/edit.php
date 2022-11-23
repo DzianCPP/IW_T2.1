@@ -1,4 +1,6 @@
-<?php $user = $data; ?>
+<?php include "components/header.html"; ?>
+
+<?php $user = $userToEdit; ?>
 <div class="main-div">
     <h1 class="new-user-h1" id="main-page-h1">Edit User</h1>
 
@@ -66,3 +68,5 @@
       <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
     </form>
 </div>
+
+<?php include "components/footer.html"; ?>
