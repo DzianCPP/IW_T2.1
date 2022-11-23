@@ -9,7 +9,7 @@ class UserController extends BaseController
     public function create(): void
     {
         $this->setModel();
-        if ($this->users->insertNewUser()) {
+        if ($this->users->insertUser()) {
             $this->show();
         } else {
             $email = $_POST['email'];
@@ -77,7 +77,7 @@ class UserController extends BaseController
         $id = ltrim($id, "\"");
         $id = rtrim($id, "\"");
         $users = new Users();
-        if ($users->delete($id)) {
+        if ($users->deleteUser($id)) {
             http_response_code(200);
         }
     }
