@@ -4,7 +4,7 @@ namespace core\controllers;
 use core\models\Users;
 use function MongoDB\BSON\fromJSON;
 
-class UserController
+class UserController extends BaseController
 {
     public function create(): void
     {
@@ -20,14 +20,14 @@ class UserController
 
     public function new(string $email = '', string $fullName = ''): void
     {
-        include VIEW_PATH . "/forms/newUser.html";
+        $this->render("forms/newUser");
     }
 
     public function show(): void
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
-        $this->renderAllUsers($allUsers);
+        $this->render("tables/users", $allUsers);
     }
 
     public function showById(): void
@@ -36,7 +36,7 @@ class UserController
         $userID = $_GET['userID'];
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
-        $this->renderOneUser($user);
+        $this->render("tables/users", $user);
     }
 
     public function editUser(): void
@@ -77,13 +77,13 @@ class UserController
         }
     }
 
-    private function renderAllUsers(array $allUsers): void
-    {
-        require VIEW_PATH . "tables/users.html";
-    }
-
-    private function renderOneUser(array $user): void
-    {
-        include VIEW_PATH . "tables/one.html";
-    }
+//    private function renderAllUsers(array $allUsers): void
+//    {
+//        require VIEW_PATH . "tables/users.html";
+//    }
+//
+//    private function renderOneUser(array $user): void
+//    {
+//        include VIEW_PATH . "tables/one.html";
+//    }
 }

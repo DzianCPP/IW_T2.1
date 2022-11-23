@@ -59,7 +59,7 @@ class Users
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
 
-        return $result[0];
+        return $result;
     }
 
     public function editUser($newUserData): bool

@@ -18,7 +18,7 @@
         <th></th>
       </tr>
 
-      <?php foreach ($allUsers as $user) { ?>
+      <?php foreach ($dataToRender as $user): ?>
       <?php $userID = $user['userID']; ?>
         <tr>
           <td><?php echo $user['userID']; ?></td>
@@ -34,7 +34,7 @@
             </a>
           </td>
         </tr>
-      <?php } ?>
+      <?php endforeach; ?>
 
     </table>
 
