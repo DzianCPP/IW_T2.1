@@ -57,13 +57,15 @@ class Model
         return $result;
     }
 
-    protected function update(string $tableName, array $params): bool
+    protected function update(string $tableName, array $fields, array $params, $colName): bool
     {
+        $sets = $this->getSets($fields);
         $sqlQuery = "UPDATE ${tableName}
-                     SET email='${params['email']}', fullName='${params['fullName']}', gender='${params['gender']}', status='${params['status']}'
-                     WHERE userID='${params['userID']}'";
+                     SET ${sets}
+                     WHERE ${colName}=${params[$colName]}";
         $query = $this->conn->prepare($sqlQuery);
-        if (!$query->execute()) {
+        array_pop($params);
+        if (!$query->execute($params)) {
             return false;
         }
 
@@ -95,5 +97,16 @@ class Model
 
         $strValues = substr($strValues, 0, -3);
         return $strValues;
+    }
+
+    private function getSets(array $fields): string
+    {
+        $sets = "";
+        foreach($fields as $field) {
+            $sets .= $field . "=:" . $field . ", ";
+        }
+        $sets = substr($sets, 0, -2);
+
+        return $sets;
     }
 }

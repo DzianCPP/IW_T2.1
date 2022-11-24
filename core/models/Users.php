@@ -35,7 +35,7 @@ class Users extends Model
     {
         $params = $this->validator->makeDataSafe($newUserData);
 
-        if (!$this->update("usersTable", $params)) {
+        if (!$this->update("usersTable", $this->fields, $params, "userID")) {
             return false;
         }
 
