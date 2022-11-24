@@ -8,12 +8,15 @@ class Validator
 
     public function makeDataSafe(array $data): array
     {
-        return [
-            'email' => $this->makeStringSafe($data['email']),
-            'fullName' => $this->makeStringSafe($data['fullName']),
-            'gender' => $this->makeStringSafe($data['gender']),
-            'status' => $this->makeStringSafe($data['status'])
-        ];
+        $userData = [];
+        $keys = array_keys($data);
+        $i = 0;
+        foreach ($data as $dataElement) {
+            $userData[$keys[$i]] = $dataElement;
+            ++$i;
+        }
+
+        return $userData;
     }
 
     private function makeStringSafe($data): string
