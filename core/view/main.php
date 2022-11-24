@@ -30,8 +30,7 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div class="input-group w-100">
-                <input type="text" class="form-control" id="main-input-userID"
-                       placeholder="User's ID">
+                <input type="text" class="form-control" id="main-input-userID">
                 <button class="btn btn-success" id="main-page-find-button"
                         disabled>Find</button>
             </div>
