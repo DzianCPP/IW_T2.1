@@ -86,7 +86,7 @@
             <div class="row w-auto">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-success w-100" id="submit-button" value="submit" disabled>Submit</button>
+                    <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>Submit</button>
                 </div>
                 <div class="col-sm-4"></div>
             </div>
