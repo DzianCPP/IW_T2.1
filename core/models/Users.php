@@ -31,13 +31,7 @@ class Users extends Model
 
     public function editUser($newUserData): bool
     {
-        $params = [
-            'email' => $newUserData['newEmail'],
-            'fullName' => $newUserData['newFullName'],
-            'gender' => $newUserData['newGender'],
-            'status' => $newUserData['newStatus'],
-            'userID' => $newUserData['newUserID']
-        ];
+        $params = $this->validator->makeDataSafe($newUserData);
 
         if (!$this->update("usersTable", $params)) {
             return false;

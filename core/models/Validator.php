@@ -12,7 +12,8 @@ class Validator
             'email' => $this->makeStringSafe($data['email']),
             'fullName' => $this->makeStringSafe($data['fullName']),
             'gender' => $this->makeStringSafe($data['gender']),
-            'status' => $this->makeStringSafe($data['status'])
+            'status' => $this->makeStringSafe($data['status']),
+            'userID' => $this->makeStringSafe($data['userID'])
         ];
     }
 

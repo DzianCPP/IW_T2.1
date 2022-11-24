@@ -61,7 +61,7 @@
 
       <div>
         <input type="hidden"
-               value="<?php echo $userID ?>"
+               value="<?php echo $user['userID']; ?>"
                name="user-id"
                id="user-id">
       </div>

@@ -35,7 +35,7 @@
             <input
                     type="text"
                     class="input-text"
-                    name="name"
+                    name="fullName"
                     id="name"
                     placeholder="Enter your first and last name"
                     onchange="formValid()">
