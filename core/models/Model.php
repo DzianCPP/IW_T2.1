@@ -17,14 +17,16 @@ class Model
         $this->conn = $this->database->getConnection();
     }
 
-    public function insert(array $params): bool
+    public function insert(array $params, array $fields, string $tableName): bool
     {
         if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
             return false;
         }
 
-        $sqlQuery = "INSERT INTO usersTable (email, fullName, gender, status)
-                    VALUES ('${params['email']}', '${params['fullName']}', '${params['gender']}', '${params['status']}')";
+        $tableFields = $this->getTableFields($fields);
+        $values = $this->getValues($params);
+        $sqlQuery = "INSERT INTO ${tableName} (${tableFields})
+                    VALUES (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
@@ -55,11 +57,24 @@ class Model
         return $result;
     }
 
-    protected function update(string $tableName, array $params): bool
+    protected function update(string $tableName, array $fields, array $params, $colName): bool
     {
+        $sets = $this->getSets($fields);
         $sqlQuery = "UPDATE ${tableName}
-                     SET email='${params['email']}', fullName='${params['fullName']}', gender='${params['gender']}', status='${params['status']}'
-                     WHERE userID='${params['userID']}'";
+                     SET ${sets}
+                     WHERE ${colName}=${params[$colName]}";
+        $query = $this->conn->prepare($sqlQuery);
+        array_pop($params);
+        if (!$query->execute($params)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function delete(string $colName, $value, string $tableName): bool
+    {
+        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName}=${value}";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
@@ -68,14 +83,30 @@ class Model
         return true;
     }
 
-    protected function delete(string $tableName, int $id): bool
+    private function getTableFields(array $fields): string
     {
-        $sqlQuery = "DELETE FROM ${tableName} WHERE userID=${id}";
-        $query = $this->conn->prepare($sqlQuery);
-        if (!$query->execute()) {
-            return false;
+        return implode(", ", $fields);
+    }
+
+    private function getValues(array $params): string
+    {
+        $strValues = "'";
+        foreach ($params as $param) {
+            $strValues .= $param . "', '";
         }
 
-        return true;
+        $strValues = substr($strValues, 0, -3);
+        return $strValues;
+    }
+
+    private function getSets(array $fields): string
+    {
+        $sets = "";
+        foreach($fields as $field) {
+            $sets .= $field . "=:" . $field . ", ";
+        }
+        $sets = substr($sets, 0, -2);
+
+        return $sets;
     }
 }
