@@ -25,8 +25,7 @@
                             <td>
                                 <div class="btn-group-vertical">
                                     <a class="btn btn-success" href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a>
-                                    <a class="btn btn-dark" id="<?php echo $user['userID']; ?>"
-                                       onclick="sendDeleteRequest(this.id)">
+                                    <a class="btn btn-dark" id="<?php echo $user['userID']; ?>">
                                         Delete</a>
                                 </div>
                             </td>

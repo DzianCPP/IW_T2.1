@@ -31,8 +31,8 @@
         <div class="col-sm-4">
             <div class="input-group w-100">
                 <input type="text" class="form-control" id="main-input-userID"
-                       placeholder="User's ID" onchange="userIdValid()">
-                <button class="btn btn-success" id="main-page-find-button" onclick="findUserById()"
+                       placeholder="User's ID">
+                <button class="btn btn-success" id="main-page-find-button"
                         disabled>Find</button>
             </div>
         </div>

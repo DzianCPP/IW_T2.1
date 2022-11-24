@@ -24,7 +24,6 @@
                                name="new-email"
                                id="email"
                                placeholder="Enter your email"
-                               onchange="formValid()"
                                value="<?php echo $user['email']; ?>">
                     </div>
                 </div>
@@ -42,7 +41,6 @@
                                 name="new-name"
                                 id="name"
                                 placeholder="Enter your first and last name"
-                                onchange="formValid()"
                                 value="<?php echo $user['fullName']; ?>">
                     </div>
                 </div>
