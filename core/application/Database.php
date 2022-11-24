@@ -7,15 +7,14 @@ use Dotenv\Dotenv;
 class Database
 {
     private PDO $connection;
-    private array $env = [];
 
     public function __construct()
     {
-        $this->env = $this->getDotEnv();
-        $dbHostName = $this->env['DB_HOST_NAME'];
-        $dbPassword = $this->env['DB_PASSWORD'];
-        $dbUserName = $this->env['DB_USER_NAME'];
-        $dbName = $this->env['DB_NAME'];
+        $env = $this->getDotEnv();
+        $dbHostName = $env['DB_HOST_NAME'];
+        $dbPassword = $env['DB_PASSWORD'];
+        $dbUserName = $env['DB_USER_NAME'];
+        $dbName = $env['DB_NAME'];
         $dsn = "mysql:host=".$dbHostName.";dbname=".$dbName;
 
         $this->connection = new PDO($dsn, $dbUserName, $dbPassword);
