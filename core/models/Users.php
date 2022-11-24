@@ -14,14 +14,13 @@ class Users extends Model
         return $this->getRecordBy("userID", $id, "usersTable");
     }
 
-    public function insertUser(): bool
+    public function insertUser(array $params = []): bool
     {
-        $params = [
-            'email' => $this->validator->makeDataSafe($_POST['email']),
-            'fullName' => $this->validator->makeDataSafe($_POST['name']),
-            'gender' => $this->validator->makeDataSafe($_POST['gender']),
-            'status' => $this->validator->makeDataSafe($_POST['status'])
-        ];
+        if ($params === []) {
+            $params = $this->validator->makeDataSafe($_POST);
+        } else {
+            $params = $this->validator->makeDataSafe($params);
+        }
 
         if (!$this->insert($params)) {
             return false;
@@ -65,7 +64,7 @@ class Users extends Model
             'status' => $data['status']
         ];
 
-        if (!$this->insertUser()) {
+        if (!$this->insertUser($params)) {
             return false;
         }
 

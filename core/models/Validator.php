@@ -6,7 +6,17 @@ class Validator
 {
     private string $nameRegEx = "/^[a-z ,.'-]+$/i";
 
-    public function makeDataSafe($data): string
+    public function makeDataSafe(array $data): array
+    {
+        return [
+            'email' => $this->makeStringSafe($data['email']),
+            'fullName' => $this->makeStringSafe($data['fullName']),
+            'gender' => $this->makeStringSafe($data['gender']),
+            'status' => $this->makeStringSafe($data['status'])
+        ];
+    }
+
+    private function makeStringSafe($data): string
     {
         $data = trim($data);
         $data = stripslashes($data);
