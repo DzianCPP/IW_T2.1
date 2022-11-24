@@ -12,7 +12,7 @@ class UsersSeeder
         $userFactory = new UserFactory();
         $usersToSeed = $userFactory->generateUsers($count);
         foreach ($usersToSeed as $user) {
-            if (!$users->seedData($user)) {
+            if (!$users->seedUsers($user)) {
                 echo "Error: UsersSeeder could not seed data";
             }
         }
