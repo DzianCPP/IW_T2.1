@@ -4,12 +4,12 @@ namespace core\controllers;
 use core\models\Users;
 use function MongoDB\BSON\fromJSON;
 
-class UserController
+class UserController extends BaseController
 {
     public function create(): void
     {
-        $users = new Users();
-        if ($users->insertNewUser()) {
+        $this->setModel();
+        if ($this->users->insertUser()) {
             $this->show();
         } else {
             $email = $_POST['email'];
@@ -20,14 +20,21 @@ class UserController
 
     public function new(string $email = '', string $fullName = ''): void
     {
-        include VIEW_PATH . "/forms/newUser.html";
+        $this->setView(VIEW_PATH);
+        $data = array(
+            "email" => $email,
+            "fullName" => $fullName
+        );
+
+        $this->view->render("new", $data);
     }
 
     public function show(): void
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
-        $this->renderAllUsers($allUsers);
+        $this->setView(VIEW_PATH);
+        $this->view->render("users", array("allUsers" => $allUsers));
     }
 
     public function showById(): void
@@ -36,21 +43,19 @@ class UserController
         $userID = $_GET['userID'];
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
-        $this->renderOneUser($user);
+        $this->setView(VIEW_PATH);
+        $this->view->render("users", array("allUsers" => $user));
     }
 
     public function editUser(): void
     {
         $users = new Users();
+        $this->setView(VIEW_PATH);
         $userID = $_GET['userID'];
         $userID = rtrim($userID, '}');
         $userID = ltrim($userID, '{');
         $userToEdit = $users->getUserById($userID);
-        $currentEmail = $userToEdit['email'];
-        $currentFullName = $userToEdit['fullName'];
-        $currentGender = $userToEdit['gender'];
-        $currentStatus = $userToEdit['status'];
-        include VIEW_PATH . "/forms/editUser.html";
+        $this->view->render("edit", array("userToEdit" => $userToEdit));
     }
 
     public function update(): void
@@ -72,18 +77,8 @@ class UserController
         $id = ltrim($id, "\"");
         $id = rtrim($id, "\"");
         $users = new Users();
-        if ($users->delete($id)) {
+        if ($users->deleteUser($id)) {
             http_response_code(200);
         }
-    }
-
-    private function renderAllUsers(array $allUsers): void
-    {
-        include VIEW_PATH . "tables/users.html";
-    }
-
-    private function renderOneUser(array $user): void
-    {
-        include VIEW_PATH . "tables/one.html";
     }
 }

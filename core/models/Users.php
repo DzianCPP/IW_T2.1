@@ -2,118 +2,73 @@
 
 namespace core\models;
 
-use PDO;
-use core\application\Database;
-
-class Users
+class Users extends Model
 {
-    private PDO $conn;
-    private Database $database;
-    private Validator $validator;
-    private SqlPreparer $sqlPreparer;
-    private array $sqlQueries;
-
-    public function __construct()
-    {
-        $this->database = new Database();
-        $this->validator = new Validator();
-        $this->sqlPreparer = new SqlPreparer();
-        $this->sqlQueries = require "sqlQueries.php";
-        $this->conn = $this->database->getConnection();
-    }
-
-    public function insertNewUser(): bool
-    {
-        $params = array (
-                'email' => $this->validator->makeDataSafe($_POST['email']),
-            'fullName' => $this->validator->makeDataSafe($_POST['name']),
-            'gender' => $this->validator->makeDataSafe($_POST['gender']),
-            'status' => $this->validator->makeDataSafe($_POST['status'])
-        );
-
-        if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
-            return false;
-        }
-
-        $query = $this->sqlPreparer->prepareInsertSql($params, $this->conn);
-        if (!$query->execute()) {
-            return false;
-        }
-        return true;
-    }
-
     public function getAllUsers(): array
     {
-        $query = $this->sqlPreparer->prepareSelectAllSql($this->conn);
-        $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $query->fetchAll();
-        return $result;
+        return $this->selectAll("usersTable");
     }
 
     public function getUserById(int $id): array
     {
-        $query = $this->sqlPreparer->prepareSelectById($id, $this->conn);
-        $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $query->fetchAll();
+        return $this->getRecordBy("userID", $id, "usersTable");
+    }
 
-        return $result[0];
+    public function insertUser(): bool
+    {
+        $params = [
+            'email' => $this->validator->makeDataSafe($_POST['email']),
+            'fullName' => $this->validator->makeDataSafe($_POST['name']),
+            'gender' => $this->validator->makeDataSafe($_POST['gender']),
+            'status' => $this->validator->makeDataSafe($_POST['status'])
+        ];
+
+        if (!$this->insert($params)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function editUser($newUserData): bool
     {
-        $params = array(
-            'newEmail' => $newUserData['newEmail'],
-        'newFullName' => $newUserData['newFullName'],
-        'newGender' => $newUserData['newGender'],
-        'newStatus' => $newUserData['newStatus'],
-        'userID' => $newUserData['newUserID']
-        );
+        $params = [
+            'email' => $newUserData['newEmail'],
+            'fullName' => $newUserData['newFullName'],
+            'gender' => $newUserData['newGender'],
+            'status' => $newUserData['newStatus'],
+            'userID' => $newUserData['newUserID']
+        ];
 
-        $query = $this->sqlPreparer->prepareUpdateSql($params, $this->conn);
-        if (!$query->execute()) {
-            return false;
-        }
-        return true;
-    }
-
-    public function delete(int $id): bool
-    {
-        $query = $this->sqlPreparer->prepareDeleteSql($id, $this->conn);
-        if (!$query->execute()) {
+        if (!$this->update("usersTable", $params)) {
             return false;
         }
 
         return true;
     }
 
-    public function seedData(array $data): bool
+    public function deleteUser(int $id): bool
     {
-        $params = array (
+        if (!$this->delete("usersTable", $id)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function seedUsers(array $data): bool
+    {
+        $params = [
                 'email' => $data['email'],
             'fullName' => $data['fullName'],
             'gender' => $data['gender'],
             'status' => $data['status']
-        );
+        ];
 
-        $query = $this->sqlPreparer->prepareInsertSql($params, $this->conn);
-        if (!$query->execute()) {
+        if (!$this->insertUser()) {
             return false;
         }
 
-        return true;
-    }
-
-    public function tableEmpty(): bool
-    {
-        $query = $this->sqlPreparer->prepareCheckIfTableEmptySql($this->conn);
-        $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $query->fetchAll();
-        if ($result[0]['COUNT(*)'] !== 0) {
-            return false;
-        }
         return true;
     }
 }

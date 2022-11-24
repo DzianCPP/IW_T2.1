@@ -2,16 +2,18 @@
 
 namespace core\controllers;
 
-class AppController
+class AppController extends BaseController
 {
     public function index(): void
     {
-        require VIEW_PATH . "main.html";
+        $this->setView(VIEW_PATH);
+        $this->view->render("main");
     }
 
     public function notFound(): void
     {
+        $this->setView(VIEW_PATH);
         http_response_code(404);
-        include VIEW_PATH . "404.html";
+        $this->view->render("404");
     }
 }

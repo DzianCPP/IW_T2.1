@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>404: Add User App</title>
-</head>
+<?php include "components/header.html"; ?>
 
-<body>
     <div class="container w-100">
         <div class="row w-100 mt-5">
             <div class="col-sm-4"></div>
@@ -27,5 +17,5 @@
             <div class="col-sm-3"></div>
         </div>
     </div>
-</body>
-</html>
+
+<?php include "components/footer.html"; ?>
