@@ -107,6 +107,7 @@
             </div>
 
             <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
+            <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
         </form>
     </div>
 
