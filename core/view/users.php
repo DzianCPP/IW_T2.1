@@ -42,7 +42,7 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <div><a class="btn btn-success w-100 mb-1"  id="users-link-add-user" href='/user/new'>Add user</a></div>
-                <div><a class="btn btn-dark w-100" id="users-link-back" href='/public'>Main page</a></div>
+                <div><a class="btn btn-dark w-100 mb-5" id="users-link-back" href='/public'>Main page</a></div>
             </div>
             <div class="col-sm-3"></div>
         </div>
