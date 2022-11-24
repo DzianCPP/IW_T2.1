@@ -58,8 +58,8 @@ class Model
     protected function update(string $tableName, array $params): bool
     {
         $sqlQuery = "UPDATE ${tableName}
-                     SET email=${params['email']}, fullName=${params['fullName']}, gender=${params['gender']}, status=${params['status']}
-                     WHERE userID=${params['userID']}";
+                     SET email='${params['email']}', fullName='${params['fullName']}', gender='${params['gender']}', status='${params['status']}'
+                     WHERE userID='${params['userID']}'";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
