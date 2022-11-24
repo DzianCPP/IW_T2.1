@@ -91,6 +91,13 @@
                 <div class="col-sm-4"></div>
             </div>
 
+            <div>
+                <input type="hidden"
+                       value="<?php echo $user['userID']; ?>"
+                       name="user-id"
+                       id="user-id">
+            </div>
+
             <div class="row w-100">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
