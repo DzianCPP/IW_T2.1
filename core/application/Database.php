@@ -14,8 +14,9 @@ class Database
         try {
             $env = DotEnver::getDotEnv();
         } catch (Exception $e) {
-            http_response_code(400);
             echo "Internal server error";
+            http_response_code(400);
+            return;
         }
 
         $dbHostName = $env['DB_HOST_NAME'];

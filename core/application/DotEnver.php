@@ -12,7 +12,7 @@ class DotEnver
     public static function getDotEnv(): array
     {
         if (!file_exists(BASE_PATH . ".env")) {
-            throw new Exception("No .env file");
+            throw new Exception();
         }
 
         $dotenv = Dotenv::createImmutable(BASE_PATH);
