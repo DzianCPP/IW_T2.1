@@ -4,6 +4,8 @@ namespace core\models;
 
 class Users extends Model
 {
+    protected array $fields = ['email', 'fullName', 'gender', 'status'];
+
     public function getAllUsers(): array
     {
         return $this->selectAll("usersTable");
@@ -22,7 +24,7 @@ class Users extends Model
             $params = $this->validator->makeDataSafe($params);
         }
 
-        if (!$this->insert($params)) {
+        if (!$this->insert($params, $this->fields, 'usersTable')) {
             return false;
         }
 
@@ -33,7 +35,7 @@ class Users extends Model
     {
         $params = $this->validator->makeDataSafe($newUserData);
 
-        if (!$this->update("usersTable", $params)) {
+        if (!$this->update("usersTable", $this->fields, $params, "userID")) {
             return false;
         }
 
@@ -42,7 +44,7 @@ class Users extends Model
 
     public function deleteUser(int $id): bool
     {
-        if (!$this->delete("usersTable", $id)) {
+        if (!$this->delete("userID", $id, "usersTable")) {
             return false;
         }
 
@@ -52,7 +54,7 @@ class Users extends Model
     public function seedUsers(array $data): bool
     {
         $params = [
-                'email' => $data['email'],
+            'email' => $data['email'],
             'fullName' => $data['fullName'],
             'gender' => $data['gender'],
             'status' => $data['status']
