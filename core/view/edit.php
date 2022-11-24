@@ -2,7 +2,7 @@
 <?php $genders = require "components/genders.php"; ?>
 <?php $statuses = require "components/status.php"; ?>
 
-<?php $user = $userToEdit; ?>
+<?php $user = $userToEdit[0]; ?>
 <div class="main-div">
     <h1 class="new-user-h1" id="main-page-h1">Edit User</h1>
 
@@ -14,7 +14,6 @@
               name="new-email"
               id="email"
               placeholder="Enter your email"
-              onchange="formValid()"
               value="<?php echo $user['email'];; ?>">
       </div>
 
@@ -27,7 +26,6 @@
                name="new-name"
                id="name"
                placeholder="Enter your first and last name"
-               onchange="formValid()"
                value="<?php echo $user['fullName']; ?>">
       </div>
 
@@ -54,8 +52,7 @@
               class="form-submit"
               id="submit-button"
               value="submit"
-              disabled
-              onclick="sendPutRequest()">Submit
+              disabled>Submit
       </button>
 
       <div>
