@@ -1,6 +1,7 @@
 <?php
 
 namespace core\application;
+use Exception;
 use PDO;
 use Dotenv\Dotenv;
 
@@ -10,7 +11,13 @@ class Database
 
     public function __construct()
     {
-        $env = $this->getDotEnv();
+        try {
+            $env = DotEnver::getDotEnv();
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo "Internal server error";
+        }
+
         $dbHostName = $env['DB_HOST_NAME'];
         $dbPassword = $env['DB_PASSWORD'];
         $dbUserName = $env['DB_USER_NAME'];
