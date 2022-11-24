@@ -1,3 +1,7 @@
+document.getElementById("email").addEventListener("change", formValid);
+document.getElementById("name").addEventListener("change", formValid);
+
+
 function formValid() {
     let errorField = document.getElementById("error-field");
     let submitButton = document.getElementById("submit-button");
