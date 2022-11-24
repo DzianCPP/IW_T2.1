@@ -23,8 +23,7 @@
                                    class="form-control w-75"
                                    name="email"
                                    id="email"
-                                   placeholder="Enter your email"
-                                   onchange="formValid()">
+                                   placeholder="Enter your email">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -41,7 +40,6 @@
                                     name="email"
                                     id="email"
                                     placeholder="Enter your email"
-                                    onchange="formValid()"
                                     value="<?php echo $email; ?>"
                                     style="color: red;">
                         </div>
@@ -62,8 +60,7 @@
                                     class="form-control w-75"
                                     name="fullName"
                                     id="name"
-                                    placeholder="Enter your first and last name"
-                                    onchange="formValid()">
+                                    placeholder="Enter your first and last name">
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
@@ -80,7 +77,6 @@
                                     name="fullName"
                                     id="name"
                                     placeholder="Enter your first and last name"
-                                    onchange="formValid()"
                                     value="<?php echo $fullName;?>"
                                     style="color: red;">
                         </div>

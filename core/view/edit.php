@@ -24,7 +24,6 @@
                                name="new-email"
                                id="email"
                                placeholder="Enter your email"
-                               onchange="formValid()"
                                value="<?php echo $user['email']; ?>">
                     </div>
                 </div>
@@ -42,7 +41,6 @@
                                 name="new-name"
                                 id="name"
                                 placeholder="Enter your first and last name"
-                                onchange="formValid()"
                                 value="<?php echo $user['fullName']; ?>">
                     </div>
                 </div>
@@ -88,9 +86,16 @@
             <div class="row w-auto">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-success w-100" id="submit-button" value="submit" disabled>Submit</button>
+                    <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>Submit</button>
                 </div>
                 <div class="col-sm-4"></div>
+            </div>
+
+            <div>
+                <input type="hidden"
+                       value="<?php echo $user['userID']; ?>"
+                       name="user-id"
+                       id="user-id">
             </div>
 
             <div class="row w-100">
@@ -109,6 +114,7 @@
             </div>
 
             <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
+            <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
         </form>
     </div>
 
