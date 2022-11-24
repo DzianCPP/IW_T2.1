@@ -44,7 +44,7 @@ class Users extends Model
 
     public function deleteUser(int $id): bool
     {
-        if (!$this->delete("usersTable", $id)) {
+        if (!$this->delete("userID", $id, "usersTable")) {
             return false;
         }
 
