@@ -17,14 +17,17 @@ class Model
         $this->conn = $this->database->getConnection();
     }
 
-    public function insert(array $params): bool
+    public function insert(array $params, array $fields, string $tableName): bool
     {
         if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
             return false;
         }
 
-        $sqlQuery = "INSERT INTO usersTable (email, fullName, gender, status)
-                    VALUES ('${params['email']}', '${params['fullName']}', '${params['gender']}', '${params['status']}')";
+        $tableFields = $this->getTableFields($fields);
+        $values = $this->getValues($params);
+
+        $sqlQuery = "INSERT INTO ${tableName} (${tableFields})
+                    VALUES (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
@@ -77,5 +80,21 @@ class Model
         }
 
         return true;
+    }
+
+    private function getTableFields(array $fields): string
+    {
+        return implode(", ", $fields);
+    }
+
+    private function getValues(array $params): string
+    {
+        $strValues = "'";
+        foreach ($params as $param) {
+            $strValues .= $param . "', '";
+        }
+
+        $strValues = substr($strValues, 0, -3);
+        return $strValues;
     }
 }

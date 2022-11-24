@@ -4,6 +4,8 @@ namespace core\models;
 
 class Users extends Model
 {
+    protected array $fields = ['email', 'fullName', 'gender', 'status'];
+
     public function getAllUsers(): array
     {
         return $this->selectAll("usersTable");
@@ -22,7 +24,7 @@ class Users extends Model
             $params = $this->validator->makeDataSafe($params);
         }
 
-        if (!$this->insert($params)) {
+        if (!$this->insert($params, $this->fields, 'usersTable')) {
             return false;
         }
 
