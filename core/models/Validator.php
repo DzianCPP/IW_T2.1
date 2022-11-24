@@ -12,7 +12,7 @@ class Validator
         $keys = array_keys($data);
         $i = 0;
         foreach ($data as $dataElement) {
-            $userData[$keys[$i]] = $dataElement;
+            $userData[$keys[$i]] = $this->makeStringSafe($dataElement);
             ++$i;
         }
 
