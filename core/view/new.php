@@ -13,8 +13,8 @@
                    class="input-text"
                    name="email"
                    id="email"
-                   placeholder="Enter your email"
-                   onchange="formValid()"></div>
+                   placeholder="Enter your email">
+       </div>
         <?php else: ?>
         <div><label for="email">E-mail</label></div>
         <div><input
@@ -23,7 +23,6 @@
                 name="email"
                 id="email"
                 placeholder="Enter your email"
-                onchange="formValid()"
                 value="<?php echo $email; ?>"
                 style="color: red;"></div>
         <?php endif; ?>
@@ -37,8 +36,7 @@
                     class="input-text"
                     name="fullName"
                     id="name"
-                    placeholder="Enter your first and last name"
-                    onchange="formValid()">
+                    placeholder="Enter your first and last name">
         </div>
 
         <?php else: ?>
@@ -49,7 +47,6 @@
                     name="fullName"
                     id="name"
                     placeholder="Enter your first and last name"
-                    onchange="formValid()"
                     value="<?php echo $fullName;?>"
                     style="color: red;">
         </div>
