@@ -60,7 +60,7 @@
                             <input
                                     type="text"
                                     class="form-control w-75"
-                                    name="name"
+                                    name="fullName"
                                     id="name"
                                     placeholder="Enter your first and last name"
                                     onchange="formValid()">
@@ -77,7 +77,7 @@
                             <input
                                     type="text"
                                     class="form-control w-75"
-                                    name="name"
+                                    name="fullName"
                                     id="name"
                                     placeholder="Enter your first and last name"
                                     onchange="formValid()"
