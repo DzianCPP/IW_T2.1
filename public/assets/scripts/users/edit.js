@@ -1,6 +1,6 @@
-function sendPutRequest() {
-    const xhttp = new XMLHttpRequest();
+document.getElementById("submit-button").addEventListener("click", sendPutRequest);
 
+function sendPutRequest() {
     let email = document.getElementById("email").value;
     let fullName = document.getElementById("name").value;
     let gender = document.getElementById("gender").value;
