@@ -10,15 +10,14 @@
         <a id="main-link-show" href="/users/show">Show all users</a>
         <br>
         <input type="text" class="input-text" id="main-input-userID"
-               placeholder="User's ID" onchange="userIdValid()">
-        <button id="main-page-find-button" onclick="findUserById()"
+               placeholder="User's ID">
+        <button id="main-page-find-button"
                 disabled>Find</button>
         <p id="main-error-field"></p>
     </div>
-
-    <script type="text/javascript" src="/assets/scripts/users/find.js"></script>
-    <script type="text/javascript" src="/assets/scripts/userIdValid.js"></script>
     </div>
 </div>
 
+<script rel="script/javasript" src="/assets/scripts/userIdValid.js"></script>
+    <script rel="script/javasript" src="/assets/scripts/users/find.js"></script>
 <?php include "components/footer.html"; ?>

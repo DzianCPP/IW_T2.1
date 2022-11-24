@@ -1,3 +1,6 @@
+let userIdField = document.getElementById("main-input-userID");
+userIdField.addEventListener("change", userIdValid);
+
 function userIdValid() {
     let userIdInput = document.getElementById("main-input-userID");
     let findButton = document.getElementById("main-page-find-button");
