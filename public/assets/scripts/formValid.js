@@ -1,5 +1,7 @@
 document.getElementById("email").addEventListener("keyup", formValid);
 document.getElementById("name").addEventListener("keyup", formValid);
+document.getElementById("gender").addEventListener("click", formValid);
+document.getElementById("status").addEventListener("click", formValid);
 
 
 function formValid() {
