@@ -1,6 +1,6 @@
 <?php include "components/header.html"; ?>
-<?php $genders = require "components/genders.php"; ?>
-<?php $statuses = require "components/status.php"; ?>
+<?php $genders = require BASE_PATH . "bootstrap/genders.php"; ?>
+<?php $statuses = require BASE_PATH . "bootstrap/status.php"; ?>
 
 <?php $user = $userToEdit[0]; ?>
 
@@ -55,9 +55,13 @@
                         <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
 
                         <?php foreach ($genders as $gender): ?>
-                  <option value="<?php echo $gender; ?>">
-                      <?php echo ucfirst($gender); ?>
-                  </option>
+                            <option
+                                <?php if ($user['gender'] === $gender):
+                                    echo 'selected="selected"';
+                                endif;?>
+                                    value="<?php echo $gender; ?>">
+                                <?php echo ucfirst($gender); ?>
+                            </option>
               <?php endforeach; ?>
                         </select>
                     </div>
@@ -73,9 +77,13 @@
                         <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
 
                         <?php foreach ($statuses as $status): ?>
-                <option value="<?php echo $status; ?>">
-                    <?php echo ucfirst($status); ?>
-                </option>
+                            <option
+                                <?php if ($user['status'] === $status):
+                                    echo 'selected="selected"';
+                                endif; ?>
+                                    value="<?php echo $status; ?>">
+                                <?php echo ucfirst($status); ?>
+                            </option>
             <?php endforeach; ?>
                         </select>
                     </div>
@@ -102,13 +110,7 @@
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <div class="alert alert-danger" id="error-field-div" hidden>
-                        <p id="error-field">
-                            <?php
-                            if ($email !== '' || $fullName !== ''):
-                                echo "Not valid information!";
-                            endif;
-                            ?>
-                        </p>
+                        <p id="error-field"></p>
                     </div>
                 </div>
             </div>

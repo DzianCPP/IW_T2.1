@@ -1,6 +1,6 @@
 <?php include "components/header.html"; ?>
-<?php $genders = require "components/genders.php"; ?>
-<?php $statuses = require "components/status.php"; ?>
+<?php $genders = require BASE_PATH . "bootstrap/genders.php"; ?>
+<?php $statuses = require BASE_PATH . "bootstrap/status.php"; ?>
 
     <div class="container w-100">
         <div class="row w-100 mt-5">
