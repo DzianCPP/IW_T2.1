@@ -38,26 +38,26 @@
                     <div><label class="form-label" for="gender">Gender</label></div>
 
                     <div><select name="gender" id="gender" class="input-select">
-                        <?php foreach ($genders as $gender): ?>
-                            <option
-                                <?php if ($user['gender'] === $gender):
-                                    echo 'selected="selected"';
-                                endif;?>
-                                    value="<?php echo $gender['lower']; ?>">
-                                <?php echo $gender['upper']; ?>
-                            </option>
-                        <?php endforeach; ?>
+                            <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
+                                <option
+                                    <?php if ($user['gender'] === $upperCaseGender):
+                                        echo 'selected="selected"';
+                                    endif;?>
+                                        value="<?php echo $lowerCaseGender; ?>">
+                                    <?php echo $upperCaseGender; ?>
+                                </option>
+                            <?php endforeach; ?>
                     </select></div>
 
                     <div><label class="form-label" for="status">Status</label>
                     <select name="status" class="input-select" id="status">
-                        <?php foreach ($statuses as $status): ?>
+                        <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
                             <option
-                                <?php if ($user['status'] === $status):
+                                <?php if ($user['status'] === $upperCaseStatus):
                                     echo 'selected="selected"';
                                 endif; ?>
-                                    value="<?php echo $status['lower']; ?>">
-                                <?php echo $status['upper']; ?>
+                                    value="<?php echo $lowerCaseStatus; ?>">
+                                <?php echo $upperCaseStatus; ?>
                             </option>
                         <?php endforeach; ?>
                     </select></div>

@@ -30,26 +30,26 @@
               <div><label class="form-label" for="gender">Gender</label></div>
 
               <div><select name="new-gender" id="gender" class="input-select">
-                      <?php foreach ($genders as $gender): ?>
+                      <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
                           <option
-                                  <?php if ($user['gender'] === $gender):
+                                  <?php if ($user['gender'] === $upperCaseGender):
                                             echo 'selected="selected"';
                                           endif;?>
-                                  value="<?php echo $gender['lower']; ?>">
-                              <?php echo $gender['upper']; ?>
+                                  value="<?php echo $lowerCaseGender; ?>">
+                              <?php echo $upperCaseGender; ?>
                           </option>
                       <?php endforeach; ?>
               </select></div>
 
               <div><label class="form-label" for="status">Status</label>
                 <select name="new-status" class="input-select" id="status">
-                    <?php foreach ($statuses as $status): ?>
+                    <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
                         <option
-                            <?php if ($user['status'] === $status):
+                            <?php if ($user['status'] === $upperCaseStatus):
                                         echo 'selected="selected"';
                             endif; ?>
-                                value="<?php echo $status['lower']; ?>">
-                            <?php echo $status['upper']; ?>
+                                value="<?php echo $lowerCaseStatus; ?>">
+                            <?php echo $upperCaseStatus; ?>
                         </option>
                     <?php endforeach; ?>
                 </select></div>
