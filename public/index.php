@@ -1,3 +1,3 @@
 <?php
 
-require_once "../bootstrap/app.php";
+require_once "../system/app.php";

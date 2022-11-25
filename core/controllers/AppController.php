@@ -2,21 +2,18 @@
 
 namespace core\controllers;
 
-use Couchbase\View;
-
-class AppController
+class AppController extends BaseController
 {
     public function index(): void
     {
-        $mainPageHtml = VIEW_PATH . "mainPage.html";
-        $file = fopen($mainPageHtml, "r");
-        echo fread($file, filesize($mainPageHtml));
+        $this->setView(VIEW_PATH);
+        $this->view->render("main");
     }
 
     public function notFound(): void
     {
-        $pageNotFoundHtml = VIEW_PATH . "notFoundPage.html";
-        $file = fopen($pageNotFoundHtml, "r");
-        echo fread($file, filesize($pageNotFoundHtml));
+        $this->setView(VIEW_PATH);
+        http_response_code(404);
+        $this->view->render("404");
     }
 }

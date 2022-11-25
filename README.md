@@ -1,15 +1,28 @@
-<b>Task 2.1</b>
+<b>Task 2.2</b>
 
 <b>Description:</b>
 
-The goal of the task is to create a simple page with a form to collect data from a user (email, full name, gender, and status) and to send it via a POST request.
+The goal of the task is to create a simple page with a form to collect data from a user
+(email, full name, gender, and status) and to send it via a POST request.
+
+Other app's features:
+- Add user
+- View all users
+- View one user (by ID)
+- Edit users' information
+- Delete user (by ID)
 
 Tech stack:
-HTML, CSS, php
+HTML, CSS, php, js, json
 
-<b>How to launch the project (Linux):</b>
+<b>How to launch the project:</b>
 
-  1) Make sure to install XAMPP on your machine
-  2) Open terminal and type "sudo /opt/lampp/lampp start" to start an Apache Server
-  3) Place all the source code to this directory: /opt/lampp/htdocs/Task2.1
-  4) Open your browser and go to page "localhost/Task2.1"
+1) Run "composer install"
+2) Fill in the .env file with your credentials (example provided in .env_example)
+3) To migrate DB to the latest version go to the root directory of the project and run "php commands/migrateDB.php"
+        <div>This command accepts arguments to define which version of the DB you want to use: php commands/migrateDB -v{int}
+        <div>If you pass no arguments - DB will be updated to the latest version.
+        <div>If you pass an argument that is lower than your current version, DB will rollback its version to the passed version.
+        <div>If you pass invalid argument (too high or negative), command will throw an error;
+4) To seed test data into DB run script "php commands/seedUsers.php"
+        <div>This command accepts arguments to define the number of users to seed into the usersTable: <b>php commands/seedUsers.php -c{int}</b>

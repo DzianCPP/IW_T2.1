@@ -4,34 +4,19 @@ namespace core\application;
 
 class Track
 {
-    private string $controller = "";
-    private string $action = "";
-    private $method = '';
-    private string $controllerActionPath;
+    private string $controller = '';
+    private string $action = '';
+    private string $method = '';
+    private string $params = '';
 
     public function __construct(array $route)
     {
         $this->controller = $route['controller'];
         $this->action = $route['action'];
         $this->method = $route['method'];
-        $this->setControllerActionPath();
-    }
-
-    private function setControllerActionPath(): void
-    {
-        $this->controllerActionPath = CONTROLLERS_PATH . $this->controller;
-        $this->controllerActionPath .= ucfirst($this->action);
-        $this->controllerActionPath .= ".php";
-    }
-
-    public function getControllerActionPath(): string
-    {
-        return $this->controllerActionPath;
-    }
-
-    public function getControllerPath(): string
-    {
-        return CONTROLLERS_PATH . $this->controller . ".php";
+        if (array_key_exists('params', $route)) {
+            $this->params = $this->extractParam();
+        }
     }
 
     public function getActionName(): string
@@ -41,6 +26,16 @@ class Track
 
     public function getControllerName(): string
     {
-        return "core\controllers\\" . $this->controller;
+        return $this->controller;
+    }
+
+    private function extractParam(): string
+    {
+        return filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+    }
+
+    public function getParams(): string
+    {
+        return $this->params;
     }
 }

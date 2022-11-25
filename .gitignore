@@ -1,3 +1,4 @@
 .idea
 /ApacheFolder/
-/public/images/
+/vendor/
+.env
