@@ -5,7 +5,7 @@
         <h1>404: Page Not Found</h1>
     </div>
     <div class="page-link-div" id="page-link-div">
-        <a href="/public">Back to main page</a>
+        <a href="/">Back to main page</a>
     </div>
 </div>
 
