@@ -5,6 +5,18 @@ namespace core\models;
 class Users extends Model
 {
     protected array $fields = ['email', 'fullName', 'gender', 'status'];
+    private array $genders = [
+      'male' => 'Male',
+        'female' => 'Female',
+        'transgender' => 'Transgender',
+        'non-binary' => 'Non-binary',
+        'other' => 'Other',
+    ];
+
+    private array $statuses = [
+        'active' => 'Active',
+        'inactive' => 'Inactive'
+    ];
 
     public function getAllUsers(): array
     {
@@ -65,5 +77,15 @@ class Users extends Model
         }
 
         return true;
+    }
+
+    public function getGenders(): array
+    {
+        return $this->genders;
+    }
+
+    public function getStatuses(): array
+    {
+        return $this->statuses;
     }
 }

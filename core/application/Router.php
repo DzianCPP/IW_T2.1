@@ -50,6 +50,10 @@ class Router
 
     private function isRouteValid($route, $routes): bool
     {
+        if (preg_match("/^\/[0-9]+/", $_SERVER['REQUEST_URI']) === 1) {
+            return false;
+        }
+
         if (array_key_exists($route, $routes)) {
             return true;
         }
@@ -64,17 +68,18 @@ class Router
 
     private function getRouteFromRequestRoute(string $request_route): string
     {
-        $route = "";
-        $num = (int) filter_var($request_route, FILTER_SANITIZE_NUMBER_INT);
+        $route = $request_route;
+        $num = (int)filter_var($request_route, FILTER_SANITIZE_NUMBER_INT);
         if ($num) {
             $numPos = strpos($request_route, $num, 0);
+            $route = substr($request_route, 0, $numPos);
         } else {
             $numPos = strlen($request_route);
         }
 
         $questionPos = strpos($request_route, "?", 0);
         if ($questionPos !== false) {
-            $route = substr($request_route, 0 ,$questionPos);
+            $route = substr($request_route, 0, $questionPos);
         }
 
         $route = ltrim(rtrim($route, "/"), "/");
