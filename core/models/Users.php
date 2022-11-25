@@ -6,16 +6,16 @@ class Users extends Model
 {
     protected array $fields = ['email', 'fullName', 'gender', 'status'];
     private array $genders = [
-      'male' => ['lower' => 'male', 'upper' => 'Male'],
-        'female' => ['lower' => 'female', 'upper' => 'Female'],
-        'transgender' => ['lower' => 'transgender', 'upper' => 'Transgender'],
-        'non-binary' => ['lower' => 'non-binary', 'upper' => 'Non-binary'],
-        'other' => ['lower' => 'other', 'upper' => 'Other'],
+      'male' => 'Male',
+        'female' => 'Female',
+        'transgender' => 'Transgender',
+        'non-binary' => 'Non-binary',
+        'other' => 'Other',
     ];
 
     private array $statuses = [
-        'active' => ['lower' => 'active', 'upper' => 'Active'],
-        'inactive' => ['lower' => 'inactive', 'upper' => 'Inactive']
+        'active' => 'Active',
+        'inactive' => 'Inactive'
     ];
 
     public function getAllUsers(): array
