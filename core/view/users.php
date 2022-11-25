@@ -20,7 +20,7 @@
                     <td><?php echo $user['gender']; ?></td>
                     <td><?php echo $user['status']; ?></td>
                     <td>
-                        <a href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a>
+                        <a href="/user/edit?userID={<?php echo $userID;?>}">Edit</a>
                         <a id="<?php echo $user['userID']; ?>"
                            onclick="sendDeleteRequest(this.id)">
                             Delete
@@ -31,14 +31,14 @@
 
     </table>
 
-    <div class='link-div'>
-        <a id="users-link-add-user" href='/user/new'>
+    <div class="link-div">
+        <a id="users-link-add-user" href="/user/new">
             Add user
         </a>
     </div>
 
-    <div class='link-div'>
-        <a id="users-link-back" href='/public'>
+    <div class="link-div">
+        <a id="users-link-back" href="/public">
             Main page
         </a>
     </div>
