@@ -2,17 +2,15 @@
 
 namespace core\application;
 use Dotenv\Dotenv;
-use Exception;
 
 class DotEnver
 {
-    /**
-     * @throws Exception
-     */
-    public static function getDotEnv(): array
+    public static function getDotEnv(): array|false
     {
         if (!file_exists(BASE_PATH . ".env")) {
-            throw new Exception();
+            echo "Internal server error";
+            http_response_code(500);
+            return false;
         }
 
         $dotenv = Dotenv::createImmutable(BASE_PATH);
