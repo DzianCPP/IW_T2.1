@@ -1,6 +1,4 @@
 <?php include "components/header.html"; ?>
-<?php $genders = require BASE_PATH . "bootstrap/genders.php"; ?>
-<?php $statuses = require BASE_PATH . "bootstrap/status.php"; ?>
 
     <div class="main-div">
         <div class="content-wrap">
@@ -41,8 +39,12 @@
 
                     <div><select name="gender" id="gender" class="input-select">
                         <?php foreach ($genders as $gender): ?>
-                            <option value="<?php echo $gender; ?>">
-                                <?php echo ucfirst($gender); ?>
+                            <option
+                                <?php if ($user['gender'] === $gender):
+                                    echo 'selected="selected"';
+                                endif;?>
+                                    value="<?php echo $gender['lower']; ?>">
+                                <?php echo $gender['upper']; ?>
                             </option>
                         <?php endforeach; ?>
                     </select></div>
@@ -50,8 +52,12 @@
                     <div><label class="form-label" for="status">Status</label>
                     <select name="status" class="input-select" id="status">
                         <?php foreach ($statuses as $status): ?>
-                            <option value="<?php echo $status; ?>">
-                                <?php echo ucfirst($status); ?>
+                            <option
+                                <?php if ($user['status'] === $status):
+                                    echo 'selected="selected"';
+                                endif; ?>
+                                    value="<?php echo $status['lower']; ?>">
+                                <?php echo $status['upper']; ?>
                             </option>
                         <?php endforeach; ?>
                     </select></div>

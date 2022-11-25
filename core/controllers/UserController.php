@@ -21,10 +21,15 @@ class UserController extends BaseController
     public function new(string $email = '', string $fullName = ''): void
     {
         $this->setView(VIEW_PATH);
-        $data = array(
-            "email" => $email,
-            "fullName" => $fullName
-        );
+        $users = new Users();
+        $genders = $users->getGenders();
+        $statuses = $users->getStatuses();
+        $data = [
+            'email' => $email,
+            'fullName' => $fullName,
+            'genders' => $genders,
+            'statuses' => $statuses
+        ];
 
         $this->view->render("new", $data);
     }
