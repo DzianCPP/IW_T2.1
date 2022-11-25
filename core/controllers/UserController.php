@@ -13,7 +13,7 @@ class UserController extends BaseController
             $this->show();
         } else {
             $email = $_POST['email'];
-            $fullName = $_POST['name'];
+            $fullName = $_POST['fullName'];
             $this->new($email, $fullName);
         }
     }
@@ -37,10 +37,10 @@ class UserController extends BaseController
         $this->view->render("users", array("allUsers" => $allUsers));
     }
 
-    public function showById(): void
+    public function showOne(): void
     {
         $users = new Users();
-        $userID = $_GET['userID'];
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
         $this->setView(VIEW_PATH);
@@ -51,9 +51,7 @@ class UserController extends BaseController
     {
         $users = new Users();
         $this->setView(VIEW_PATH);
-        $userID = $_GET['userID'];
-        $userID = rtrim($userID, '}');
-        $userID = ltrim($userID, '{');
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userToEdit = $users->getUserById($userID);
         $this->view->render("edit", array("userToEdit" => $userToEdit));
     }

@@ -54,7 +54,7 @@ class Users extends Model
     public function seedUsers(array $data): bool
     {
         $params = [
-            'email' => $data['email'],
+                'email' => $data['email'],
             'fullName' => $data['fullName'],
             'gender' => $data['gender'],
             'status' => $data['status']

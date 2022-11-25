@@ -1,5 +1,5 @@
-document.getElementById("email").addEventListener("change", formValid);
-document.getElementById("name").addEventListener("change", formValid);
+document.getElementById("email").addEventListener("keyup", formValid);
+document.getElementById("name").addEventListener("keyup", formValid);
 
 
 function formValid() {

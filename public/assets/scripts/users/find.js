@@ -5,7 +5,7 @@ function findUserById()
 {
     let input = document.getElementById("main-input-userID");
     let id = input.value;
-    let url = "/user/id?userID=" + id;
+    let url = "/user/" + id;
 
     fetch(url)
         .then(() => {

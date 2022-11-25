@@ -12,7 +12,7 @@
         <div class="row w-100">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-                <div><a class="btn btn-dark w-100" id="users-link-back" href='/public'>Main page</a></div>
+                <div><a class="btn btn-dark w-100" id="users-link-back" href="/">Main page</a></div>
             </div>
             <div class="col-sm-3"></div>
         </div>
