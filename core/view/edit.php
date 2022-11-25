@@ -1,8 +1,5 @@
 <?php include "components/header.html"; ?>
-<?php $genders = require BASE_PATH . "bootstrap/genders.php"; ?>
-<?php $statuses = require BASE_PATH . "bootstrap/status.php"; ?>
 
-<?php $user = $userToEdit[0]; ?>
     <div class="main-div">
         <div class="content-wrap">
             <h1 class="new-user-h1" id="main-page-h1">Edit User</h1>
@@ -38,8 +35,8 @@
                                   <?php if ($user['gender'] === $gender):
                                             echo 'selected="selected"';
                                           endif;?>
-                                  value="<?php echo $gender; ?>">
-                              <?php echo ucfirst($gender); ?>
+                                  value="<?php echo $gender['lower']; ?>">
+                              <?php echo $gender['upper']; ?>
                           </option>
                       <?php endforeach; ?>
               </select></div>
@@ -51,8 +48,8 @@
                             <?php if ($user['status'] === $status):
                                         echo 'selected="selected"';
                             endif; ?>
-                                value="<?php echo $status; ?>">
-                            <?php echo ucfirst($status); ?>
+                                value="<?php echo $status['lower']; ?>">
+                            <?php echo $status['upper']; ?>
                         </option>
                     <?php endforeach; ?>
                 </select></div>

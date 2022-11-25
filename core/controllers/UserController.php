@@ -52,8 +52,15 @@ class UserController extends BaseController
         $users = new Users();
         $this->setView(VIEW_PATH);
         $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $userToEdit = $users->getUserById($userID);
-        $this->view->render("edit", array("userToEdit" => $userToEdit));
+        $userToEdit = $users->getUserById($userID)[0];
+        $genders = $users->getGenders();
+        $statuses = $users->getStatuses();
+        $data = [
+          'genders' => $genders,
+          'statuses' => $statuses,
+          'user' => $userToEdit
+        ];
+        $this->view->render("edit", $data);
     }
 
     public function update(): void
