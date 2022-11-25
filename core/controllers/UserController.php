@@ -51,9 +51,7 @@ class UserController extends BaseController
     {
         $users = new Users();
         $this->setView(VIEW_PATH);
-        $userID = $_GET['userID'];
-        $userID = rtrim($userID, '}');
-        $userID = ltrim($userID, '{');
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userToEdit = $users->getUserById($userID);
         $this->view->render("edit", array("userToEdit" => $userToEdit));
     }
