@@ -32,13 +32,6 @@ class Database
     {
         return $this->connection;
     }
-
-    private function getDotEnv(): array
-    {
-        $dotenv = Dotenv::createImmutable(BASE_PATH);
-        $dotenv->safeLoad();
-        return $_ENV;
-    }
 }
 
 
