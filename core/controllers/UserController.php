@@ -37,10 +37,10 @@ class UserController extends BaseController
         $this->view->render("users", array("allUsers" => $allUsers));
     }
 
-    public function showById(): void
+    public function showOne(): void
     {
         $users = new Users();
-        $userID = $_GET['userID'];
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
         $this->setView(VIEW_PATH);

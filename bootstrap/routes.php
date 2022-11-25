@@ -34,10 +34,11 @@ return [
         'method' => 'GET'
     ],
 
-    'users/id' => [
+    'user' => [
         'controller' => UserController::class,
         'action' => 'showOne',
-        'method' => 'GET'
+        'method' => 'GET',
+        'params' => 'userID'
     ],
 
     'users/show' => [
