@@ -24,7 +24,7 @@
                         <td><?php echo $user['status']; ?></td>
                         <td>
                             <div class="btn-group-vertical">
-                                <a class="btn btn-success" href='/user/edit?userID={<?php echo $userID;?>}'>Edit</a>
+                                <a class="btn btn-success" href='/user/edit/<?php echo $userID;?>'>Edit</a>
                                 <a class="btn btn-dark" id="<?php echo $user['userID']; ?>"
                                    onclick="sendDeleteRequest(this.id)">
                                     Delete</a>
