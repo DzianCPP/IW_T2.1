@@ -72,6 +72,7 @@ class Router
         $num = (int)filter_var($request_route, FILTER_SANITIZE_NUMBER_INT);
         if ($num) {
             $numPos = strpos($request_route, $num, 0);
+            $route = substr($request_route, 0, $numPos);
         } else {
             $numPos = strlen($request_route);
         }
