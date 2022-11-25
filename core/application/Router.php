@@ -50,6 +50,10 @@ class Router
 
     private function isRouteValid($route, $routes): bool
     {
+        if (preg_match("/^\/[0-9]+/", $_SERVER['REQUEST_URI']) === 1) {
+            return false;
+        }
+
         if (array_key_exists($route, $routes)) {
             return true;
         }
