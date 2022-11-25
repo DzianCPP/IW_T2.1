@@ -68,7 +68,7 @@ class Router
 
     private function getRouteFromRequestRoute(string $request_route): string
     {
-        $route = "";
+        $route = $request_route;
         $num = (int)filter_var($request_route, FILTER_SANITIZE_NUMBER_INT);
         if ($num) {
             $numPos = strpos($request_route, $num, 0);
