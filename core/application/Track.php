@@ -15,7 +15,7 @@ class Track
         $this->action = $route['action'];
         $this->method = $route['method'];
         if (array_key_exists('params', $route)) {
-            $this->params = $this->extractParam($route);
+            $this->params = $this->extractParam();
         }
     }
 
