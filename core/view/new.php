@@ -8,15 +8,6 @@
 
                 <form class="new-user-form" method="POST" action="/user/create">
 
-                    <?php if ($email === ''): ?>
-                    <div><label for="email">E-mail</label></div>
-                   <div><input type="text"
-                               class="input-text"
-                               name="email"
-                               id="email"
-                               placeholder="Enter your email">
-                   </div>
-                    <?php else: ?>
                     <div><label for="email">E-mail</label></div>
                     <div><input
                             type="text"
@@ -24,23 +15,13 @@
                             name="email"
                             id="email"
                             placeholder="Enter your email"
-                            value="<?php echo $email; ?>"
-                            style="color: red;"></div>
-                    <?php endif; ?>
+                            value="<?php if ($email !== ''):
+                                                echo $email;
+                                            else:
+                                                echo '';
+                                            endif;?>"
+                            ></div>
 
-
-                    <?php if ($fullName === ''): ?>
-                    <div><label class="form-label" for="name">Your first and last name</label></div>
-                    <div>
-                        <input
-                                type="text"
-                                class="input-text"
-                                name="fullName"
-                                id="name"
-                                placeholder="Enter your first and last name">
-                    </div>
-
-                    <?php else: ?>
                     <div><label class="form-label" for="name">Your first and last name</label></div>
                     <div>
                         <input type="text"
@@ -48,11 +29,13 @@
                                 name="fullName"
                                 id="name"
                                 placeholder="Enter your first and last name"
-                                value="<?php echo $fullName;?>"
-                                style="color: red;">
+                                value="<?php if ($fullName !== ''):
+                                                    echo $fullName;
+                                                else:
+                                                    echo '';
+                                                endif;?>"
+                                >
                     </div>
-
-                    <?php endif; ?>
 
                     <div><label class="form-label" for="gender">Gender</label></div>
 

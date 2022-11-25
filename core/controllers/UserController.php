@@ -13,7 +13,7 @@ class UserController extends BaseController
             $this->show();
         } else {
             $email = $_POST['email'];
-            $fullName = $_POST['name'];
+            $fullName = $_POST['fullName'];
             $this->new($email, $fullName);
         }
     }
