@@ -50,7 +50,7 @@ class Router
 
     private function isRouteValid($route, $routes): bool
     {
-        if (key_exists($route, $routes)) {
+        if (array_key_exists($route, $routes)) {
             return true;
         }
 
