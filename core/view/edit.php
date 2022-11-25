@@ -34,7 +34,11 @@
 
               <div><select name="new-gender" id="gender" class="input-select">
                       <?php foreach ($genders as $gender): ?>
-                          <option value="<?php echo $gender; ?>">
+                          <option
+                                  <?php if ($user['gender'] === $gender):
+                                            echo 'selected="selected"';
+                                          endif;?>
+                                  value="<?php echo $gender; ?>">
                               <?php echo ucfirst($gender); ?>
                           </option>
                       <?php endforeach; ?>
@@ -43,7 +47,11 @@
               <div><label class="form-label" for="status">Status</label>
                 <select name="new-status" class="input-select" id="status">
                     <?php foreach ($statuses as $status): ?>
-                        <option value="<?php echo $status; ?>">
+                        <option
+                            <?php if ($user['status'] === $status):
+                                        echo 'selected="selected"';
+                            endif; ?>
+                                value="<?php echo $status; ?>">
                             <?php echo ucfirst($status); ?>
                         </option>
                     <?php endforeach; ?>
