@@ -6,12 +6,12 @@
     <div class="col-sm-10">
         <table class="table table-hover table-responsive-sm" id="all-users-table">
                 <tr>
-                    <th>ID</th>
-                    <th>E-mail</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Status</th>
-                    <th></th>
+                    <th scope="col">ID</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
                 </tr>
 
                 <?php foreach ($allUsers as $user): ?>
