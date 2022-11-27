@@ -9,7 +9,7 @@ class m2_add_status_column extends MigrationsBase
 {
     public function up(): bool
     {
-        $db = new Database;
+        $db = Database::getInstance();
         $conn = $db->getConnection();
 
         $sqlQuery = "ALTER TABLE usersTable ADD status varchar(10) NOT NULL";
@@ -25,7 +25,7 @@ class m2_add_status_column extends MigrationsBase
 
     public function down(): bool
     {
-        $db = new Database();
+        $db = Database::getInstance();
         $conn = $db->getConnection();
 
         $sqlQuery = "ALTER TABLE usersTable DROP status";
