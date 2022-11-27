@@ -4,36 +4,38 @@
     <div class="row w-auto">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
-        <table class="table table-hover table-responsive-sm" id="all-users-table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Full Name</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Status</th>
-                    <th scope="col"></th>
-                </tr>
-
-                <?php foreach ($allUsers as $user): ?>
-                    <?php $userID = $user['userID']; ?>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" id="all-users-table">
                     <tr>
-                        <td><?php echo $user['userID']; ?></td>
-                        <td><?php echo $user['email']; ?></td>
-                        <td><?php echo $user['fullName']; ?></td>
-                        <td><?php echo $user['gender']; ?></td>
-                        <td><?php echo $user['status']; ?></td>
-                        <td>
-                            <div class="btn-group-vertical">
-                                <a class="btn btn-success" href='/user/edit/<?php echo $userID;?>'>Edit</a>
-                                <a class="btn btn-dark" id="<?php echo $user['userID']; ?>"
-                                   onclick="sendDeleteRequest(this.id)">
-                                    Delete</a>
-                            </div>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
                     </tr>
-                <?php endforeach; ?>
 
-        </table>
+                    <?php foreach ($allUsers as $user): ?>
+                        <?php $userID = $user['userID']; ?>
+                        <tr>
+                            <td><?php echo $user['userID']; ?></td>
+                            <td><?php echo $user['email']; ?></td>
+                            <td><?php echo $user['fullName']; ?></td>
+                            <td><?php echo $user['gender']; ?></td>
+                            <td><?php echo $user['status']; ?></td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <a class="btn btn-success" href='/user/edit/<?php echo $userID;?>'>Edit</a>
+                                    <a class="btn btn-dark" id="<?php echo $user['userID']; ?>"
+                                       onclick="sendDeleteRequest(this.id)">
+                                        Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+            </table>
+        </div>
     </div>
         <div class="col-sm-1"></div>
     </div>
