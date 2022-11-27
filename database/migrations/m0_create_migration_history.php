@@ -9,15 +9,18 @@ class m0_create_migration_history extends MigrationsBase
 {
     public function up(): bool
     {
+        $db = new Database;
+        $conn = $db->getConnection();
+
         $sqlQuery = "CREATE TABLE migrationHistory(
                      migrationID int(10) NOT NULL AUTO_INCREMENT,
                      migrationIndex varchar(10) NOT NULL,
                      migrationName varchar(100) NOT NULL,
                      PRIMARY KEY (migrationID))";
 
-        $query = $this->conn->prepare($sqlQuery);
+        $query = $conn->prepare($sqlQuery);
 
-        if (!$this->trySqlQuery($query, $this->conn, get_class($this))) {
+        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
             return false;
         }
 
@@ -26,9 +29,11 @@ class m0_create_migration_history extends MigrationsBase
 
     public function down(): bool
     {
+        $db = new Database();
+        $conn = $db->getConnection();
         $sqlQuery = "DROP TABLE migrationHistory";
 
-        $query = $this->conn->prepare($sqlQuery);
+        $query = $conn->prepare($sqlQuery);
 
         try {
             $query->execute();

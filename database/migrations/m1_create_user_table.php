@@ -9,6 +9,9 @@ class m1_create_user_table extends MigrationsBase
 {
     public function up(): bool
     {
+        $db = new Database;
+        $conn = $db->getConnection();
+
         $sqlQuery = "CREATE TABLE usersTable(
                         userID int(20) NOT NULL AUTO_INCREMENT,
                         email varchar(255) NOT NULL,
@@ -16,9 +19,9 @@ class m1_create_user_table extends MigrationsBase
                         gender varchar(25) NOT NULL,
                         PRIMARY KEY(userID))";
 
-        $query = $this->conn->prepare($sqlQuery);
+        $query = $conn->prepare($sqlQuery);
 
-        if (!$this->trySqlQuery($query, $this->conn, get_class($this))) {
+        if (!$this->trySqlQuery($query, $conn, get_class($this))) {
             return false;
         }
 
@@ -27,13 +30,16 @@ class m1_create_user_table extends MigrationsBase
 
     public function down(): bool
     {
+        $db = new Database();
+        $conn = $db->getConnection();
+
         $sqlQuery = "DROP TABLE usersTable";
 
-        $query = $this->conn->prepare($sqlQuery);
+        $query = $conn->prepare($sqlQuery);
 
         try {
             $query->execute();
-            $this->migrationHistoryHandler->removeMigrationFromHistory($this->conn, get_class($this));
+            $this->migrationHistoryHandler->removeMigrationFromHistory($conn, get_class($this));
         } catch (\PDOException $e) {
             return false;
         }

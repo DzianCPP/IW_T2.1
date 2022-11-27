@@ -12,7 +12,7 @@ class Migrations
 
     public function run(int $databaseVersion = -1): bool
     {
-        $db = Database::getInstance();
+        $db = new Database();
         $conn = $db->getConnection();
         $this->migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
 

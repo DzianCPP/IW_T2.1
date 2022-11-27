@@ -13,7 +13,7 @@ class UserController extends BaseController
             $this->show();
         } else {
             $email = $_POST['email'];
-            $fullName = $_POST['name'];
+            $fullName = $_POST['fullName'];
             $this->new($email, $fullName);
         }
     }
@@ -21,10 +21,15 @@ class UserController extends BaseController
     public function new(string $email = '', string $fullName = ''): void
     {
         $this->setView(VIEW_PATH);
-        $data = array(
-            "email" => $email,
-            "fullName" => $fullName
-        );
+        $users = new Users();
+        $genders = $users->getGenders();
+        $statuses = $users->getStatuses();
+        $data = [
+            'email' => $email,
+            'fullName' => $fullName,
+            'genders' => $genders,
+            'statuses' => $statuses
+        ];
 
         $this->view->render("new", $data);
     }
@@ -37,10 +42,10 @@ class UserController extends BaseController
         $this->view->render("users", array("allUsers" => $allUsers));
     }
 
-    public function showById(): void
+    public function showOne(): void
     {
         $users = new Users();
-        $userID = $_GET['userID'];
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
         $this->setView(VIEW_PATH);
@@ -51,11 +56,16 @@ class UserController extends BaseController
     {
         $users = new Users();
         $this->setView(VIEW_PATH);
-        $userID = $_GET['userID'];
-        $userID = rtrim($userID, '}');
-        $userID = ltrim($userID, '{');
-        $userToEdit = $users->getUserById($userID);
-        $this->view->render("edit", array("userToEdit" => $userToEdit));
+        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $userToEdit = $users->getUserById($userID)[0];
+        $genders = $users->getGenders();
+        $statuses = $users->getStatuses();
+        $data = [
+          'genders' => $genders,
+          'statuses' => $statuses,
+          'user' => $userToEdit
+        ];
+        $this->view->render("edit", $data);
     }
 
     public function update(): void

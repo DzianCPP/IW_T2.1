@@ -5,10 +5,17 @@ use Dotenv\Dotenv;
 
 class DotEnver
 {
-    public static function getDotEnv(): array
+    public static function getDotEnv(): array|false
     {
+        if (!file_exists(BASE_PATH . ".env")) {
+            echo "Internal server error";
+            http_response_code(500);
+            return false;
+        }
+
         $dotenv = Dotenv::createImmutable(BASE_PATH);
         $dotenv->safeLoad();
+
         return $_ENV;
     }
 }
