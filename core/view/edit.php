@@ -32,7 +32,7 @@
               <div><select name="new-gender" id="gender" class="input-select">
                       <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
                           <option
-                                  <?php if ($user['gender'] === $upperCaseGender):
+                                  <?php if ($user['gender'] === $lowerCaseGender):
                                             echo 'selected="selected"';
                                           endif;?>
                                   value="<?php echo $lowerCaseGender; ?>">
@@ -45,7 +45,7 @@
                 <select name="new-status" class="input-select" id="status">
                     <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
                         <option
-                            <?php if ($user['status'] === $upperCaseStatus):
+                            <?php if ($user['status'] === $lowerCaseStatus):
                                         echo 'selected="selected"';
                             endif; ?>
                                 value="<?php echo $lowerCaseStatus; ?>">
