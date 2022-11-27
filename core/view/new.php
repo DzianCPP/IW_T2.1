@@ -63,9 +63,6 @@
                                 <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
                             <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
                                 <option
-                                    <?php if ($user['gender'] === $upperCaseGender):
-                                        echo 'selected="selected"';
-                                    endif;?>
                                         value="<?php echo $lowerCaseGender; ?>">
                                     <?php echo $upperCaseGender; ?>
                                 </option>
@@ -84,9 +81,6 @@
                                 <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
                         <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
                             <option
-                                <?php if ($user['status'] === $upperCaseStatus):
-                                    echo 'selected="selected"';
-                                endif; ?>
                                     value="<?php echo $lowerCaseStatus; ?>">
                                 <?php echo $upperCaseStatus; ?>
                             </option>
