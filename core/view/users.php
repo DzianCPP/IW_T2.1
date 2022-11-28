@@ -1,9 +1,9 @@
 <?php include "components/header.html"; ?>
 
-    <div class="container-sm w-100">
+    <div class="container-xs container-sm container-md container-xl pt-5 w-100">
     <div class="row w-auto">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-10">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
         <div class="table-responsive">
             <table class="table table-sm table-hover" id="all-users-table">
                     <tr>
@@ -37,16 +37,16 @@
             </table>
         </div>
     </div>
-        <div class="col-sm-1"></div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
     </div>
 
         <div class="row w-100">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6">
+            <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
                 <div><a class="btn btn-success w-100 mb-1"  id="users-link-add-user" href='/user/new'>Add user</a></div>
                 <div><a class="btn btn-dark w-100 mb-5" id="users-link-back" href='/public'>Main page</a></div>
             </div>
-            <div class="col-sm-3"></div>
+            <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
         </div>
     </div>
 
