@@ -24,6 +24,6 @@ function sendPutRequest() {
 
     fetch(url, putRequest)
         .then(()=>{
-            window.location="/users/show";
+            history.back();
         });
 }

@@ -21,7 +21,7 @@
         <div class="row w-100 mb-1" id="main-link-show-div">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <a class="btn btn-dark w-100" id="main-link-show" href="/users/show">Show all users</a>
+                <a class="btn btn-dark w-100" id="main-link-show" href="/users/show/1">Show all users</a>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
         </div>
@@ -32,7 +32,8 @@
                 <div class="input-group w-100">
                     <input type="text" class="form-control" id="main-input-userID">
                     <button class="btn btn-success" id="main-page-find-button"
-                            disabled>Find</button>
+                            disabled>Find
+                    </button>
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>

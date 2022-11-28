@@ -5,7 +5,7 @@ use Dotenv\Dotenv;
 
 class DotEnver
 {
-    public static function getDotEnv(): array|false
+    public static function getDotEnv(): bool
     {
         if (!file_exists(BASE_PATH . ".env")) {
             echo "Internal server error";
@@ -16,6 +16,6 @@ class DotEnver
         $dotenv = Dotenv::createImmutable(BASE_PATH);
         $dotenv->safeLoad();
 
-        return $_ENV;
+        return true;
     }
 }
