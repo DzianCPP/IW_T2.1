@@ -9,114 +9,116 @@
             <div class="col-sm-1"></div>
         </div>
 
-                <form class="form" method="POST" action="/user/create">
+        <form class="form" method="POST" action="/user/create">
 
-                    <div class="row w-auto mt-2">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <label class="input-group-text w-25" for="email">E-mail</label>
-                                <input
-                                    type="text"
-                                    class="form-control w-75"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    value="<?php if ($email !== ''):
-                                                        echo $email;
-                                                    else:
-                                                        echo '';
-                                                    endif;?>"
-                                    >
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
+            <div class="row w-auto mt-2">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <label class="input-group-text w-25" for="email">E-mail</label>
+                        <input
+                                type="text"
+                                class="form-control w-75"
+                                name="email"
+                                id="email"
+                                placeholder="Enter your email"
+                                value="<?php if ($email !== ''):
+                                    echo $email;
+                                else:
+                                    echo '';
+                                endif; ?>"
+                        >
                     </div>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
 
-                    <div class="row w-auto mt-2">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <label class="input-group-text w-25" for="name">Full Name</label>
-                                <input
-                                        type="text"
-                                        class="form-control w-75"
-                                        name="fullName"
-                                        id="name"
-                                        placeholder="Enter your first and last name"
+            <div class="row w-auto mt-2">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <label class="input-group-text w-25" for="name">Full Name</label>
+                        <input
+                                type="text"
+                                class="form-control w-75"
+                                name="fullName"
+                                id="name"
+                                placeholder="Enter your first and last name"
                                 value="<?php if ($fullName !== ''):
-                                                    echo $fullName;
-                                                else:
-                                                    echo '';
-                                                endif;?>"
-                                >
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
+                                    echo $fullName;
+                                else:
+                                    echo '';
+                                endif; ?>"
+                        >
                     </div>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
 
-                    <div class="row w-auto mt-2">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <label class="input-group-text w-25" for="gender">Gender</label>
-                                <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
+            <div class="row w-auto mt-2">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <label class="input-group-text w-25" for="gender">Gender</label>
+                        <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
                             <?php foreach ($genders as $key => $upperCaseGender): ?>
                                 <option
                                         value="<?php echo $key; ?>">
                                     <?php echo $upperCaseGender; ?>
                                 </option>
                             <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
+                        </select>
                     </div>
-                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
 
-                    <div class="row w-auto mt-2 mb-2">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <label class="input-group-text w-25" for="status">Status</label>
-                                <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
-                        <?php foreach ($statuses as $key => $upperCaseStatus): ?>
-                            <option
-                                    value="<?php echo $key; ?>">
-                                <?php echo $upperCaseStatus; ?>
-                            </option>
-                        <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
+            <div class="row w-auto mt-2 mb-2">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <label class="input-group-text w-25" for="status">Status</label>
+                        <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
+                            <?php foreach ($statuses as $key => $upperCaseStatus): ?>
+                                <option
+                                        value="<?php echo $key; ?>">
+                                    <?php echo $upperCaseStatus; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
 
-                    <div class="row w-auto">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-6">
-                            <button type="submit" class="btn btn-success w-100" id="submit-button" value="submit" disabled>Submit</button>
-                        </div>
-                        <div class="col-sm-3"></div>
-                    </div>
+            <div class="row w-auto">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
+                        Submit
+                    </button>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
 
-                    <div class="row w-100">
-                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-                        <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                            <div class="alert mt-1" id="error-field-div">
-                                <p id="error-field">
+            <div class="row w-100">
+                <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+                <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                    <div class="alert mt-1" id="error-field-div">
+                        <p id="error-field">
                             <?php
-                                if ($email !== '' || $fullName !== ''):
-                                    echo "Not valid information!";
-                                endif;
+                            if ($email !== '' || $fullName !== ''):
+                                echo "Not valid information!";
+                            endif;
                             ?>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+                        </p>
                     </div>
-                </form>
+                </div>
+                <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            </div>
+        </form>
     </div>
 
     <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
 
-    <?php include "components/footer.html"; ?>
+<?php include "components/footer.html"; ?>

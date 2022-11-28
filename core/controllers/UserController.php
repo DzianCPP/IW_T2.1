@@ -1,6 +1,7 @@
 <?php
 
 namespace core\controllers;
+
 use core\models\Users;
 use function MongoDB\BSON\fromJSON;
 
@@ -50,8 +51,10 @@ class UserController extends BaseController
 
         $data = [
             'allUsers' => $allUsers,
-        'GENDERS' => $users->getGenders(),
-        'STATUSES' => $users->getStatuses()
+            'GENDERS' => $users->getGenders(),
+            'STATUSES' => $users->getStatuses(),
+            'thisPage' => $page,
+            'pages' => $pages
         ];
 
         $this->view->render("users", $data);
@@ -76,9 +79,9 @@ class UserController extends BaseController
         $genders = $users->getGenders();
         $statuses = $users->getStatuses();
         $data = [
-          'genders' => $genders,
-          'statuses' => $statuses,
-          'user' => $userToEdit
+            'genders' => $genders,
+            'statuses' => $statuses,
+            'user' => $userToEdit
         ];
         $this->view->render("edit", $data);
     }

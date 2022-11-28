@@ -32,7 +32,8 @@
                 <div class="input-group w-100">
                     <input type="text" class="form-control" id="main-input-userID">
                     <button class="btn btn-success" id="main-page-find-button"
-                            disabled>Find</button>
+                            disabled>Find
+                    </button>
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>

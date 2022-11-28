@@ -18,4 +18,4 @@
         </div>
     </div>
 
-    <?php include "components/footer.html"; ?>
+<?php include "components/footer.html"; ?>
