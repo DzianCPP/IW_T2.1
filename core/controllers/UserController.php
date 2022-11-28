@@ -37,6 +37,7 @@ class UserController extends BaseController
     public function show(): void
     {
         $users = new Users();
+        $records = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $allUsers = $users->getAllUsers();
         $this->setView(VIEW_PATH);
         $this->view->render("users", array("allUsers" => $allUsers));
