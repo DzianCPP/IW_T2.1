@@ -21,7 +21,7 @@
         <div class="row w-100 mb-1" id="main-link-show-div">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <a class="btn btn-dark w-100" id="main-link-show" href="/users/show">Show all users</a>
+                <a class="btn btn-dark w-100" id="main-link-show" href="/users/show/1">Show all users</a>
             </div>
             <div class="col-sm-4"></div>
         </div>

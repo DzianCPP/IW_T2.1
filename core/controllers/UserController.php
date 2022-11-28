@@ -37,8 +37,17 @@ class UserController extends BaseController
     public function show(): void
     {
         $users = new Users();
-        $records = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $allUsers = $users->getAllUsers();
+        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $pages = (int)ceil(count($allUsers) / 10);
+        if ($page > $pages) {
+            echo "There not so many users";
+            http_response_code(404);
+            return;
+        }
+
+        $this->limitUsersRange($allUsers, $page);
+
         $this->setView(VIEW_PATH);
         $this->view->render("users", array("allUsers" => $allUsers));
     }
@@ -91,5 +100,18 @@ class UserController extends BaseController
         if ($users->deleteUser($id)) {
             http_response_code(200);
         }
+    }
+
+    private function limitUsersRange(array &$allUsers, int $requestedPage): void
+    {
+        $usersRangeStart = $requestedPage * 10 - 10;
+        $usersRangeEnd = $usersRangeStart + 10;
+
+        $newAllUsers = [];
+        for ($i = $usersRangeStart; $i < $usersRangeEnd && $i < count($allUsers); ++$i) {
+            $newAllUsers[] = $allUsers[$i];
+        }
+
+        $allUsers = $newAllUsers;
     }
 }
