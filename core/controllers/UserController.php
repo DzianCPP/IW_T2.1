@@ -85,7 +85,6 @@ class UserController extends BaseController
         $users = new Users();
         if ($users->editUser($newUserInfo)) {
             http_response_code(200);
-            $this->show();
         }
     }
 

@@ -22,8 +22,10 @@ function sendPutRequest() {
         body: JSON.stringify(newUserInfo)
     };
 
+    let newLocation = "/users/show/" + Math.ceil(newUserID/10);
+
     fetch(url, putRequest)
         .then(()=>{
-            window.location="/users/show/" + newUserID/10;
+            window.location=newLocation;
         });
 }
