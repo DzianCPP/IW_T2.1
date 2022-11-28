@@ -21,8 +21,8 @@
                             <td><?php echo $user['userID']; ?></td>
                             <td><?php echo $user['email']; ?></td>
                             <td><?php echo $user['fullName']; ?></td>
-                            <td><?php echo $user['gender']; ?></td>
-                            <td><?php echo $user['status']; ?></td>
+                            <td><?php echo $GENDERS[$user['gender']]; ?></td>
+                            <td><?php echo $STATUSES[$user['status']]; ?></td>
                             <td>
                                 <div class="btn-group-vertical">
                                     <a class="btn btn-success" href='/user/edit/<?php echo $userID;?>'>Edit</a>

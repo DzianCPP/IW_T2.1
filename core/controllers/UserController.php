@@ -39,7 +39,14 @@ class UserController extends BaseController
         $users = new Users();
         $allUsers = $users->getAllUsers();
         $this->setView(VIEW_PATH);
-        $this->view->render("users", array("allUsers" => $allUsers));
+
+        $data = [
+            'allUsers' => $allUsers,
+        'GENDERS' => $users->getGenders(),
+        'STATUSES' => $users->getStatuses()
+        ];
+
+        $this->view->render("users", $data);
     }
 
     public function showOne(): void
