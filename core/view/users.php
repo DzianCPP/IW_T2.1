@@ -1,50 +1,55 @@
 <?php include "components/header.html"; ?>
 
-<div class="main-div">
-    <div class="content-wrap">
-        <table class="all-users-table" id="all-users-table">
-                <tr>
-                    <th>ID</th>
-                    <th>E-mail</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-
-                <?php foreach ($allUsers as $user): ?>
-                    <?php $userID = $user['userID']; ?>
+    <div class="container-xs container-sm container-md container-xl pt-5 w-100">
+    <div class="row w-auto">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" id="all-users-table">
                     <tr>
-                        <td><?php echo $user['userID']; ?></td>
-                        <td><?php echo $user['email']; ?></td>
-                        <td><?php echo $user['fullName']; ?></td>
-                        <td><?php echo $user['gender']; ?></td>
-                        <td><?php echo $user['status']; ?></td>
-                        <td>
-                            <a href="/user/edit/<?php echo $userID;?>">Edit</a>
-                            <a id="<?php echo $user['userID']; ?>"
-                               onclick="sendDeleteRequest(this.id)">
-                                Delete
-                            </a>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
                     </tr>
-                <?php endforeach; ?>
 
-        </table>
+                    <?php foreach ($allUsers as $user): ?>
+                        <?php $userID = $user['userID']; ?>
+                        <tr>
+                            <td><?php echo $user['userID']; ?></td>
+                            <td><?php echo $user['email']; ?></td>
+                            <td><?php echo $user['fullName']; ?></td>
+                            <td><?php echo $GENDERS[$user['gender']]; ?></td>
+                            <td><?php echo $STATUSES[$user['status']]; ?></td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <a class="btn btn-success" href='/user/edit/<?php echo $userID;?>'>Edit</a>
+                                    <a class="btn btn-dark" id="<?php echo $user['userID']; ?>"
+                                       onclick="sendDeleteRequest(this.id)">
+                                        Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
 
-        <div class="link-div">
-            <a id="users-link-add-user" href="/user/new">
-                Add user
-            </a>
+            </table>
         </div>
-
-        <div class="link-div">
-            <a id="users-link-back" href="/public">
-                Main page
-            </a>
-        </div>
-
-        <script type="text/javascript" src="/assets/scripts/users/delete.js"></script>
     </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+
+        <div class="row w-100">
+            <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+                <div><a class="btn btn-success w-100 mb-1"  id="users-link-add-user" href='/user/new'>Add user</a></div>
+                <div><a class="btn btn-dark w-100 mb-5" id="users-link-back" href='/public'>Main page</a></div>
+            </div>
+            <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/assets/scripts/users/delete.js"></script>
 
 <?php include "components/footer.html"; ?>
