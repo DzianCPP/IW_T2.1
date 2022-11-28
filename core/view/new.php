@@ -100,8 +100,8 @@
                     </div>
 
                     <div class="row w-100">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+                        <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                             <div class="alert mt-1" id="error-field-div">
                                 <p id="error-field">
                             <?php
@@ -112,6 +112,7 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
                     </div>
                 </form>
     </div>
