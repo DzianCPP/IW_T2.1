@@ -114,9 +114,9 @@
                     </div>
                 </div>
             </div>
-
-            <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
-            <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
         </form>
+
+        <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
+        <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
     </div>
     <?php include "components/footer.html"; ?>
