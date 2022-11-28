@@ -1,0 +1,101 @@
+html {
+    height: 100%;
+    position: relative;
+}
+
+body {
+    background-color: bisque;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    font-size: 100%;
+    width: 100%;
+    position: relative;
+    min-height: fit-content;
+}
+
+.main-div {
+    margin: 40px auto 5px auto;
+    border-left-width: 2px;
+    border-left-style: dotted;
+    border-left-color: bisque;
+    border-right-width: 2px;
+    border-right-style: dotted;
+    border-right-color: bisque;
+    border-radius: 10px;
+    padding: 10px;
+    color: bisque;
+    background-color: darkred;
+    font-family: 'Lucida Typewriter Serif', Lucida, serif;
+    font-size: 1em;
+    width: fit-content;
+}
+
+.content-wrap {
+    position: relative;
+    min-height: fit-content;
+    text-align: center;
+}
+
+table, td {
+    text-shadow: none;
+    margin-bottom: 10px;
+    border: 1px dotted bisque;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: center;
+    color: bisque;
+}
+
+a {
+    margin-bottom: 5px;
+    padding: 2px 2px;
+    width: 80%;
+    text-align: center;
+    text-decoration: none;
+    color: darkred;
+    background-color: bisque;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: azure;
+    cursor: pointer;
+}
+
+.link-div {
+    margin-bottom: 10px;
+}
+
+button {
+    width: 30%;
+    background-color: lightpink;
+    color: darkslategray;
+    border: none;
+    border-radius: 10px;
+}
+
+button:enabled {
+    background-color: bisque;
+    color: darkred;
+}
+
+button:enabled:hover {
+    background-color: azure;
+    cursor: pointer;
+}
+
+.input-text, .input-select {
+    width: 80%;
+    margin: 5px auto 5px auto;
+    padding-left: 5px;
+    border-radius: 10px;
+    background-color: bisque;
+    border: 1px dotted darkred;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+}
