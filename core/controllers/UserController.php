@@ -41,7 +41,7 @@ class UserController extends BaseController
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / 10);
         if ($page > $pages) {
-            echo "There not so many users";
+            echo "There are not so many users";
             http_response_code(404);
             return;
         }

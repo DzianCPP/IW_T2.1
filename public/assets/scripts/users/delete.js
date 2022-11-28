@@ -11,7 +11,7 @@ function sendDeleteRequest(id) {
 
         fetch(url, putRequest)
             .then(() => {
-                window.location = "/users/show";
+                location.reload();
             });
     }
 }
