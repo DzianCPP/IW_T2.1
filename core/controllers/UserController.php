@@ -41,13 +41,13 @@ class UserController extends BaseController
         $allUsers = $users->getAllUsers();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / 10);
+        $this->setView(VIEW_PATH);
         if ($page > $pages) {
-            echo "There are not so many users";
+            $this->view->render("404");
             http_response_code(404);
             return;
         }
         $this->limitUsersRange($allUsers, $page);
-        $this->setView(VIEW_PATH);
 
         $data = [
             'allUsers' => $allUsers,
