@@ -10,6 +10,12 @@ return [
         'method' => 'GET'
     ],
 
+    '/' => [
+        'controller' => AppController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ],
+
     'public' => [
         'controller' => AppController::class,
         'action' => 'index',

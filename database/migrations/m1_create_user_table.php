@@ -9,7 +9,7 @@ class m1_create_user_table extends MigrationsBase
 {
     public function up(): bool
     {
-        $db = new Database;
+        $db = Database::getInstance();
         $conn = $db->getConnection();
 
         $sqlQuery = "CREATE TABLE usersTable(
@@ -30,7 +30,7 @@ class m1_create_user_table extends MigrationsBase
 
     public function down(): bool
     {
-        $db = new Database();
+        $db = Database::getInstance();
         $conn = $db->getConnection();
 
         $sqlQuery = "DROP TABLE usersTable";

@@ -9,7 +9,7 @@ class m0_create_migration_history extends MigrationsBase
 {
     public function up(): bool
     {
-        $db = new Database;
+        $db = Database::getInstance();
         $conn = $db->getConnection();
 
         $sqlQuery = "CREATE TABLE migrationHistory(
@@ -29,7 +29,7 @@ class m0_create_migration_history extends MigrationsBase
 
     public function down(): bool
     {
-        $db = new Database();
+        $db = Database::getInstance();
         $conn = $db->getConnection();
         $sqlQuery = "DROP TABLE migrationHistory";
 
