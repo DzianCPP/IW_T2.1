@@ -1,6 +1,7 @@
 <?php
 
 namespace core\models;
+
 use core\application\Database;
 use PDO;
 
@@ -40,10 +41,8 @@ class Model
         $sqlQuery = "SELECT * FROM $tableName";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $query->fetchAll();
 
-        return $result;
+        return $query->fetchAll();
     }
 
     protected function getRecordBy(string $colName, $value, string $tableName): array
@@ -51,18 +50,18 @@ class Model
         $sqlQuery = "SELECT * FROM ${tableName} WHERE ${colName}=${value}";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $query->fetchAll();
 
-        return $result;
+        return $query->fetchAll();
     }
 
     protected function update(string $tableName, array $fields, array $params, $colName): bool
     {
         $sets = $this->getSets($fields);
-        $sqlQuery = "UPDATE ${tableName}
-                     SET ${sets}
-                     WHERE ${colName}=${params[$colName]}";
+        $sqlQuery = "
+            UPDATE ${tableName}
+            SET ${sets}
+            WHERE ${colName}=${params[$colName]}
+        ";
         $query = $this->conn->prepare($sqlQuery);
         array_pop($params);
         if (!$query->execute($params)) {
@@ -102,7 +101,7 @@ class Model
     private function getSets(array $fields): string
     {
         $sets = "";
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             $sets .= $field . "=:" . $field . ", ";
         }
         $sets = substr($sets, 0, -2);
