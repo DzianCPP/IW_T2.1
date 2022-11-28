@@ -61,9 +61,9 @@
                             <div class="input-group">
                                 <label class="input-group-text w-25" for="gender">Gender</label>
                                 <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
-                            <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
+                            <?php foreach ($genders as $key => $upperCaseGender): ?>
                                 <option
-                                        value="<?php echo $lowerCaseGender; ?>">
+                                        value="<?php echo $key; ?>">
                                     <?php echo $upperCaseGender; ?>
                                 </option>
                             <?php endforeach; ?>
@@ -79,9 +79,9 @@
                             <div class="input-group">
                                 <label class="input-group-text w-25" for="status">Status</label>
                                 <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
-                        <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
+                        <?php foreach ($statuses as $key => $upperCaseStatus): ?>
                             <option
-                                    value="<?php echo $lowerCaseStatus; ?>">
+                                    value="<?php echo $key; ?>">
                                 <?php echo $upperCaseStatus; ?>
                             </option>
                         <?php endforeach; ?>
