@@ -24,6 +24,6 @@ function sendPutRequest() {
 
     fetch(url, putRequest)
         .then(()=>{
-            history.back();
+            window.location=document.referrer;
         });
 }
