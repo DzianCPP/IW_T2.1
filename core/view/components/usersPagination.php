@@ -18,8 +18,8 @@
                                              href="/users/show/<?php echo $thisPage - 1; ?>"><?php echo $thisPage - 1; ?></a>
                     </li>
                 <?php endif; ?>
-                <li class="page-item active"><a class="page-link"
-                                         href="/users/show/<?php echo $thisPage; ?>"><?php echo "..."; ?></a>
+                <li class="page-item disabled"><a class="page-link"
+                                         href="/users/show/<?php echo $thisPage; ?>"><?php echo $thisPage; ?></a>
                 </li>
                 <?php if ($thisPage < $pages): ?>
                     <li class="page-item"><a class="page-link"
