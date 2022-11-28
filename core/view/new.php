@@ -61,9 +61,9 @@
                             <div class="input-group">
                                 <label class="input-group-text w-25" for="gender">Gender</label>
                                 <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
-                            <?php foreach ($genders as $lowerCaseGender => $upperCaseGender): ?>
+                            <?php foreach ($genders as $key => $upperCaseGender): ?>
                                 <option
-                                        value="<?php echo $lowerCaseGender; ?>">
+                                        value="<?php echo $key; ?>">
                                     <?php echo $upperCaseGender; ?>
                                 </option>
                             <?php endforeach; ?>
@@ -79,9 +79,9 @@
                             <div class="input-group">
                                 <label class="input-group-text w-25" for="status">Status</label>
                                 <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
-                        <?php foreach ($statuses as $lowerCaseStatus => $upperCaseStatus): ?>
+                        <?php foreach ($statuses as $key => $upperCaseStatus): ?>
                             <option
-                                    value="<?php echo $lowerCaseStatus; ?>">
+                                    value="<?php echo $key; ?>">
                                 <?php echo $upperCaseStatus; ?>
                             </option>
                         <?php endforeach; ?>
@@ -100,8 +100,8 @@
                     </div>
 
                     <div class="row w-100">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+                        <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                             <div class="alert mt-1" id="error-field-div">
                                 <p id="error-field">
                             <?php
@@ -112,10 +112,11 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
                     </div>
-
-                    <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
                 </form>
     </div>
+
+    <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
 
     <?php include "components/footer.html"; ?>
