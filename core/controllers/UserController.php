@@ -67,7 +67,12 @@ class UserController extends BaseController
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
         $this->setView(VIEW_PATH);
-        $this->view->render("users", array("allUsers" => $user));
+        $data = [
+            'allUsers' => $user,
+            'GENDERS' => $users->getGenders(),
+            'STATUSES' => $users->getStatuses()
+        ];
+        $this->view->render("users", $data);
     }
 
     public function editUser(): void
