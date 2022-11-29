@@ -3,21 +3,41 @@ deleteAllBtn.addEventListener("click", deleteAll);
 
 function deleteAll() {
     let allCheckboxes = document.getElementsByName("select-user");
-    let checkUsersIds = getCheckedUsers(allCheckboxes);
+    let checkedUsersIds = getCheckedUsers(allCheckboxes);
 
-    for (var i = 0; i < checkUsersIds.length; i++) {
-        console.log(checkUsersIds[i]);
+    if (confirm("Are you sure you want to delete these records?")) {
+        let url = "/user/deleteSelected";
+
+        let users = {};
+
+        for (var i = 0; i < checkedUsersIds.length; i++) {
+            var key = "user" + i;
+            Object.defineProperty(users, key, {
+                value: checkedUsersIds[i],
+                enumerable: true
+            });
+        }
+
+        let deleteRequest = {
+            method: "DELETE",
+            body: JSON.stringify(users)
+        };
+
+        fetch(url, deleteRequest)
+            .then(() => {
+                location.reload();
+            });
     }
 }
 
 function getCheckedUsers(allCheckboxes) {
-    let checkUsersIds = new Array();
+    let checkedUsersIds = new Array();
 
     for (var i = 0; i < allCheckboxes.length; i++) {
         if (allCheckboxes[i].checked === true) {
-            checkUsersIds.push(allCheckboxes[i].value);
+            checkedUsersIds.push(allCheckboxes[i].value);
         }
     }
 
-    return checkUsersIds;
+    return checkedUsersIds;
 }

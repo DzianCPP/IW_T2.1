@@ -71,9 +71,10 @@ class Model
         return true;
     }
 
-    protected function delete(string $colName, $value, string $tableName): bool
+    protected function delete(string $colName, array $values, string $tableName): bool
     {
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName}=${value}";
+        $values = implode(", ", $values);
+        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName} IN (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
