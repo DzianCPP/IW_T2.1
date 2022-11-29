@@ -6,7 +6,7 @@ function deleteAll() {
     let checkedUsersIds = getCheckedUsers(allCheckboxes);
 
     if (confirm("Are you sure you want to delete these records?")) {
-        let url = "/user/deleteSelected";
+        let url = "/user/delete";
 
         let users = {};
 

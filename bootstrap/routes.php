@@ -67,13 +67,6 @@ return [
         'params' => 'userID'
     ],
 
-    'user/deleteSelected' => [
-        'controller' => UserController::class,
-        'action' => 'deleteSelected',
-        'method' => 'delete',
-        'params' => 'userIDs'
-    ],
-
     'user/update' => [
         'controller' => UserController::class,
         'action' => 'update',
