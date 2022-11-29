@@ -1,6 +1,7 @@
 <?php
 
 namespace core\models;
+
 use core\application\Database;
 use PDO;
 
@@ -40,6 +41,7 @@ class Model
         $sqlQuery = "SELECT * FROM $tableName";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
+        
         return $query->fetchAll();
     }
 
@@ -99,7 +101,7 @@ class Model
     private function getSets(array $fields): string
     {
         $sets = "";
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             $sets .= $field . "=:" . $field . ", ";
         }
         $sets = substr($sets, 0, -2);
