@@ -7,6 +7,7 @@
             <div class="table-responsive">
                 <table class="table table-sm table-hover" id="all-users-table">
                     <tr>
+                        <th scope="col"><input type="checkbox" id="check-all"></th>
                         <th scope="col">ID</th>
                         <th scope="col">E-mail</th>
                         <th scope="col">Full Name</th>
@@ -18,6 +19,7 @@
                     <?php foreach ($allUsers as $user) : ?>
                         <?php $userID = $user['userID']; ?>
                         <tr>
+                            <td><input name="select-user" type="checkbox" value="<?php echo $user['userID']; ?>"></td>
                             <td><?php echo $user['userID']; ?></td>
                             <td><?php echo $user['email']; ?></td>
                             <td><?php echo $user['fullName']; ?></td>
@@ -54,5 +56,6 @@
 </div>
 
 <script type="text/javascript" src="/assets/scripts/users/delete.js"></script>
+<script type="text/javascript" src="/assets/scripts/users/selectAll.js"></script>
 
 <?php include "components/footer.html"; ?>
