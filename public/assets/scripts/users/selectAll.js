@@ -1,5 +1,6 @@
-let checkAll = document.getElementById("check-all");
-checkAll.addEventListener("change", selectAll);
+$(document).ready(function() {
+    $("#check-all").change(selectAll);
+});
 
 function selectAll() {
     let checkboxes = document.getElementsByName("select-user");
