@@ -25,7 +25,7 @@ function deleteAll() {
 
         fetch(url, deleteRequest)
             .then(() => {
-                location.reload();
+                location.reload(true);
             });
     }
 }
