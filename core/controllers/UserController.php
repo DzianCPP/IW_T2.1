@@ -41,11 +41,17 @@ class UserController extends BaseController
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
+        $this->setView();
+        if (count($allUsers) === 0) {
+            $this->view->render("emptyTable.html.twig");
+            http_response_code(200);
+            return;
+        }
+
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / 10);
-        $this->setView();
         if ($page > $pages) {
-            $this->view->render("404");
+            $this->view->render("404.html.twig");
             http_response_code(404);
             return;
         }
