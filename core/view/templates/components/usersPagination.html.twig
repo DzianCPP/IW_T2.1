@@ -26,11 +26,12 @@
                                              href="/users/show/{{ thisPage + 1 }}">{{ thisPage + 1 }}</a>
                     </li>
                 {% endif %}
+
                 {% if thisPage < pages %}
                 <li class="page-item">
-                    {% else %}
+                {% else %}
                 <li class="page-item disabled">
-                    {% endif %}
+                {% endif %}
                     <a class="page-link" href="/users/show/{{ thisPage + 1 }}" aria-label="Previous">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only"></span>
