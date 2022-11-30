@@ -2,6 +2,8 @@
 
 namespace core\controllers;
 
+use Exception;
+
 class AppController extends BaseController
 {
     public function index(): void
@@ -11,7 +13,12 @@ class AppController extends BaseController
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
-        $this->view->render("main.html.twig", $data);
+
+        try {
+        $this->view->render("main.html.twig", $data); }
+        catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function notFound(): void
