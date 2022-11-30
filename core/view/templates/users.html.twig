@@ -1,13 +1,12 @@
 {{ include('components/header.html.twig') }}
 
 <div class="container-xs container-sm container-md container-xl pt-5 w-100">
+    {% if allUsers|length > 0 %}
     <div class="row w-auto">
         <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
             <div class="table-responsive">
-                
-              {{ include('components/usersTable.html.twig') }}
-
+                    {{ include('components/usersTable.html.twig') }}
             </div>
         </div>
         <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
@@ -24,6 +23,17 @@
         </div>
         <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
     </div>
+    {% else %}
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <h1 class="h1 w-100 m-1">{{ 'No user found' }}</h1>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+    {% endif %}
     
     {% if countUsers > 1 %}
         {{ include('components/usersPagination.html.twig') }}
