@@ -44,6 +44,7 @@ class UserController extends BaseController
         $this->setView();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / 10);
+        $this->limitUsersRange($allUsers, $page);
         $data = [
             'allUsers' => $allUsers,
             'GENDERS' => $users->getGenders(),
@@ -54,18 +55,19 @@ class UserController extends BaseController
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
+
         if (count($allUsers) === 0) {
             $this->view->render("emptyTable.html.twig", $data);
             http_response_code(200);
             return;
         }
+        
         if ($page > $pages) {
             $this->view->render("404.html.twig", $data);
             http_response_code(404);
             return;
         }
-        
-        $this->limitUsersRange($allUsers, $page);
+
         $this->view->render("users.html.twig", $data);
     }
 
