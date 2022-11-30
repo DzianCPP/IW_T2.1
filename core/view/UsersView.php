@@ -7,8 +7,9 @@ class UsersView extends View
     public function render(string $template, $data = null): void
     {
         if ($data !== null) {
-            extract($data);
+            echo $this->twig->render($template, $data);
+        } else {
+            echo $this->twig->render($template);
         }
-        include $this->templatePath . $template . ".php";
     }
 }

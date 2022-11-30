@@ -21,7 +21,7 @@ class UserController extends BaseController
 
     public function new(string $email = '', string $fullName = ''): void
     {
-        $this->setView(VIEW_PATH);
+        $this->setView();
         $users = new Users();
         $genders = $users->getGenders();
         $statuses = $users->getStatuses();
@@ -29,10 +29,12 @@ class UserController extends BaseController
             'email' => $email,
             'fullName' => $fullName,
             'genders' => $genders,
-            'statuses' => $statuses
+            'statuses' => $statuses,
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP'
         ];
 
-        $this->view->render("new", $data);
+        $this->view->render("new.html.twig", $data);
     }
 
     public function show(): void
@@ -41,7 +43,7 @@ class UserController extends BaseController
         $allUsers = $users->getAllUsers();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / 10);
-        $this->setView(VIEW_PATH);
+        $this->setView();
         if ($page > $pages) {
             $this->view->render("404");
             http_response_code(404);
@@ -54,10 +56,13 @@ class UserController extends BaseController
             'GENDERS' => $users->getGenders(),
             'STATUSES' => $users->getStatuses(),
             'thisPage' => $page,
-            'pages' => $pages
+            'pages' => $pages,
+            'countUsers' => count($allUsers),
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP'
         ];
 
-        $this->view->render("users", $data);
+        $this->view->render("users.html.twig", $data);
     }
 
     public function showOne(): void
@@ -66,19 +71,22 @@ class UserController extends BaseController
         $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userID = ltrim(rtrim($userID, '}'), '{');
         $user = $users->getUserById($userID);
-        $this->setView(VIEW_PATH);
+        $this->setView();
         $data = [
             'allUsers' => $user,
             'GENDERS' => $users->getGenders(),
-            'STATUSES' => $users->getStatuses()
+            'STATUSES' => $users->getStatuses(),
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP',
+            'countUsers' => count([$user])
         ];
-        $this->view->render("users", $data);
+        $this->view->render("users.html.twig", $data);
     }
 
     public function editUser(): void
     {
         $users = new Users();
-        $this->setView(VIEW_PATH);
+        $this->setView();
         $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userToEdit = $users->getUserById($userID)[0];
         $genders = $users->getGenders();
@@ -86,9 +94,16 @@ class UserController extends BaseController
         $data = [
             'genders' => $genders,
             'statuses' => $statuses,
-            'user' => $userToEdit
+            'user' => $userToEdit,
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP',
+            'userEmail' => $userToEdit['email'],
+            'userFullName' => $userToEdit['fullName'],
+            'userGender' => $userToEdit['gender'],
+            'userStatus' => $userToEdit['status'],
+            'userID' => $userToEdit['userID']
         ];
-        $this->view->render("edit", $data);
+        $this->view->render("edit.html.twig", $data);
     }
 
     public function update(): void

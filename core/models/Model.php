@@ -41,7 +41,7 @@ class Model
         $sqlQuery = "SELECT * FROM $tableName";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
-        
+
         return $query->fetchAll();
     }
 

@@ -10,9 +10,9 @@ class BaseController
     protected Users $users;
     protected UsersView $view;
 
-    protected function setView(string $templatePath): void
+    protected function setView(): void
     {
-        $this->view = new UsersView($templatePath);
+        $this->view = new UsersView();
     }
 
     protected function setModel(): void
