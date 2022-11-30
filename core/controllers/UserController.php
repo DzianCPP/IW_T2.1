@@ -61,7 +61,7 @@ class UserController extends BaseController
             http_response_code(200);
             return;
         }
-        
+
         if ($page > $pages) {
             $this->view->render("404.html.twig", $data);
             http_response_code(404);
@@ -86,6 +86,7 @@ class UserController extends BaseController
             'author' => 'Author: DzianCPP',
             'countUsers' => count([$user])
         ];
+
         $this->view->render("users.html.twig", $data);
     }
 
@@ -102,12 +103,7 @@ class UserController extends BaseController
             'statuses' => $statuses,
             'user' => $userToEdit,
             'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
-            'userEmail' => $userToEdit['email'],
-            'userFullName' => $userToEdit['fullName'],
-            'userGender' => $userToEdit['gender'],
-            'userStatus' => $userToEdit['status'],
-            'userID' => $userToEdit['userID']
+            'author' => 'Author: DzianCPP'
         ];
         $this->view->render("edit.html.twig", $data);
     }
