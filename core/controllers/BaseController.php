@@ -2,7 +2,6 @@
 
 namespace core\controllers;
 use core\view\UsersView;
-use core\models\Model;
 use core\models\Users;
 
 class BaseController
