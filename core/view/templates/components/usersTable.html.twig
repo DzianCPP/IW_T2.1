@@ -10,7 +10,7 @@
     </tr>
     {% for user in allUsers %}
     <tr>
-            <td><input name="select-user" type="checkbox" value="3"></td>
+            <td><input name="select-user" type="checkbox" value="{{user.userID}}"></td>
             <td>{{user.userID}}</td>
             <td>{{user.email}}</td>
             <td>{{user.fullName}}</td>
