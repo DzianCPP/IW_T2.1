@@ -57,13 +57,12 @@ class Model
     protected function update(string $tableName, array $fields, array $params, $colName): bool
     {
         $sets = $this->getSets($fields);
-        $sqlQuery = "
-            UPDATE ${tableName}
+        $sqlQuery = "UPDATE ${tableName}
             SET ${sets}
-            WHERE ${colName}=${params[$colName]}
+            WHERE ${colName}={$params[$colName]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        array_pop($params);
+        unset($params['userID']);
         if (!$query->execute($params)) {
             return false;
         }
@@ -91,11 +90,6 @@ class Model
     private function getValues(array $params): string
     {
         $strValues = "";
-        // foreach ($params as $param) {
-        //     $strValues .= $param . "', '";
-        // }
-
-        // $strValues = substr($strValues, 0, -3);
 
         foreach($params as &$param) {
             $param = "'" . $param . "'";
