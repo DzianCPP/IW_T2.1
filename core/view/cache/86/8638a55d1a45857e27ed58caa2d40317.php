@@ -171,7 +171,7 @@ class __TwigTemplate_14aba2317481fe7b87b0a4cdc243230d extends Template
             <div class=\"row w-auto\">
                 <div class=\"col-sm-3\"></div>
                 <div class=\"col-sm-6\">
-                    <button type=\"submit\" class=\"btn btn-success w-100\" id=\"submit-button\" value=\"submit\" disabled>
+                    <button type=\"button\" class=\"btn btn-success w-100\" id=\"submit-button\" value=\"submit\" disabled>
                         Submit
                     </button>
                 </div>
