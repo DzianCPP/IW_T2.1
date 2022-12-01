@@ -42,14 +42,19 @@ class UserController extends BaseController
         $users = new Users();
         $allUsers = $users->getAllUsers();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $pages = (int)ceil(count($allUsers) / 10);
+        $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->setView(VIEW_PATH);
         if ($page > $pages) {
             $this->view->render("404");
             http_response_code(404);
             return;
         }
-        $this->limitUsersRange($allUsers, $page);
+
+        if ($page) {
+            $this->limitUsersRange($allUsers, $page);
+        } else {
+            $this->limitUsersRange($allUsers);
+        }
 
         $data = [
             'allUsers' => $allUsers,
@@ -115,7 +120,7 @@ class UserController extends BaseController
         }
     }
 
-    private function limitUsersRange(array &$allUsers, int $requestedPage): void
+    private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
     {
         $usersRangeStart = $requestedPage * 10 - self::PER_PAGE;
         $usersRangeEnd = $usersRangeStart + self::PER_PAGE;

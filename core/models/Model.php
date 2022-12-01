@@ -90,12 +90,18 @@ class Model
 
     private function getValues(array $params): string
     {
-        $strValues = "'";
-        foreach ($params as $param) {
-            $strValues .= $param . "', '";
+        $strValues = "";
+        // foreach ($params as $param) {
+        //     $strValues .= $param . "', '";
+        // }
+
+        // $strValues = substr($strValues, 0, -3);
+
+        foreach($params as &$param) {
+            $param = "'" . $param . "'";
         }
 
-        $strValues = substr($strValues, 0, -3);
+        $strValues = implode(",", $params);
         return $strValues;
     }
 
