@@ -49,7 +49,12 @@ class UserController extends BaseController
         $this->setView();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
-        $this->limitUsersRange($allUsers, $page);
+        if ($page) {
+            $this->limitUsersRange($allUsers, $page);
+        } else {
+            $this->limitUsersRange($allUsers);
+        }
+
         $data = [
             'allUsers' => $allUsers,
             'GENDERS' => $users->getGenders(),
@@ -63,7 +68,6 @@ class UserController extends BaseController
 
         if (count($allUsers) === 0) {
             $this->view->render("emptyTable.html.twig", $data);
-            http_response_code(200);
             return;
         }
 
@@ -119,7 +123,6 @@ class UserController extends BaseController
         $newUserInfo = json_decode($jsonString, true);
         $users = new Users();
         if ($users->editUser($newUserInfo)) {
-            http_response_code(200);
             $this->show();
         }
     }
@@ -136,7 +139,7 @@ class UserController extends BaseController
         }
     }
 
-    private function limitUsersRange(array &$allUsers, int $requestedPage): void
+    private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
     {
         $usersRangeStart = $requestedPage * 10 - self::PER_PAGE;
         $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
