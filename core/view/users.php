@@ -7,7 +7,8 @@
             <div class="table-responsive">
                 <table class="table table-sm table-hover" id="all-users-table">
                     <tr>
-                        <th scope="col"><input type="checkbox" id="check-all"></th>
+                        <th scope="col"><input
+                        class="checkbox" type="checkbox" id="check-all"></th>
                         <th scope="col">ID</th>
                         <th scope="col">E-mail</th>
                         <th scope="col">Full Name</th>
@@ -45,7 +46,7 @@
         <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
             <div>
-                <a class="btn btn-success w-auto mb-1" id="delete-all" >
+                <a class="btn btn-success w-auto mb-1" id="delete-all">
                     Delete selected users
                 </a>
             </div>
