@@ -89,24 +89,19 @@ class Model
 
     private function getValues(array $params): string
     {
-        $strValues = "";
-
         foreach($params as &$param) {
             $param = "'" . $param . "'";
         }
 
-        $strValues = implode(",", $params);
-        return $strValues;
+        return implode(",", $params);
     }
 
     private function getSets(array $fields): string
     {
-        $sets = "";
-        foreach ($fields as $field) {
-            $sets .= $field . "=:" . $field . ", ";
+        foreach ($fields as &$field) {
+            $field = $field . "=:" . $field;
         }
-        $sets = substr($sets, 0, -2);
-
-        return $sets;
+        
+        return implode(",", $fields);
     }
 }
