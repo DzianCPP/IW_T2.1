@@ -3,7 +3,6 @@
 namespace core\models;
 
 use core\application\Database;
-use Exception;
 use PDO;
 
 class Model
@@ -39,14 +38,10 @@ class Model
 
     public function selectAll(string $tableName): array
     {
-        $sqlQuery = "SELECT * FROM ${tableName}";
+        $sqlQuery = "SELECT * FROM $tableName";
         $query = $this->conn->prepare($sqlQuery);
-        try {
         $query->execute();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-
+        
         return $query->fetchAll();
     }
 
@@ -94,24 +89,19 @@ class Model
 
     private function getValues(array $params): string
     {
-        $strValues = "";
-
         foreach($params as &$param) {
             $param = "'" . $param . "'";
         }
 
-        $strValues = implode(",", $params);
-        return $strValues;
+        return implode(",", $params);
     }
 
     private function getSets(array $fields): string
     {
-        $sets = "";
-        foreach ($fields as $field) {
-            $sets .= $field . "=:" . $field . ", ";
+        foreach ($fields as &$field) {
+            $field = $field . "=:" . $field;
         }
-        $sets = substr($sets, 0, -2);
-
-        return $sets;
+        
+        return implode(",", $fields);
     }
 }
