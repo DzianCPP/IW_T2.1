@@ -7,12 +7,17 @@ use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
+    const PER_PAGE = 10;
+    
     public function create(): void
     {
         $this->setModel();
-        if ($this->users->insertUser()) {
-            $this->show();
-        } else {
+        $jsonString = file_get_contents("php://input");
+        $newUserInfo = json_decode($jsonString, true);
+        foreach($newUserInfo as $key => $value) {
+            $_POST[$key] = $value;
+        }
+        if (!$this->users->insertUser()) {
             $email = $_POST['email'];
             $fullName = $_POST['fullName'];
             $this->new($email, $fullName);
@@ -40,14 +45,19 @@ class UserController extends BaseController
         $users = new Users();
         $allUsers = $users->getAllUsers();
         $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $pages = (int)ceil(count($allUsers) / 10);
+        $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->setView(VIEW_PATH);
         if ($page > $pages) {
             $this->view->render("404");
             http_response_code(404);
             return;
         }
-        $this->limitUsersRange($allUsers, $page);
+
+        if ($page) {
+            $this->limitUsersRange($allUsers, $page);
+        } else {
+            $this->limitUsersRange($allUsers);
+        }
 
         $data = [
             'allUsers' => $allUsers,
@@ -97,7 +107,6 @@ class UserController extends BaseController
         $newUserInfo = json_decode($jsonString, true);
         $users = new Users();
         if ($users->editUser($newUserInfo)) {
-            http_response_code(200);
             $this->show();
         }
     }
@@ -105,20 +114,19 @@ class UserController extends BaseController
     public function delete(): void
     {
         $jsonString = file_get_contents("php://input");
-        $id = json_decode($jsonString, true);
-        $id = $id['userID'];
-        $id = ltrim($id, "\"");
-        $id = rtrim($id, "\"");
-        $users = new Users();
-        if ($users->deleteUser($id)) {
-            http_response_code(200);
+        $ids = json_decode($jsonString, true);
+        if (count($ids) > 0) {
+            $users = new Users();
+            if (!$users->deleteUsers($ids)) {
+                http_response_code(500);
+            }
         }
     }
 
-    private function limitUsersRange(array &$allUsers, int $requestedPage): void
+    private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
     {
-        $usersRangeStart = $requestedPage * 10 - 10;
-        $usersRangeEnd = $usersRangeStart + 10;
+        $usersRangeStart = $requestedPage * 10 - self::PER_PAGE;
+        $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
 
         $newAllUsers = [];
         for ($i = $usersRangeStart; $i < $usersRangeEnd && $i < count($allUsers); ++$i) {

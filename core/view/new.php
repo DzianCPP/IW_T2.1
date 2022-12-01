@@ -9,7 +9,7 @@
             <div class="col-sm-1"></div>
         </div>
 
-        <form class="form" method="POST" action="/user/create">
+        <form class="form">
 
             <div class="row w-auto mt-2">
                 <div class="col-sm-1"></div>
@@ -94,7 +94,7 @@
             <div class="row w-auto">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
-                    <button type="submit" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
+                    <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
                         Submit
                     </button>
                 </div>
@@ -120,5 +120,6 @@
     </div>
 
     <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
+    <script type="text/javascript" src="/assets/scripts/users/create.js"></script>
 
 <?php include "components/footer.html"; ?>

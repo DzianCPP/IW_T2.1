@@ -54,9 +54,9 @@ class Users extends Model
         return true;
     }
 
-    public function deleteUser(int $id): bool
+    public function deleteUsers(array $ids): bool
     {
-        if (!$this->delete("userID", $id, "usersTable")) {
+        if (!$this->delete("userID", $ids, "usersTable")) {
             return false;
         }
 
