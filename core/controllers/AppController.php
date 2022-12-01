@@ -20,9 +20,10 @@ class AppController extends BaseController
         $this->setView();
         $data = [
             'title' => 'Add User App',
-            'author' => 'Author: DzianCPP'
+            'author' => 'Author: DzianCPP',
+            'message' => '404: page not found'
         ];
         http_response_code(404);
-        $this->view->render("404");
+        $this->view->render("404.html.twig", $data);
     }
 }
