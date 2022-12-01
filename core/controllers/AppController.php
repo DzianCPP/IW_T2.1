@@ -2,8 +2,6 @@
 
 namespace core\controllers;
 
-use Exception;
-
 class AppController extends BaseController
 {
     public function index(): void
@@ -25,6 +23,6 @@ class AppController extends BaseController
             'author' => 'Author: DzianCPP'
         ];
         http_response_code(404);
-        $this->view->render("404.html.twig", $data);
+        $this->view->render("404");
     }
 }
