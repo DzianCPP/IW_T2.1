@@ -7,6 +7,8 @@ use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
+    const PER_PAGE = 10;
+    
     public function create(): void
     {
         $this->setModel();
@@ -115,8 +117,8 @@ class UserController extends BaseController
 
     private function limitUsersRange(array &$allUsers, int $requestedPage): void
     {
-        $usersRangeStart = $requestedPage * 10 - 10;
-        $usersRangeEnd = $usersRangeStart + 10;
+        $usersRangeStart = $requestedPage * 10 - self::PER_PAGE;
+        $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
 
         $newAllUsers = [];
         for ($i = $usersRangeStart; $i < $usersRangeEnd && $i < count($allUsers); ++$i) {
