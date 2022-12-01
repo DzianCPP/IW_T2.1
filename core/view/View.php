@@ -15,13 +15,14 @@ abstract class View
     public function __construct()
     {
         $this->loader = new FilesystemLoader(TEMPLATES_PATH);
-        try {
-        $this->twig = new Environment($this->loader, array(
+        $this->twig = new Environment($this->loader, [
+            'debug' => false,
+            'charset' => 'UTF-8',
+            'strict_variable' => false,
+            'optimizations' => -1,
+            'auto_reload' => true,
             'cache' => CACHE_PATH
-        ));
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
+        ]);
     }
 
     abstract public function render(string $template, $data = null): void;

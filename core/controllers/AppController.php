@@ -14,11 +14,7 @@ class AppController extends BaseController
             'author' => 'Author: DzianCPP'
         ];
 
-        try {
-        $this->view->render("main.html.twig", $data); }
-        catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        $this->view->render("main.html.twig", $data);
     }
 
     public function notFound(): void

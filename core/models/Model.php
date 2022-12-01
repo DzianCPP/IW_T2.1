@@ -3,6 +3,7 @@
 namespace core\models;
 
 use core\application\Database;
+use Exception;
 use PDO;
 
 class Model
@@ -38,9 +39,13 @@ class Model
 
     public function selectAll(string $tableName): array
     {
-        $sqlQuery = "SELECT * FROM $tableName";
+        $sqlQuery = "SELECT * FROM ${tableName}";
         $query = $this->conn->prepare($sqlQuery);
+        try {
         $query->execute();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
 
         return $query->fetchAll();
     }
