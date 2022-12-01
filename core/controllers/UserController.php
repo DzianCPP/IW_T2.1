@@ -126,12 +126,12 @@ class UserController extends BaseController
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
-        $users = new Users();
-        if (!$users->deleteUsers($ids)) {
-            http_response_code(500);
+        if (count($ids) > 0) {
+            $users = new Users();
+            if (!$users->deleteUsers($ids)) {
+                http_response_code(500);
+            }
         }
-
-        http_response_code(200);
     }
 
     private function limitUsersRange(array &$allUsers, int $requestedPage): void

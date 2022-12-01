@@ -202,9 +202,10 @@ class __TwigTemplate_14aba2317481fe7b87b0a4cdc243230d extends Template
     </div>
 
     <script type=\"text/javascript\" src=\"/assets/scripts/formValid.js\"></script>
+    <script type=\"text/javascript\" src=\"/assets/scripts/users/create.js\"></script>
 
     ";
-        // line 116
+        // line 117
         echo twig_include($this->env, $context, "components/footer.html.twig");
     }
 
@@ -220,7 +221,7 @@ class __TwigTemplate_14aba2317481fe7b87b0a4cdc243230d extends Template
 
     public function getDebugInfo()
     {
-        return array (  208 => 116,  196 => 106,  190 => 104,  188 => 103,  165 => 82,  156 => 79,  151 => 78,  147 => 77,  133 => 65,  124 => 62,  119 => 61,  115 => 60,  100 => 47,  94 => 46,  92 => 45,  72 => 27,  66 => 26,  64 => 25,  37 => 1,);
+        return array (  209 => 117,  196 => 106,  190 => 104,  188 => 103,  165 => 82,  156 => 79,  151 => 78,  147 => 77,  133 => 65,  124 => 62,  119 => 61,  115 => 60,  100 => 47,  94 => 46,  92 => 45,  72 => 27,  66 => 26,  64 => 25,  37 => 1,);
     }
 
     public function getSourceContext()
