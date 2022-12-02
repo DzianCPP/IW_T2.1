@@ -1,5 +1,6 @@
-<?php include "components/header.html"; ?>
+{% extends "base.html.twig" %}
 
+{% block content %}
 <div class="container-xs container-sm container-md container-xl pt-5">
     <div class="container w-100">
         <div class="row w-100 mb-5 mt-5" id="main-page-h1">
@@ -56,4 +57,4 @@
 <script type="text/javascript" src="/assets/scripts/users/find.js"></script>
 <script type="text/javascript" src="/assets/scripts/userIdValid.js"></script>
 
-<?php include "components/footer.html"; ?>
+{% endblock %}

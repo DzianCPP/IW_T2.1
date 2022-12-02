@@ -4,12 +4,12 @@ function sendDeleteRequest(id) {
         let userInfo = {
             userID: id
         };
-        let putRequest = {
+        let deleteRequest = {
             method: "DELETE",
             body: JSON.stringify(userInfo)
         };
 
-        fetch(url, putRequest)
+        fetch(url, deleteRequest)
             .then(() => {
                 location.reload();
             });
