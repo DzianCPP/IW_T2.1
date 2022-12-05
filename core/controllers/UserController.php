@@ -7,17 +7,14 @@ use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
-    const PER_PAGE = 3;
+    const PER_PAGE = 5;
     
     public function create(): void
     {
         $this->setModel();
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
-        foreach($newUserInfo as $key => $value) {
-            $_POST[$key] = $value;
-        }
-        if (!$this->users->insertUser()) {
+        if (!$this->users->insertUser($newUserInfo)) {
             $email = $_POST['email'];
             $fullName = $_POST['fullName'];
             $this->new($email, $fullName);
