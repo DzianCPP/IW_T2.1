@@ -20,7 +20,7 @@ class Model
 
     public function insert(array $params, array $fields, string $tableName): bool
     {
-        if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
+        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class Model
         $query = $this->conn->prepare($sqlQuery);
         unset($params['userID']);
 
-        if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
+        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
             return false;
         }
         

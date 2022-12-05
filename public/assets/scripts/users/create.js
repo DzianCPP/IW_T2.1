@@ -2,7 +2,7 @@ document.getElementById("submit-button").addEventListener("click", sendPostReque
 
 async function sendPostRequest() {
     let setEmail = document.getElementById("email").value;
-    let setFullName = document.getElementById("name").value;
+    let setName = document.getElementById("name").value;
     let setNewGender = document.getElementById("gender").value;
     let setStatus = document.getElementById("status").value;
 
@@ -10,7 +10,7 @@ async function sendPostRequest() {
 
     let newUserInfo = {
         email: setEmail,
-        fullName: setFullName,
+        name: setName,
         gender: setNewGender,
         status: setStatus
     };

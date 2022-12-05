@@ -20,7 +20,7 @@ class UserController extends BaseController
         }
     }
 
-    public function new(string $email = '', string $fullName = ''): void
+    public function new(string $email = '', string $name = ''): void
     {
         $this->setView();
         $users = new Users();
@@ -28,7 +28,7 @@ class UserController extends BaseController
         $statuses = $users->getStatuses();
         $data = [
             'email' => $email,
-            'fullName' => $fullName,
+            'name' => $name,
             'genders' => $genders,
             'statuses' => $statuses,
             'title' => 'Add User App',

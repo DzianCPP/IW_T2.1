@@ -4,7 +4,7 @@ namespace core\models;
 
 class Users extends Model
 {
-    protected array $fields = ['email', 'fullName', 'gender', 'status'];
+    protected array $fields = ['email', 'name', 'gender', 'status'];
     private array $genders = [
       'male' => 'Male',
         'female' => 'Female',
@@ -67,7 +67,7 @@ class Users extends Model
     {
         $params = [
                 'email' => $data['email'],
-            'fullName' => $data['fullName'],
+            'name' => $data['name'],
             'gender' => $data['gender'],
             'status' => $data['status']
         ];
