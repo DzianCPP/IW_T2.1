@@ -22,6 +22,6 @@ function sendPostRequest() {
 
     fetch(url, postRequest)
         .then(()=>{
-            window.location ="/users/1";
+            window.location ="/users";
         });
 }
