@@ -47,7 +47,7 @@ class UserController extends BaseController
         $users = new Users();
         $allUsers = $users->getAllUsers();
         $this->setView();
-        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         if ($page) {
             $this->limitUsersRange($allUsers, $page);
@@ -150,5 +150,15 @@ class UserController extends BaseController
         }
 
         $allUsers = $newAllUsers;
+    }
+
+    private function getPage(): int
+    {
+        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        if ($page == "") {
+            $page = 1;
+        }
+
+        return $page;
     }
 }
