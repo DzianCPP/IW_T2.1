@@ -15,9 +15,8 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
         if (!$this->users->insertUser($newUserInfo)) {
-            $email = $_POST['email'];
-            $fullName = $_POST['fullName'];
-            $this->new($email, $fullName);
+            http_response_code(401);
+            return;
         }
     }
 

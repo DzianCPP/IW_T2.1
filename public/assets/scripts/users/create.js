@@ -1,6 +1,6 @@
 document.getElementById("submit-button").addEventListener("click", sendPostRequest);
 
-function sendPostRequest() {
+async function sendPostRequest() {
     let setEmail = document.getElementById("email").value;
     let setFullName = document.getElementById("name").value;
     let setNewGender = document.getElementById("gender").value;
@@ -20,8 +20,16 @@ function sendPostRequest() {
         body: JSON.stringify(newUserInfo)
     };
 
-    fetch(url, postRequest)
-        .then(()=>{
-            window.location ="/users";
-        });
+    let response = await fetch(url, postRequest);
+
+    if (response.ok !== false) {
+        window.location="/users/";
+    } else {
+        let errorField = document.getElementById("error-field");
+        errorField.innerHTML = "Wrong name or email";
+        let emailField = document.getElementById("email");
+        emailField.style.color = "red";
+        let nameField = document.getElementById("name");
+        nameField.style.color = "red";
+    }
 }
