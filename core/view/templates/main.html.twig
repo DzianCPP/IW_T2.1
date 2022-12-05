@@ -31,8 +31,8 @@
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control" id="main-input-userID">
-                    <button class="btn btn-success" id="main-page-find-button"
+                    <input type="text" class="form-control w-75" id="main-input-userID">
+                    <button class="btn btn-success w-25" id="main-page-find-button"
                             disabled>Find
                     </button>
                 </div>
@@ -40,14 +40,21 @@
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
         </div>
 
-        <div class="row w-100 mb-1">
+
+
+        <div class="row w-100">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <select name="status" class="btn btn-secondary dropdown-toggle w-100" id="status">
-                    <option value="local-database">Local Database</option>
-                    <option value="gorest-rest-api">gorest REST API</option>
-                </select>
+                <div class="input-group">
+                    <select class="form-select w-75" id="inputGroupSelect04" aria-label="Example select with button addon">
+                        <option selected>Choose data source</option>
+                            <option value="local">Local DB</option>
+                            <option value="gorest">gorest API</option>
+                    </select>
+                    <button class="btn btn-outline-secondary w-25" type="button">Button</button>
+                </div>
             </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
         </div>
 
         <div class="row w-100">
