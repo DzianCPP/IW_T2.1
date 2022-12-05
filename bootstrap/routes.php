@@ -47,7 +47,7 @@ return [
         'params' => 'userID'
     ],
 
-    'users/show' => [
+    'users' => [
         'controller' => UserController::class,
         'action' => 'show',
         'method' => 'get'
