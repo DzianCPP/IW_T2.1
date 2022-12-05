@@ -15,7 +15,7 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
         if (!$this->users->insertUser($newUserInfo)) {
-            http_response_code(401);
+            http_response_code(400);
             return;
         }
     }
@@ -117,8 +117,8 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
         $users = new Users();
-        if ($users->editUser($newUserInfo)) {
-            $this->show();
+        if (!$users->editUser($newUserInfo)) {
+            http_response_code(400);
         }
     }
 
