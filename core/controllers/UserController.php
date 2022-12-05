@@ -71,9 +71,8 @@ class UserController extends BaseController
             return;
         }
 
-        if ($page > $pages) {
-            $this->view->render("404.html.twig", $data);
-            http_response_code(404);
+        if ($page > $pages || $page < 1) {
+            $this->notFound();
             return;
         }
 
@@ -160,5 +159,17 @@ class UserController extends BaseController
         }
 
         return $page;
+    }
+
+    private function notFound(): void
+    {
+        $data = [
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP',
+            'message' => '404: page not found'
+        ];
+        $this->view->render("404.html.twig", $data);
+        http_response_code(404);
+        return;
     }
 }
