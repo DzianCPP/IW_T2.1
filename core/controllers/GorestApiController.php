@@ -14,6 +14,7 @@ abstract class GorestApiController
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec(self::$curlHandler);
         $result = str_replace("id", "userID", $result);
+        curl_close(self::$curlHandler);
         return json_decode($result);
     }
 
