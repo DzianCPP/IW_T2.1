@@ -2,25 +2,23 @@
 
 namespace core\controllers;
 
-use GuzzleHttp\Client;
-
 abstract class GorestApiController
 {
     private const API_BASE_URI = "https://gorest.co.in";
-    private static $apiClient;
+    private static $curlHandler;
 
     public static function getRecords(string $request_uri): array
     {
-        self::setClient();
-        $records = self::$apiClient->request("GET", self::API_BASE_URI . $request_uri);
-        $rawBody = (string)$records->getBody();
-        $cookies = self::$apiClient->getConfig("cookies");
-        $rawBody = str_replace("id", "userID", $rawBody);
-        return json_decode($rawBody);
+        self::setCurlResource();
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec(self::$curlHandler);
+        $result = str_replace("id", "userID", $result);
+        return json_decode($result);
     }
 
-    private static function setClient(): void
+    private static function setCurlResource(): void
     {
-        self::$apiClient = new Client();
+        self::$curlHandler = curl_init();
     }
 }
