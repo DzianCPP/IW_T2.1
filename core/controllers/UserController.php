@@ -7,11 +7,22 @@ use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
+    const PER_PAGE = 10;
+    
     const PER_PAGE = 5;
     
     public function create(): void
     {
         $this->setModel();
+        $jsonString = file_get_contents("php://input");
+        $newUserInfo = json_decode($jsonString, true);
+        foreach($newUserInfo as $key => $value) {
+            $_POST[$key] = $value;
+        }
+        if (!$this->users->insertUser()) {
+            $email = $_POST['email'];
+            $fullName = $_POST['fullName'];
+            $this->new($email, $fullName);
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
         if (!$this->users->insertUser($newUserInfo)) {
@@ -42,9 +53,15 @@ class UserController extends BaseController
     {
         $users = new Users();
         $allUsers = $users->getAllUsers();
-        $this->setView();
-        $page = $this->getPage();
+        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
+        $this->setView(VIEW_PATH);
+        if ($page > $pages) {
+            $this->view->render("404");
+            http_response_code(404);
+            return;
+        }
+
         if ($page) {
             $this->limitUsersRange($allUsers, $page);
         } else {
@@ -131,13 +148,20 @@ class UserController extends BaseController
             if (!$users->deleteUsers($ids)) {
                 http_response_code(500);
             }
+        if (count($ids) > 0) {
+            $users = new Users();
+            if (!$users->deleteUsers($ids)) {
+                http_response_code(500);
+            }
         }
+
+        http_response_code(200);
     }
 
     private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
     {
-        $usersRangeStart = $requestedPage * self::PER_PAGE - self::PER_PAGE;
-        $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
+        $usersRangeStart = $requestedPage * 10 - 10;
+        $usersRangeEnd = $usersRangeStart + 10;
 
         $newAllUsers = [];
         for ($i = $usersRangeStart; $i < $usersRangeEnd && $i < count($allUsers); ++$i) {

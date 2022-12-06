@@ -63,11 +63,14 @@ class Model
         ";
         $query = $this->conn->prepare($sqlQuery);
         unset($params['userID']);
+<<<<<<< HEAD
 
         if (!$this->validator->userDataValid($params['email'], $params['name'])) {
             return false;
         }
         
+=======
+>>>>>>> 4ce6293eb3b4b74b6ce783d3b67640e69c722fe8
         if (!$query->execute($params)) {
             return false;
         }
