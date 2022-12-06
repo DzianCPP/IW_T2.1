@@ -3,7 +3,6 @@
 namespace core\controllers;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\CookieJarInterface;
 
 abstract class GorestApiController
 {
