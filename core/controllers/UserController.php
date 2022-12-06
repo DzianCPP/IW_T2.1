@@ -180,6 +180,7 @@ class UserController extends BaseController
             $apiClient = new Client();
             $response = $apiClient->request("GET", "https://gorest.co.in/public/v2/users");
             $rawBody = (string)$response->getBody();
+            $rawBody = str_replace("id", "userID", $rawBody);
             return json_decode($rawBody);
         }
     }
