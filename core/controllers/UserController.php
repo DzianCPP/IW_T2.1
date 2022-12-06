@@ -15,6 +15,11 @@ class UserController extends BaseController
         $this->setModel();
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
+
+        if ($_COOKIE['dataSource'] === 'gorest') {
+            GorestApiController::createRecord("/public/v2/users");
+        }
+        
         if (!$this->users->insertUser($newUserInfo)) {
             http_response_code(400);
             return;
