@@ -53,12 +53,12 @@ function nameFilled() {
     return nameValue.length !== 0;
 }
 
-function nameHasTwoWords(fullName) {
-    if (fullName.indexOf(" ") === -1) {
+function nameHasTwoWords(name) {
+    if (name.indexOf(" ") === -1) {
         return false;
     }
 
-    return fullName.indexOf(" ") !== fullName.length;
+    return name.indexOf(" ") !== name.length;
 }
 
 function emailHasAtChar(email) {

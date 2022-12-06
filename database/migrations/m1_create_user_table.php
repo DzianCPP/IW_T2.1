@@ -15,7 +15,7 @@ class m1_create_user_table extends MigrationsBase
         $sqlQuery = "CREATE TABLE usersTable(
                         userID int(20) NOT NULL AUTO_INCREMENT,
                         email varchar(255) NOT NULL,
-                        fullName varchar(255) default NULL,
+                        name varchar(255) default NULL,
                         gender varchar(25) NOT NULL,
                         PRIMARY KEY(userID))";
 
