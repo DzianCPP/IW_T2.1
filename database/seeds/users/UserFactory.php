@@ -13,7 +13,7 @@ class UserFactory
         while ($i < $count) {
             $users[] = [
                 'email' => getRandomName() . '@gmail.com',
-                'fullName' => getRandomFullName(),
+                'name' => getRandomFullName(),
                 'gender' => 'male',
                 'status' => 'active'
             ];

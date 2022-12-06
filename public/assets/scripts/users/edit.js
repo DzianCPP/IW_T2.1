@@ -1,8 +1,8 @@
 document.getElementById("submit-button").addEventListener("click", sendPutRequest);
 
-function sendPutRequest() {
+async function sendPutRequest() {
     let newEmail = document.getElementById("email").value;
-    let newFullName = document.getElementById("name").value;
+    let newName = document.getElementById("name").value;
     let newGender = document.getElementById("gender").value;
     let newStatus = document.getElementById("status").value;
     let newUserID = document.getElementById("user-id").value;
@@ -11,7 +11,7 @@ function sendPutRequest() {
 
     let newUserInfo = {
         email: newEmail,
-        fullName: newFullName,
+        name: newName,
         gender: newGender,
         status: newStatus,
         userID: newUserID
@@ -22,8 +22,16 @@ function sendPutRequest() {
         body: JSON.stringify(newUserInfo)
     };
 
-    fetch(url, putRequest)
-        .then(()=>{
-            history.back();
-        });
+    let response = await fetch(url, putRequest);
+
+    if (response.ok !== false) {
+        window.location="/users/";
+    } else {
+        let errorField = document.getElementById("error-field");
+        errorField.innerHTML = "Wrong name or email";
+        let emailField = document.getElementById("email");
+        emailField.style.color = "red";
+        let nameField = document.getElementById("name");
+        nameField.style.color = "red";
+    }
 }

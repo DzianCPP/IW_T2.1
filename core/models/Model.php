@@ -1,6 +1,7 @@
 <?php
 
 namespace core\models;
+
 use core\application\Database;
 use PDO;
 
@@ -19,7 +20,7 @@ class Model
 
     public function insert(array $params, array $fields, string $tableName): bool
     {
-        if (!$this->validator->userDataValid($params['email'], $params['fullName'])) {
+        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
             return false;
         }
 
@@ -40,6 +41,7 @@ class Model
         $sqlQuery = "SELECT * FROM $tableName";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
+        
         return $query->fetchAll();
     }
 
@@ -55,13 +57,17 @@ class Model
     protected function update(string $tableName, array $fields, array $params, $colName): bool
     {
         $sets = $this->getSets($fields);
-        $sqlQuery = "
-            UPDATE ${tableName}
+        $sqlQuery = "UPDATE ${tableName}
             SET ${sets}
-            WHERE ${colName}=${params[$colName]}
+            WHERE ${colName}={$params[$colName]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        array_pop($params);
+        unset($params['userID']);
+
+        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
+            return false;
+        }
+        
         if (!$query->execute($params)) {
             return false;
         }
@@ -69,9 +75,10 @@ class Model
         return true;
     }
 
-    protected function delete(string $colName, $value, string $tableName): bool
+    protected function delete(string $colName, array $values, string $tableName): bool
     {
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName}=${value}";
+        $values = implode(", ", $values);
+        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName} IN (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
@@ -87,23 +94,19 @@ class Model
 
     private function getValues(array $params): string
     {
-        $strValues = "'";
-        foreach ($params as $param) {
-            $strValues .= $param . "', '";
+        foreach($params as &$param) {
+            $param = "'" . $param . "'";
         }
 
-        $strValues = substr($strValues, 0, -3);
-        return $strValues;
+        return implode(",", $params);
     }
 
     private function getSets(array $fields): string
     {
-        $sets = "";
-        foreach($fields as $field) {
-            $sets .= $field . "=:" . $field . ", ";
+        foreach ($fields as &$field) {
+            $field = $field . "=:" . $field;
         }
-        $sets = substr($sets, 0, -2);
-
-        return $sets;
+        
+        return implode(",", $fields);
     }
 }

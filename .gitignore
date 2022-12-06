@@ -3,3 +3,4 @@
 /ApacheFolder/
 /vendor/
 .env
+/core/view/cache
