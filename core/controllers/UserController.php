@@ -3,6 +3,7 @@
 namespace core\controllers;
 
 use core\models\Users;
+use GuzzleHttp\Client;
 use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
@@ -41,7 +42,7 @@ class UserController extends BaseController
     public function show(): void
     {
         $users = new Users();
-        $allUsers = $users->getAllUsers();
+        $allUsers = $this->getAllUsers($users);
         $this->setView();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
@@ -167,5 +168,19 @@ class UserController extends BaseController
         $this->view->render("404.html.twig", $data);
         http_response_code(404);
         return;
+    }
+
+    private function getAllUsers(Users $users): array
+    {
+        if ($_COOKIE['dataSource'] === "local") {
+            return $users->getAllUsers();
+        }
+
+        if ($_COOKIE['dataSource'] === "gorest") {
+            $apiClient = new Client();
+            $response = $apiClient->request("GET", "https://gorest.co.in/public/v2/users");
+            $rawBody = (string)$response->getBody();
+            return json_decode($rawBody);
+        }
     }
 }
