@@ -7,7 +7,7 @@ use GuzzleHttp\Cookie\CookieJarInterface;
 
 abstract class GorestApiController
 {
-    const API_BASE_URI = "https://gorest.co.in";
+    private const API_BASE_URI = "https://gorest.co.in";
     private static $apiClient;
 
     public static function getRecords(string $request_uri): array
