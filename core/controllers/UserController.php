@@ -3,18 +3,21 @@
 namespace core\controllers;
 
 use core\models\Users;
-use GuzzleHttp\Client;
-use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
     const PER_PAGE = 5;
-    
+
     public function create(): void
     {
         $this->setModel();
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
+
+        if ($_COOKIE['dataSource'] === 'gorest') {
+            GorestApiController::createRecord("/public/v2/users");
+        }
+
         if (!$this->users->insertUser($newUserInfo)) {
             http_response_code(400);
             return;
@@ -177,11 +180,7 @@ class UserController extends BaseController
         }
 
         if ($_COOKIE['dataSource'] === "gorest") {
-            $apiClient = new Client();
-            $response = $apiClient->request("GET", "https://gorest.co.in/public/v2/users");
-            $rawBody = (string)$response->getBody();
-            $rawBody = str_replace("id", "userID", $rawBody);
-            return json_decode($rawBody);
+            return GorestApiController::getRecords("/public/v2/users");
         }
     }
 }
