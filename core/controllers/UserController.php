@@ -75,6 +75,17 @@ class UserController extends BaseController
         $this->view->render("users.html.twig", $data);
     }
 
+    private function getAllUsers(Users $users): array
+    {
+        if ($_COOKIE['dataSource'] === "local") {
+            return $users->getAllUsers();
+        }
+
+        if ($_COOKIE['dataSource'] === "gorest") {
+            return GorestApiController::getRecords("/public/v2/users");
+        }
+    }
+
     public function showOne(): void
     {
         $users = new Users();
@@ -112,6 +123,15 @@ class UserController extends BaseController
         $this->view->render("edit.html.twig", $data);
     }
 
+    private function getUserById(Users $users, int $id): array
+    {
+        if ($_COOKIE['dataSource']  === "local") {
+            return $userToEdit = $users->getUserById($id)[0];
+        }
+
+        return GorestApiController::getRecordById($id, "/public/v2/users");
+    }
+
     public function update(): void
     {
         $jsonString = file_get_contents("php://input");
@@ -128,10 +148,26 @@ class UserController extends BaseController
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $users = new Users();
+            $this->deleteUsers($users, $ids);
+        }
+    }
+
+    private function deleteUsers(Users $users, array $ids): bool
+    {
+        if ($_COOKIE['dataSource'] === "local") {
             if (!$users->deleteUsers($ids)) {
                 http_response_code(500);
+                return false;
             }
         }
+
+        if ($_COOKIE['dataSource'] === "gorest") {
+            foreach ($ids as $id) {
+                GorestApiController::deleteRecord($id, "/public/v2/users");
+            }
+        }
+
+        return true;
     }
 
     private function limitUsersRange(array &$allUsers, int $requestedPage = 0): void
@@ -171,25 +207,5 @@ class UserController extends BaseController
         $this->view->render("404.html.twig", $data);
         http_response_code(404);
         return;
-    }
-
-    private function getAllUsers(Users $users): array
-    {
-        if ($_COOKIE['dataSource'] === "local") {
-            return $users->getAllUsers();
-        }
-
-        if ($_COOKIE['dataSource'] === "gorest") {
-            return GorestApiController::getRecords("/public/v2/users");
-        }
-    }
-
-    private function getUserById(Users $users, int $id): array
-    {
-        if ($_COOKIE['dataSource']  === "local") {
-            return $userToEdit = $users->getUserById($id)[0];
-        }
-
-        return GorestApiController::getRecordById($id, "/public/v2/users/");
     }
 }
