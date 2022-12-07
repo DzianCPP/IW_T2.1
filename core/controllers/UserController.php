@@ -134,12 +134,30 @@ class UserController extends BaseController
 
     public function update(): void
     {
-        $jsonString = file_get_contents("php://input");
-        $newUserInfo = json_decode($jsonString, true);
         $users = new Users();
-        if (!$users->editUser($newUserInfo)) {
+        if (!$this->updateUser($users)) {
             http_response_code(400);
         }
+    }
+
+    private function updateUser(Users $users): bool
+    {
+        $jsonString = file_get_contents("php://input");
+        $newUserInfo = json_decode($jsonString, true);
+
+        if ($_COOKIE['dataSource'] === "local") {
+            if (!$users->editUser($newUserInfo)) {
+                return false;
+            }
+        }
+
+        if ($_COOKIE['dataSource'] === "gorest") {
+            if (!GorestApiController::updateRecordById($newUserInfo, "/public/v2/users")) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function delete(): void

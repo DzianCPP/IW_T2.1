@@ -25,21 +25,6 @@ abstract class GorestApiController
         return json_decode($result, true);
     }
 
-    public static function createRecord(string $request_uri): bool
-    {
-        self::setPostCurl($request_uri);
-        $gorest_response = curl_exec(self::$curlHandler);
-        echo $gorest_response;
-        curl_close(self::$curlHandler);
-        return true;
-    }
-
-    public static function deleteRecord(int $id, string $request_uri)
-    {
-        self::setDeleteCurl($request_uri . "/${id}");
-        $result = curl_exec(self::$curlHandler);
-    }
-
     private static function setGetCurl(string $request_uri): void
     {
         self::setCurlResource();
@@ -49,6 +34,15 @@ abstract class GorestApiController
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
         ]);
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+    }
+
+    public static function createRecord(string $request_uri): bool
+    {
+        self::setPostCurl($request_uri);
+        $gorest_response = curl_exec(self::$curlHandler);
+        echo $gorest_response;
+        curl_close(self::$curlHandler);
+        return true;
     }
 
     private static function setPostCurl(string $request_uri): void
@@ -69,6 +63,12 @@ abstract class GorestApiController
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
 
+    public static function deleteRecord(int $id, string $request_uri)
+    {
+        self::setDeleteCurl($request_uri . "/${id}");
+        $result = curl_exec(self::$curlHandler);
+    }
+
     private static function setDeleteCurl(string $request_uri): void
     {
         self::setCurlResource();
@@ -80,6 +80,31 @@ abstract class GorestApiController
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
         ]);
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+    }
+
+    public static function updateRecordById(array $newRecordInfo, string $requested_uri): bool
+    {
+        self::setPutCurl($newRecordInfo, $requested_uri . "/{$newRecordInfo['id']}");
+        $result = curl_exec(self::$curlHandler);
+
+        if ($result === false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static function setPutCurl(array $newRecordInfo, string $requested_uri): void
+    {
+        self::setCurlResource();
+        curl_setopt(self::$curlHandler, CURLOPT_FRESH_CONNECT, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_PUT, true);
+        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
+        ]);
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $requested_uri);
     }
 
     private static function setCurlResource(): void
