@@ -5,7 +5,7 @@ namespace core\controllers;
 abstract class GorestApiController
 {
     private const API_BASE_URI = "https://gorest.co.in";
-    private const API_AUTH_TOKEN = "Authorization: Bearer 7fd5289a86e8ceb7eb7df25cac45b38dbb9588c418bafe2daca8c9e9348b22aa";
+    private const API_AUTH_TOKEN = "'Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'] . "'";
     private static $curlHandler;
 
     public static function getRecords(string $request_uri): array
@@ -29,8 +29,9 @@ abstract class GorestApiController
     private static function setGetCurl(string $request_uri): void
     {
         self::setCurlResource();
-        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
-        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Accept:application/json");
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Content-Type:application/json");
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN);
     }
 
     private static function setPostCurl(string $request_uri): void
