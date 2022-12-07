@@ -10,9 +10,7 @@ abstract class GorestApiController
 
     public static function getRecords(string $request_uri): array
     {
-        self::setCurlResource();
-        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
-        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        self::setGetCurl($request_uri);
         $result = curl_exec(self::$curlHandler);
         $result = str_replace("id", "userID", $result);
         curl_close(self::$curlHandler);
@@ -21,24 +19,36 @@ abstract class GorestApiController
 
     public static function createRecord(string $request_uri): bool
     {
+        self::setPostCurl($request_uri);
+        $gorest_response = curl_exec(self::$curlHandler);
+        echo $gorest_response;
+        curl_close(self::$curlHandler);
+        return true;
+    }
+
+    private static function setGetCurl(string $request_uri): void
+    {
+        self::setCurlResource();
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+    }
+
+    private static function setPostCurl(string $request_uri): void
+    {
         self::setCurlResource();
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
         curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            self::API_AUTH_TOKEN]);
+            self::API_AUTH_TOKEN
+        ]);
         curl_setopt(self::$curlHandler, CURLOPT_POST, 1);
-        curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS,
-        "email=example@gmail.ru&name=John Doe&gender=male&status=active");
+        curl_setopt(
+            self::$curlHandler,
+            CURLOPT_POSTFIELDS,
+            "email=example@gmail.ru&name=John Doe&gender=male&status=active"
+        );
 
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
-
-        $gorest_response = curl_exec(self::$curlHandler);
-
-        echo $gorest_response;
-
-        curl_close(self::$curlHandler);
-        
-        return true;
     }
 
     private static function setCurlResource(): void
