@@ -5,7 +5,7 @@ namespace core\controllers;
 abstract class GorestApiController
 {
     private const API_BASE_URI = "https://gorest.co.in";
-    private const API_AUTH_TOKEN = "'Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'] . "'";
+    private const API_AUTH_TOKEN = "'Authorization: Bearer ";
     private static $curlHandler;
 
     public static function getRecords(string $request_uri): array
@@ -31,25 +31,22 @@ abstract class GorestApiController
         self::setCurlResource();
         curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Accept:application/json");
         curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Content-Type:application/json");
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN);
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN . $_ENV['API_AUTH_TOKEN'] . "'");
+        curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
 
     private static function setPostCurl(string $request_uri): void
     {
         self::setCurlResource();
-        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
-        curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            self::API_AUTH_TOKEN
-        ]);
-        curl_setopt(self::$curlHandler, CURLOPT_POST, 1);
-        curl_setopt(
-            self::$curlHandler,
-            CURLOPT_POSTFIELDS,
-            "email=example@gmail.ru&name=John Doe&gender=male&status=active"
-        );
-
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Accept:application/json");
+        curl_setopt(self::$curlHandler, CURLOPT_VERBOSE, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Content-Type:application/json");
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN . $_ENV['API_AUTH_TOKEN'] . "'");
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+        $newUserInfo = file_get_contents("php://input");
+        curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS, $newUserInfo);
     }
 
     private static function setCurlResource(): void
