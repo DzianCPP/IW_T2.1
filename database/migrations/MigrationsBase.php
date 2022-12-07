@@ -1,6 +1,7 @@
 <?php
 
 namespace database\migrations;
+
 use database\migrationHistory\MigrationHistoryHandler;
 use PDO;
 
