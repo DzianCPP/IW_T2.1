@@ -30,6 +30,9 @@ abstract class GorestApiController
         self::setCurlResource();
         curl_setopt(self::$curlHandler, CURLOPT_FRESH_CONNECT, true);
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
+        ]);
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
 
