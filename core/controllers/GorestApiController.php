@@ -13,7 +13,16 @@ abstract class GorestApiController
         $result = curl_exec(self::$curlHandler);
         $result = str_replace("id", "userID", $result);
         curl_close(self::$curlHandler);
-        return json_decode($result);
+        return json_decode($result, true);
+    }
+
+    public static function getRecordById(int $id, $request_uri)
+    {
+        self::setGetCurl($request_uri . "/${id}");
+        $result = curl_exec(self::$curlHandler);
+        $result = str_replace("id", "userID", $result);
+        curl_close(self::$curlHandler);
+        return json_decode($result, true);
     }
 
     public static function createRecord(string $request_uri): bool
