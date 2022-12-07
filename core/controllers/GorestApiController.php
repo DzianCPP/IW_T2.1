@@ -29,9 +29,6 @@ abstract class GorestApiController
     private static function setGetCurl(string $request_uri): void
     {
         self::setCurlResource();
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Accept:application/json");
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Content-Type:application/json");
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN . $_ENV['API_AUTH_TOKEN'] . "'");
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
