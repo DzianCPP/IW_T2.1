@@ -80,10 +80,10 @@ class UserController extends BaseController
         $users = new Users();
         $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $userID = ltrim(rtrim($userID, '}'), '{');
-        $user = $users->getUserById($userID);
+        $user = $this->getUserById($users, $userID);
         $this->setView();
         $data = [
-            'allUsers' => $user,
+            'allUsers' => [$user],
             'GENDERS' => $users->getGenders(),
             'STATUSES' => $users->getStatuses(),
             'title' => 'Add User App',
