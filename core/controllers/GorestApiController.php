@@ -39,14 +39,18 @@ abstract class GorestApiController
     private static function setPostCurl(string $request_uri): void
     {
         self::setCurlResource();
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Accept:application/json");
-        curl_setopt(self::$curlHandler, CURLOPT_VERBOSE, true);
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, "Content-Type:application/json");
-        curl_setopt(self::$curlHandler, CURLOPT_HEADER, self::API_AUTH_TOKEN . $_ENV['API_AUTH_TOKEN'] . "'");
+        curl_setopt(self::$curlHandler, CURLOPT_FRESH_CONNECT, true);
+        curl_setopt(self::$curlHandler, CURLOPT_HEADER, true);
+        curl_setopt(self::$curlHandler, CURLOPT_POST, true);
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
+        curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
+            "Authentication: Bearer " . $_ENV['API_ACCESS_TOKEN']
+        ]);
         $newUserInfo = file_get_contents("php://input");
+        $newUserInfo = json_decode($newUserInfo);
+        $newUserInfo = http_build_query($newUserInfo);
         curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS, $newUserInfo);
+        curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
 
     private static function setCurlResource(): void
