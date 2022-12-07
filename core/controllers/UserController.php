@@ -98,8 +98,8 @@ class UserController extends BaseController
     {
         $users = new Users();
         $this->setView();
-        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $userToEdit = $users->getUserById($userID)[0];
+        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $userToEdit = $this->getUserById($users, $id);
         $genders = $users->getGenders();
         $statuses = $users->getStatuses();
         $data = [
@@ -182,5 +182,14 @@ class UserController extends BaseController
         if ($_COOKIE['dataSource'] === "gorest") {
             return GorestApiController::getRecords("/public/v2/users");
         }
+    }
+
+    private function getUserById(Users $users, int $id): array
+    {
+        if ($_COOKIE['dataSource']  === "local") {
+            return $userToEdit = $users->getUserById($id)[0];
+        }
+
+        return GorestApiController::getUserById($id);
     }
 }
