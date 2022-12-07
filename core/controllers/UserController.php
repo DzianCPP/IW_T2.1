@@ -3,28 +3,25 @@
 namespace core\controllers;
 
 use core\models\Users;
+use GuzzleHttp\Client;
 use function MongoDB\BSON\fromJSON;
 
 class UserController extends BaseController
 {
-    const PER_PAGE = 10;
+    const PER_PAGE = 5;
     
     public function create(): void
     {
         $this->setModel();
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
-        foreach($newUserInfo as $key => $value) {
-            $_POST[$key] = $value;
-        }
-        if (!$this->users->insertUser()) {
-            $email = $_POST['email'];
-            $fullName = $_POST['fullName'];
-            $this->new($email, $fullName);
+        if (!$this->users->insertUser($newUserInfo)) {
+            http_response_code(400);
+            return;
         }
     }
 
-    public function new(string $email = '', string $fullName = ''): void
+    public function new(string $email = '', string $name = ''): void
     {
         $this->setView();
         $users = new Users();
@@ -32,7 +29,7 @@ class UserController extends BaseController
         $statuses = $users->getStatuses();
         $data = [
             'email' => $email,
-            'fullName' => $fullName,
+            'name' => $name,
             'genders' => $genders,
             'statuses' => $statuses,
             'title' => 'Add User App',
@@ -45,9 +42,9 @@ class UserController extends BaseController
     public function show(): void
     {
         $users = new Users();
-        $allUsers = $users->getAllUsers();
+        $allUsers = $this->getAllUsers($users);
         $this->setView();
-        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         if ($page) {
             $this->limitUsersRange($allUsers, $page);
@@ -71,9 +68,8 @@ class UserController extends BaseController
             return;
         }
 
-        if ($page > $pages) {
-            $this->view->render("404.html.twig", $data);
-            http_response_code(404);
+        if ($page > $pages || $page < 1) {
+            $this->notFound();
             return;
         }
 
@@ -122,8 +118,8 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $newUserInfo = json_decode($jsonString, true);
         $users = new Users();
-        if ($users->editUser($newUserInfo)) {
-            $this->show();
+        if (!$users->editUser($newUserInfo)) {
+            http_response_code(400);
         }
     }
 
@@ -141,7 +137,7 @@ class UserController extends BaseController
 
     private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
     {
-        $usersRangeStart = $requestedPage * 10 - self::PER_PAGE;
+        $usersRangeStart = $requestedPage * self::PER_PAGE - self::PER_PAGE;
         $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
 
         $newAllUsers = [];
@@ -150,5 +146,42 @@ class UserController extends BaseController
         }
 
         $allUsers = $newAllUsers;
+    }
+
+    private function getPage(): int
+    {
+        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        if ($page == "") {
+            $page = 1;
+        }
+
+        return $page;
+    }
+
+    private function notFound(): void
+    {
+        $data = [
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP',
+            'message' => '404: page not found'
+        ];
+        $this->view->render("404.html.twig", $data);
+        http_response_code(404);
+        return;
+    }
+
+    private function getAllUsers(Users $users): array
+    {
+        if ($_COOKIE['dataSource'] === "local") {
+            return $users->getAllUsers();
+        }
+
+        if ($_COOKIE['dataSource'] === "gorest") {
+            $apiClient = new Client();
+            $response = $apiClient->request("GET", "https://gorest.co.in/public/v2/users");
+            $rawBody = (string)$response->getBody();
+            $rawBody = str_replace("id", "userID", $rawBody);
+            return json_decode($rawBody);
+        }
     }
 }

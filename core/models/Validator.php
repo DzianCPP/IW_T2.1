@@ -27,9 +27,9 @@ class Validator
         return htmlspecialchars($data);
     }
 
-    public function userDataValid(string $email, string $fullName): bool
+    public function userDataValid(string $email, string $name): bool
     {
-        if (!$this->nameValid($fullName) || !$this->emailValid($email)) {
+        if (!$this->nameValid($name) || !$this->emailValid($email)) {
             return false;
         }
 
@@ -49,10 +49,10 @@ class Validator
         return true;
     }
 
-    private function nameValid(string $fullName): bool
+    private function nameValid(string $name): bool
     {
-        $firstName = substr($fullName, 0, strpos($fullName, " ", 0));
-        $lastName = ltrim(substr($fullName, strpos($fullName, " ", 0), strlen($fullName)));
+        $firstName = substr($name, 0, strpos($name, " ", 0));
+        $lastName = ltrim(substr($name, strpos($name, " ", 0), strlen($name)));
 
         if (!preg_match($this->nameRegEx, $firstName) || !preg_match($this->nameRegEx, $lastName)) {
             return false;
