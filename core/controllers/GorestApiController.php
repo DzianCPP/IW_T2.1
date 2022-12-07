@@ -41,9 +41,10 @@ abstract class GorestApiController
         curl_setopt(self::$curlHandler, CURLOPT_POST, true);
         curl_setopt(self::$curlHandler, CURLOPT_RETURNTRANSFER, true);
         curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer " . $_ENV['API_ACCESS_TOKEN']
+            "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
         ]);
         $newUserInfo = file_get_contents("php://input");
+        $newUserInfo = str_replace("userID", "id", $newUserInfo);
         $newUserInfo = json_decode($newUserInfo);
         $newUserInfo = http_build_query($newUserInfo);
         curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS, $newUserInfo);
