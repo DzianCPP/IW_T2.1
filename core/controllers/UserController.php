@@ -190,6 +190,6 @@ class UserController extends BaseController
             return $userToEdit = $users->getUserById($id)[0];
         }
 
-        return GorestApiController::getUserById($id);
+        return GorestApiController::getRecordById($id, "/public/v2/users/");
     }
 }
