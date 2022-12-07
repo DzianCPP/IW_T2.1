@@ -49,11 +49,7 @@ class UserController extends BaseController
         $this->setView();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
-        if ($page) {
-            $this->limitUsersRange($allUsers, $page);
-        } else {
-            $this->limitUsersRange($allUsers);
-        }
+        $this->limitUsersRange($allUsers, $page);
 
         $data = [
             'allUsers' => $allUsers,
@@ -138,8 +134,12 @@ class UserController extends BaseController
         }
     }
 
-    private function limitUsersRange(array &$allUsers, int $requestedPage = 1): void
+    private function limitUsersRange(array &$allUsers, int $requestedPage = 0): void
     {
+        if ($requestedPage === 0) {
+            $requestedPage = 1;
+        }
+
         $usersRangeStart = $requestedPage * self::PER_PAGE - self::PER_PAGE;
         $usersRangeEnd = $usersRangeStart + self::PER_PAGE;
 
