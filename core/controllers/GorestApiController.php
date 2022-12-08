@@ -16,7 +16,7 @@ abstract class GorestApiController
         return json_decode($result, true);
     }
 
-    public static function getRecordById(int $id, $request_uri)
+    public static function getRecordById(int $id, $request_uri): array
     {
         self::setGetCurl($request_uri . "/${id}");
         $result = curl_exec(self::$curlHandler);
@@ -38,13 +38,23 @@ abstract class GorestApiController
 
     public static function createRecord(string $request_uri): bool
     {
-        self::setPostCurl($request_uri);
+        $newUserInfo = file_get_contents("php://input");
+        $newUserInfo = str_replace("userID", "id", $newUserInfo);
+        $newUserInfo = json_decode($newUserInfo);
+        $newUserInfo = http_build_query($newUserInfo);
+
+        self::setPostCurl($request_uri, $newUserInfo);
         $gorest_response = curl_exec(self::$curlHandler);
         curl_close(self::$curlHandler);
+
+        if ($gorest_response === false) {
+            return false;
+        }
+
         return true;
     }
 
-    private static function setPostCurl(string $request_uri): void
+    private static function setPostCurl(string $request_uri, string $newUserInfo): void
     {
         self::setCurlResource();
         curl_setopt(self::$curlHandler, CURLOPT_FRESH_CONNECT, true);
@@ -54,18 +64,20 @@ abstract class GorestApiController
         curl_setopt(self::$curlHandler, CURLOPT_HTTPHEADER, [
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN']
         ]);
-        $newUserInfo = file_get_contents("php://input");
-        $newUserInfo = str_replace("userID", "id", $newUserInfo);
-        $newUserInfo = json_decode($newUserInfo);
-        $newUserInfo = http_build_query($newUserInfo);
         curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS, $newUserInfo);
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $request_uri);
     }
 
-    public static function deleteRecord(int $id, string $request_uri)
+    public static function deleteRecord(int $id, string $request_uri): bool
     {
         self::setDeleteCurl($request_uri . "/${id}");
         $result = curl_exec(self::$curlHandler);
+
+        if (!$result) {
+            return false;
+        }
+
+        return true;
     }
 
     private static function setDeleteCurl(string $request_uri): void
@@ -83,9 +95,9 @@ abstract class GorestApiController
 
     public static function updateRecordById(array $newRecordInfo, string $requested_uri): bool
     {
-        self::setPutCurl($newRecordInfo, $requested_uri . "/{$newRecordInfo['id']}");
+        self::setPutCurl(json_encode($newRecordInfo), $requested_uri . "/{$newRecordInfo['id']}");
         $result = curl_exec(self::$curlHandler);
-        $info = curl_getinfo(self::$curlHandler);
+
         if ($result === false) {
             return false;
         }
@@ -93,7 +105,7 @@ abstract class GorestApiController
         return true;
     }
 
-    private static function setPutCurl(array &$newRecordInfo, string $requested_uri): void
+    private static function setPutCurl(string $newRecordInfo, string $requested_uri): void
     {
         self::setCurlResource();
         curl_setopt(self::$curlHandler, CURLOPT_FRESH_CONNECT, true);
@@ -104,7 +116,7 @@ abstract class GorestApiController
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
             "Content-Type:application/json"
         ]);
-        $newRecordInfo = json_encode($newRecordInfo);
+
         curl_setopt(self::$curlHandler, CURLOPT_URL, self::API_BASE_URI . $requested_uri);
         curl_setopt(self::$curlHandler, CURLOPT_POSTFIELDS, $newRecordInfo);
     }
