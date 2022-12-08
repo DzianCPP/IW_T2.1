@@ -6,24 +6,24 @@ class AppController extends BaseController
 {
     public function index(): void
     {
-        $this->setView();
+        self::setView();
         $data = [
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
 
-        $this->view->render("main.html.twig", $data);
+        self::$view->render("main.html.twig", $data);
     }
 
     public function notFound(): void
     {
-        $this->setView();
+        self::setView();
         $data = [
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP',
             'message' => '404: page not found'
         ];
         http_response_code(404);
-        $this->view->render("404.html.twig", $data);
+        self::$view->render("404.html.twig", $data);
     }
 }

@@ -10,51 +10,37 @@ class UserController extends BaseController
 
     public function create(): void
     {
-        $this->setModel();
-        $jsonString = file_get_contents("php://input");
-        $newUserInfo = json_decode($jsonString, true);
-
-        if ($_COOKIE['dataSource'] === 'gorest') {
-            GorestApiController::createRecord("/public/v2/users");
-        }
-
-        if (!$this->users->insertUser($newUserInfo)) {
-            http_response_code(400);
-            return;
-        }
+        UserDataController::createUser();
     }
 
     public function new(string $email = '', string $name = ''): void
     {
-        $this->setView();
-        $users = new Users();
-        $genders = $users->getGenders();
-        $statuses = $users->getStatuses();
+        self::setView();
+        self::setModel();
         $data = [
             'email' => $email,
             'name' => $name,
-            'genders' => $genders,
-            'statuses' => $statuses,
+            'genders' => self::$users->getGenders(),
+            'statuses' => self::$users->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
 
-        $this->view->render("new.html.twig", $data);
+        self::$view->render("new.html.twig", $data);
     }
 
     public function show(): void
     {
-        $users = new Users();
-        $allUsers = $this->getAllUsers($users);
-        $this->setView();
+        self::setModel();
+        self::setView();
+        $allUsers = UserDataController::selectUsers();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
-
         $data = [
             'allUsers' => $allUsers,
-            'GENDERS' => $users->getGenders(),
-            'STATUSES' => $users->getStatuses(),
+            'GENDERS' => self::$users->getGenders(),
+            'STATUSES' => self::$users->getStatuses(),
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
@@ -63,7 +49,7 @@ class UserController extends BaseController
         ];
 
         if (count($allUsers) === 0) {
-            $this->view->render("emptyTable.html.twig", $data);
+            self::$view->render("emptyTable.html.twig", $data);
             return;
         }
 
@@ -72,92 +58,48 @@ class UserController extends BaseController
             return;
         }
 
-        $this->view->render("users.html.twig", $data);
-    }
-
-    private function getAllUsers(Users $users): array
-    {
-        if ($_COOKIE['dataSource'] === "local") {
-            return $users->getAllUsers();
-        }
-
-        if ($_COOKIE['dataSource'] === "gorest") {
-            return GorestApiController::getRecords("/public/v2/users");
-        }
+        self::$view->render("users.html.twig", $data);
     }
 
     public function showOne(): void
     {
-        $users = new Users();
-        $userID = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $userID = ltrim(rtrim($userID, '}'), '{');
-        $user = $this->getUserById($users, $userID);
-        $this->setView();
+        self::setModel();
+        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $id = ltrim(rtrim($id, '}'), '{');
+        $user = UserDataController::selectUser($id);
+        self::setView();
         $data = [
             'allUsers' => [$user],
-            'GENDERS' => $users->getGenders(),
-            'STATUSES' => $users->getStatuses(),
+            'GENDERS' => self::$users->getGenders(),
+            'STATUSES' => self::$users->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP',
             'countUsers' => count([$user])
         ];
 
-        $this->view->render("users.html.twig", $data);
+        self::$view->render("users.html.twig", $data);
     }
 
     public function editUser(): void
     {
-        $users = new Users();
-        $this->setView();
+        self::setModel();
+        self::setView();
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $userToEdit = $this->getUserById($users, $id);
-        $genders = $users->getGenders();
-        $statuses = $users->getStatuses();
         $data = [
-            'genders' => $genders,
-            'statuses' => $statuses,
-            'user' => $userToEdit,
+            'genders' => self::$users->getGenders(),
+            'statuses' => self::$users->getStatuses(),
+            'user' => UserDataController::selectUser($id),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
-        $this->view->render("edit.html.twig", $data);
-    }
-
-    private function getUserById(Users $users, int $id): array
-    {
-        if ($_COOKIE['dataSource']  === "local") {
-            return $userToEdit = $users->getUserById($id)[0];
-        }
-
-        return GorestApiController::getRecordById($id, "/public/v2/users");
+        self::$view->render("edit.html.twig", $data);
     }
 
     public function update(): void
     {
-        $users = new Users();
-        if (!$this->updateUser($users)) {
+        if (!UserDataController::updateUser()) {
             http_response_code(400);
         }
-    }
-
-    private function updateUser(Users $users): bool
-    {
-        $jsonString = file_get_contents("php://input");
-        $newUserInfo = json_decode($jsonString, true);
-
-        if ($_COOKIE['dataSource'] === "local") {
-            if (!$users->editUser($newUserInfo)) {
-                return false;
-            }
-        }
-
-        if ($_COOKIE['dataSource'] === "gorest") {
-            if (!GorestApiController::updateRecordById($newUserInfo, "/public/v2/users")) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public function delete(): void
@@ -165,27 +107,20 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
-            $users = new Users();
-            $this->deleteUsers($users, $ids);
+            UserDataController::deleteUsers($ids);
         }
     }
 
-    private function deleteUsers(Users $users, array $ids): bool
+    private function notFound(): void
     {
-        if ($_COOKIE['dataSource'] === "local") {
-            if (!$users->deleteUsers($ids)) {
-                http_response_code(500);
-                return false;
-            }
-        }
-
-        if ($_COOKIE['dataSource'] === "gorest") {
-            foreach ($ids as $id) {
-                GorestApiController::deleteRecord($id, "/public/v2/users");
-            }
-        }
-
-        return true;
+        $data = [
+            'title' => 'Add User App',
+            'author' => 'Author: DzianCPP',
+            'message' => '404: page not found'
+        ];
+        $this->view->render("404.html.twig", $data);
+        http_response_code(404);
+        return;
     }
 
     private function limitUsersRange(array &$allUsers, int $requestedPage = 0): void
@@ -213,17 +148,5 @@ class UserController extends BaseController
         }
 
         return $page;
-    }
-
-    private function notFound(): void
-    {
-        $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
-            'message' => '404: page not found'
-        ];
-        $this->view->render("404.html.twig", $data);
-        http_response_code(404);
-        return;
     }
 }
