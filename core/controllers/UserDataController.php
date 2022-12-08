@@ -17,7 +17,7 @@ abstract class UserDataController extends BaseController
             }
         }
 
-        if ($_COOKIE['dataSourc'] === "local") {
+        if ($_COOKIE['dataSource'] === "local") {
             if (!self::$users->insertUser($newUserInfo)) {
                 http_response_code(400);
                 return;
