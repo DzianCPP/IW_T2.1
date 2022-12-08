@@ -54,7 +54,8 @@ abstract class UserDataController extends BaseController
     public static function updateUser(): bool
     {
         $jsonString = file_get_contents("php://input");
-        $newUserInfo = json_decode($jsonString, true);
+        $newUserInfo = str_replace("id", "userID", $jsonString);
+        $newUserInfo = json_decode($newUserInfo, true);
         self::setModel();
         if ($_COOKIE['dataSource'] === "local") {
             if (!self::$users->editUser($newUserInfo)) {
