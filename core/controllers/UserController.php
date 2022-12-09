@@ -33,7 +33,7 @@ class UserController extends BaseController
             'author' => 'Author: DzianCPP'
         ];
 
-        self::$view->render("new.html.twig", $data);
+        $this->view->render("new.html.twig", $data);
     }
 
     public function show(): void
@@ -81,7 +81,7 @@ class UserController extends BaseController
             'countUsers' => count([$user])
         ];
 
-        self::$view->render("users.html.twig", $data);
+        $this->view->render("users.html.twig", $data);
     }
 
     public function editUser(): void

@@ -12,14 +12,14 @@ abstract class BaseController
 
     protected function setView()
     {
-        if (!isset(self::$view)) {
+        if (!isset($this->view)) {
             $this->view = new UsersView();
         }
     }
 
     protected function setModel()
     {
-        if (!isset(self::$users)) {
+        if (!isset($this->users)) {
             $this->users = new Users();
         }
     }
