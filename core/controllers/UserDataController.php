@@ -59,6 +59,7 @@ class UserDataController extends BaseController
         $jsonString = file_get_contents("php://input");
         $newUserInfo = $jsonString;
         $newUserInfo = json_decode($newUserInfo, true);
+        
         if ($_COOKIE['dataSource'] === "local") {
             if (!$this->users->editUser($newUserInfo)) {
                 return false;
