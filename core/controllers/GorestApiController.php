@@ -6,7 +6,6 @@ use core\GorestCurlBuilder;
 
 class GorestApiController
 {
-    private const API_BASE_URI = "https://gorest.co.in";
     private $curlHandler;
     private GorestCurlBuilder $gorestCurlBuilder;
 
