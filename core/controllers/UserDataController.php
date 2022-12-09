@@ -57,7 +57,7 @@ class UserDataController extends BaseController
     public function updateUser(): bool
     {
         $jsonString = file_get_contents("php://input");
-        $newUserInfo = str_replace("id", "userID", $jsonString);
+        $newUserInfo = $jsonString;
         $newUserInfo = json_decode($newUserInfo, true);
         if ($_COOKIE['dataSource'] === "local") {
             if (!$this->users->editUser($newUserInfo)) {
@@ -66,7 +66,7 @@ class UserDataController extends BaseController
         }
 
         if ($_COOKIE['dataSource'] === "gorest") {
-            if (!$this->gorestApiController->updateRecordById($newUserInfo, "/public/v2/users")) {
+            if (!$this->gorestApiController->updateRecordById($newUserInfo, "/public/v2/users/" . $newUserInfo['id'])) {
                 return false;
             }
         }
