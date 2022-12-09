@@ -7,20 +7,20 @@ use core\models\Users;
 
 abstract class BaseController
 {
-    protected static Users $users;
-    protected static UsersView $view;
+    protected Users $users;
+    protected UsersView $view;
 
-    protected static function setView()
+    protected function setView()
     {
         if (!isset(self::$view)) {
-            self::$view = new UsersView();
+            $this->view = new UsersView();
         }
     }
 
-    protected static function setModel()
+    protected function setModel()
     {
         if (!isset(self::$users)) {
-            self::$users = new Users();
+            $this->users = new Users();
         }
     }
 }

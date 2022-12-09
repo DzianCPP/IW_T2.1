@@ -3,25 +3,32 @@
 namespace core\controllers;
 
 use core\models\Users;
+use core\view\UsersView;
 
 class UserController extends BaseController
 {
     const PER_PAGE = 5;
+    private UserDataController $userDataController;
+
+    public function __construct()
+    {
+        $this->userDataController = new UserDataController();
+        $this->setModel();
+        $this->setView();
+    }
 
     public function create(): void
     {
-        UserDataController::createUser();
+        $this->userDataController->createUser();
     }
 
     public function new(string $email = '', string $name = ''): void
     {
-        self::setView();
-        self::setModel();
         $data = [
             'email' => $email,
             'name' => $name,
-            'genders' => self::$users->getGenders(),
-            'statuses' => self::$users->getStatuses(),
+            'genders' => $this->users->getGenders(),
+            'statuses' => $this->users->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
@@ -31,16 +38,15 @@ class UserController extends BaseController
 
     public function show(): void
     {
-        self::setModel();
-        self::setView();
-        $allUsers = UserDataController::selectUsers();
+        $allUsers =  $this->userDataController->selectUsers();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
+        $g = $this->users->getGenders();
         $data = [
             'allUsers' => $allUsers,
-            'GENDERS' => self::$users->getGenders(),
-            'STATUSES' => self::$users->getStatuses(),
+            'GENDERS' => $this->users->getGenders(),
+            'STATUSES' => $this->users->getStatuses(),
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
@@ -49,7 +55,7 @@ class UserController extends BaseController
         ];
 
         if (count($allUsers) === 0) {
-            self::$view->render("emptyTable.html.twig", $data);
+            $this->view->render("emptyTable.html.twig", $data);
             return;
         }
 
@@ -58,20 +64,18 @@ class UserController extends BaseController
             return;
         }
 
-        self::$view->render("users.html.twig", $data);
+        $this->view->render("users.html.twig", $data);
     }
 
     public function showOne(): void
     {
-        self::setModel();
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $id = ltrim(rtrim($id, '}'), '{');
-        $user = UserDataController::selectUser($id);
-        self::setView();
+        $user = $this->userDataController->selectUser($id);
         $data = [
             'allUsers' => [$user],
-            'GENDERS' => self::$users->getGenders(),
-            'STATUSES' => self::$users->getStatuses(),
+            'GENDERS' => $this->users->getGenders(),
+            'STATUSES' => $this->users->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP',
             'countUsers' => count([$user])
@@ -82,22 +86,20 @@ class UserController extends BaseController
 
     public function editUser(): void
     {
-        self::setModel();
-        self::setView();
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $data = [
-            'genders' => self::$users->getGenders(),
-            'statuses' => self::$users->getStatuses(),
-            'user' => UserDataController::selectUser($id),
+            'genders' => $this->users->getGenders(),
+            'statuses' => $this->users->getStatuses(),
+            'user' => $this->userDataController->selectUser($id),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
-        self::$view->render("edit.html.twig", $data);
+        $this->view->render("edit.html.twig", $data);
     }
 
     public function update(): void
     {
-        if (!UserDataController::updateUser()) {
+        if (!$this->userDataController->updateUser()) {
             http_response_code(400);
         }
     }
@@ -107,7 +109,7 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
-            UserDataController::deleteUsers($ids);
+            $this->userDataController->deleteUsers($ids);
         }
     }
 

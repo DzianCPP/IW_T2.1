@@ -79,12 +79,12 @@ class Users extends Model
         return true;
     }
 
-    public function getGenders(): array
+    public function &getGenders(): array
     {
         return $this->genders;
     }
 
-    public function getStatuses(): array
+    public function &getStatuses(): array
     {
         return $this->statuses;
     }
