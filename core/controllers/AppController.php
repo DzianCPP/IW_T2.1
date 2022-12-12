@@ -13,8 +13,13 @@ class AppController extends BaseController
     
     public function index(): void
     {
+        $dataSource = "local";
+        if (isset($_COOKIE['dataSource'])) {
+            $dataSource = $_COOKIE['dataSource'];
+        }
         $data = [
             'title' => 'Main Page',
+            'dataSource' => $dataSource
         ];
 
         $this->view->render("main.html.twig", $data);
