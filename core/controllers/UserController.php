@@ -27,7 +27,8 @@ class UserController extends BaseController
             'name' => $name,
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
-            'title' => 'New user'
+            'title' => 'New user',
+            'dataSource' => $_COOKIE['dataSource']
         ];
 
         $this->view->render("new.html.twig", $data);
@@ -46,7 +47,9 @@ class UserController extends BaseController
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
-            'title' => 'All users'
+            'title' => 'All users',
+            'message' => 'Users from',
+            'dataSource' => $_COOKIE['dataSource']
         ];
 
         if (count($allUsers) === 0) {
