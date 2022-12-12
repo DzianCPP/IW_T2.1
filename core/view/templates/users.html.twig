@@ -39,7 +39,7 @@
     </div>
     {% endif %}
 
-    {% if allUsers|length > 1 %}
+    {% if allUsers|length > 1 or thisPage > 1 %}
         {% use 'components/usersPagination.html.twig' %}
         {% block pagination %}
             {{ parent() }}
