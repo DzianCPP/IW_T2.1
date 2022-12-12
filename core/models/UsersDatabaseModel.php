@@ -2,9 +2,11 @@
 
 namespace core\models;
 
-class UsersDatabaseModel extends Model
+class UsersDatabaseModel implements ModelInterface
 {
-    protected array $fields = ['email', 'name', 'gender', 'status'];
+    private const TABLE_NAME = "usersTable";
+    protected array $fields = ['email', 'name', 'gender', 'status', 'id'];
+    private Validator $validator;
     private array $genders = [
       'male' => 'Male',
         'female' => 'Female'
@@ -15,45 +17,65 @@ class UsersDatabaseModel extends Model
         'inactive' => 'Inactive'
     ];
 
-    public function getAllUsers(): array
+    private DatabaseSqlBuilder $sqlBuilder;
+
+    public function __construct()
     {
-        return $this->selectAll("usersTable");
+        $this->sqlBuilder = new DatabaseSqlBuilder();
+        $this->validator = new Validator();
     }
 
-    public function getUserById(int $id): array
+    public function getUsers(array $fieldValue = []): array
     {
-        return $this->getRecordBy("id", $id, "usersTable");
+        return $this->sqlBuilder->select(self::TABLE_NAME, $fieldValue);
     }
 
-    public function insertUser(array $params = []): bool
+    public function create(): bool
     {
-        if ($params === []) {
-            $params = $this->validator->makeDataSafe($_POST);
-        } else {
-            $params = $this->validator->makeDataSafe($params);
+        $newUserInfo = file_get_contents("php://input");
+        $newUserInfo = json_decode($newUserInfo, true);
+
+        $newUserInfo = $this->validator->makeDataSafe($newUserInfo);
+
+        if (!$this->validator->userDataValid($newUserInfo['email'], $newUserInfo['name'])) {
+            return false;
         }
 
-        if (!$this->insert($params, $this->fields, 'usersTable')) {
+        if (!$this->sqlBuilder->insert(recordInfo: $newUserInfo, fields: $this->fields, tableName: self::TABLE_NAME)) {
             return false;
         }
 
         return true;
     }
 
-    public function editUser($newUserData): bool
+    public function update(array $newInfo, mixed $field = NULL): bool
     {
-        $params = $this->validator->makeDataSafe($newUserData);
+        $newUserInfo = $this->validator->makeDataSafe($newInfo);
 
-        if (!$this->update("usersTable", $this->fields, $params, "id")) {
+        if (!$this->validator->userDataValid($newUserInfo['email'], $newUserInfo['name'])) {
+            return false;
+        }
+
+        if (!$this->sqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newUserInfo)) {
             return false;
         }
 
         return true;
     }
 
-    public function deleteUsers(array $ids): bool
+    public function delete(array $fieldValues = []): bool
     {
-        if (!$this->delete("id", $ids, "usersTable")) {
+        $jsonString = file_get_contents("php://input");
+        $ids = json_decode($jsonString, true);
+
+        if (count($ids) < 1) {
+            return false; 
+        }
+        
+        if (!$this->sqlBuilder->delete(
+                columnValues: $fieldValues,
+                tableName: self::TABLE_NAME)) {
+            
             return false;
         }
 
@@ -62,14 +84,14 @@ class UsersDatabaseModel extends Model
 
     public function seedUsers(array $data): bool
     {
-        $params = [
+        $userInfo = [
                 'email' => $data['email'],
             'name' => $data['name'],
             'gender' => $data['gender'],
             'status' => $data['status']
         ];
 
-        if (!$this->insertUser($params)) {
+        if (!$this->sqlBuilder->insert($userInfo, $this->fields, self::TABLE_NAME)) {
             return false;
         }
 

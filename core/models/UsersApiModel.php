@@ -4,7 +4,7 @@ namespace core\models;
 
 use core\GorestCurlBuilder;
 
-class UsersApiModel
+class UsersApiModel //implements ModelInterface
 {
     private $curlHandler;
     private GorestCurlBuilder $gorestCurlBuilder;
@@ -14,27 +14,19 @@ class UsersApiModel
         $this->gorestCurlBuilder = new GorestCurlBuilder();
     }
 
-    public function getRecords(string $request_uri): array
+    public function getUsers(int $id = 0): array
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl("GET", $request_uri);
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "GET", id: $id);
         $result = curl_exec($this->curlHandler);
         curl_close($this->curlHandler);
         return json_decode($result, true);
     }
 
-    public function getRecordById(int $id, $request_uri): array
-    {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl("GET", $request_uri . "/${id}");
-        $result = curl_exec($this->curlHandler);
-        curl_close($this->curlHandler);
-        return json_decode($result, true);
-    }
-
-    public function createRecord(string $request_uri): bool
+    public function create(): bool
     {
         $newUserInfo = file_get_contents("php://input");
 
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl("POST", $request_uri, $newUserInfo);
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "POST", json_body: $newUserInfo);
         $gorest_response = curl_exec($this->curlHandler);
         curl_close($this->curlHandler);
 
@@ -45,9 +37,9 @@ class UsersApiModel
         return true;
     }
 
-    public function deleteRecord(int $id, string $request_uri): bool
+    public function delete(int $id = 0): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl("DELETE", $request_uri . "/${id}");
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "DELETE", id: $id);
         $result = curl_exec($this->curlHandler);
 
         if (!$result) {
@@ -57,9 +49,9 @@ class UsersApiModel
         return true;
     }
 
-    public function updateRecordById(array $newRecordInfo, string $requested_uri): bool
+    public function update(array $newUserInfo, int $id = 0): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl("PATCH", $requested_uri, json_encode($newRecordInfo));
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "PATCH", json_body: json_encode($newUserInfo));
         $result = curl_exec($this->curlHandler);
 
         if ($result === false) {

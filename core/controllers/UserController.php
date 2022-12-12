@@ -17,7 +17,7 @@ class UserController extends BaseController
 
     public function create(): void
     {
-        $this->model->createUser();
+        $this->model->create();
     }
 
     public function new(string $email = '', string $name = ''): void
@@ -35,7 +35,7 @@ class UserController extends BaseController
 
     public function show(): void
     {
-        $allUsers =  $this->model->selectUsers();
+        $allUsers =  $this->model->getUsers();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
@@ -92,18 +92,14 @@ class UserController extends BaseController
 
     public function update(): void
     {
-        if (!$this->model->updateUser()) {
+        if (!$this->model->update()) {
             http_response_code(400);
         }
     }
 
     public function delete(): void
     {
-        $jsonString = file_get_contents("php://input");
-        $ids = json_decode($jsonString, true);
-        if (count($ids) > 0) {
-            $this->model->deleteUsers($ids);
-        }
+        $this->model->delete();
     }
 
     private function notFound(): void

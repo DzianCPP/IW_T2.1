@@ -2,11 +2,10 @@
 
 namespace core\models;
 
-use core\models\Model;
 use core\models\UsersApiModel;
 use core\models\UsersDatabaseModel;
 
-class UsersModel extends Model
+class UsersModel
 {
     private UsersApiModel $usersApiModel;
     private UsersDatabaseModel $usersDatabaseModel;
@@ -17,62 +16,62 @@ class UsersModel extends Model
         $this->usersDatabaseModel = new UsersDatabaseModel();
     }
     
-    public function createUser(): void
+    public function create(): void
     {
-        $jsonString = file_get_contents("php://input");
-        $newUserInfo = json_decode($jsonString, true);
-
         if ($_COOKIE['dataSource'] === 'gorest') {
-            if (!$this->usersApiModel->createRecord("/public/v2/users")) {
+            if (!$this->usersApiModel->create()) {
                 http_response_code(400);
                 return;
             }
         }
 
         if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->insertUser($newUserInfo)) {
+            if (!$this->usersDatabaseModel->create()) {
                 http_response_code(400);
                 return;
             }
         }
     }
 
-    public function selectUsers(): array
+    public function getUsers(): array
     {
         if ($_COOKIE['dataSource'] === "gorest") {
-            return $this->usersApiModel->getRecords("/public/v2/users");
+            return $this->usersApiModel->getUsers();
         }
         
         if ($_COOKIE['dataSource'] === "local") {
-            return $this->usersDatabaseModel->getAllUsers();
+            return $this->usersDatabaseModel->getUsers();
         }
     }
 
     public function selectUser(int $id): array
     {
         if ($_COOKIE['dataSource'] === "gorest") {
-            return $this->usersApiModel->getRecordById($id, "/public/v2/users");
+            return $this->usersApiModel->getUsers("/public/v2/users", $id);
         }
 
         if ($_COOKIE['dataSource']  === "local") {
-            return $this->usersDatabaseModel->getUserById($id)[0];
+            return $this->usersDatabaseModel->getUsers(fieldValue: [
+                'field' => 'id',
+                'value' => $id
+            ])[0];
         }
     }
 
-    public function updateUser(): bool
+    public function update(): bool
     {
         $jsonString = file_get_contents("php://input");
         $newUserInfo = $jsonString;
         $newUserInfo = json_decode($newUserInfo, true);
 
         if ($_COOKIE['dataSource'] === "gorest") {
-            if (!$this->usersApiModel->updateRecordById($newUserInfo, "/public/v2/users/" . $newUserInfo['id'])) {
+            if (!$this->usersApiModel->update(newUserInfo: $newUserInfo, id: $newUserInfo['id'])) {
                 return false;
             }
         }
         
         if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->editUser($newUserInfo)) {
+            if (!$this->usersDatabaseModel->update($newUserInfo)) {
                 return false;
             }
         }
@@ -80,11 +79,11 @@ class UsersModel extends Model
         return true;
     }
 
-    public function deleteUsers(array $ids): bool
+    public function delete(array $ids): bool
     {
         if ($_COOKIE['dataSource'] === "gorest") {
             foreach ($ids as $id) {
-                if (!$this->usersApiModel->deleteRecord($id, "/public/v2/users")) {
+                if (!$this->usersApiModel->delete(id: $id)) {
                     http_response_code(500);
                     return false;
                 }
@@ -92,7 +91,9 @@ class UsersModel extends Model
         }
         
         if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->deleteUsers($ids)) {
+            if (!$this->usersDatabaseModel->delete(
+                fieldValues: [ 'field' => 'id', 'values' => $ids]
+            )) {
                 http_response_code(500);
                 return false;
             }

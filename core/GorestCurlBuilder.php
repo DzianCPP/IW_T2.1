@@ -7,6 +7,7 @@ use core\CurlBuilderInterface;
 class GorestCurlBuilder implements CurlBuilderInterface
 {
     private const API_BASE_URI = "https://gorest.co.in";
+    private const API_ENDPOINT = "/public/v2/users/";
     private $curlHandler;
 
     public function __construct()
@@ -14,7 +15,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
         $this->curlHandler = curl_init();
     }
 
-    public function setCurl(string $method, string $endpoint, string $json_body = "")
+    public function setCurl(string $method, $id = 0, $json_body = "")
     {
         curl_setopt($this->curlHandler, CURLOPT_FRESH_CONNECT, true);
         curl_setopt($this->curlHandler, CURLOPT_RETURNTRANSFER, true);
@@ -22,6 +23,12 @@ class GorestCurlBuilder implements CurlBuilderInterface
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
             "Content-Type:application/json"
         ]);
+
+        $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
+        if ($id != 0 ) {
+            $endpoint .= (string)$id;
+        }
+
         if ($json_body != "") {
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $json_body);
         }
@@ -29,7 +36,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
             curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, $method);
             curl_setopt($this->curlHandler, CURLOPT_HEADER, true);
         }
-        curl_setopt($this->curlHandler, CURLOPT_URL, self::API_BASE_URI . $endpoint);
+        curl_setopt($this->curlHandler, CURLOPT_URL, $endpoint);
         return $this->curlHandler;
     }
 }

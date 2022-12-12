@@ -2,9 +2,6 @@
 
 namespace core\controllers;
 
-use core\view\UsersView;
-use core\models\Users;
-
 abstract class BaseController
 {
     protected $view;
@@ -19,7 +16,7 @@ abstract class BaseController
 
     protected function setModel(string $modelName)
     {
-        if (!isset($this->users)) {
+        if (!isset($this->model)) {
             $this->model = new $modelName();
         }
     }
