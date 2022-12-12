@@ -2,9 +2,6 @@
 
 namespace core\controllers;
 
-use core\models\Users;
-use core\view\UsersView;
-
 class UserController extends BaseController
 {
     const PER_PAGE = 5;
