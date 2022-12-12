@@ -7,20 +7,20 @@ use core\models\Users;
 
 abstract class BaseController
 {
-    protected Users $users;
-    protected UsersView $view;
-
-    protected function setView()
+    protected $view;
+    protected $model;
+    
+    protected function setView(string $viewName)
     {
         if (!isset($this->view)) {
-            $this->view = new UsersView();
+            $this->view = new $viewName();
         }
     }
 
-    protected function setModel()
+    protected function setModel(string $modelName)
     {
         if (!isset($this->users)) {
-            $this->users = new Users();
+            $this->model = new $modelName();
         }
     }
 }

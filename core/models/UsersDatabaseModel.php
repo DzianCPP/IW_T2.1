@@ -2,7 +2,7 @@
 
 namespace core\models;
 
-class Users extends Model
+class UsersDatabaseModel extends Model
 {
     protected array $fields = ['email', 'name', 'gender', 'status'];
     private array $genders = [
@@ -25,7 +25,7 @@ class Users extends Model
 
     public function getUserById(int $id): array
     {
-        return $this->getRecordBy("userID", $id, "usersTable");
+        return $this->getRecordBy("id", $id, "usersTable");
     }
 
     public function insertUser(array $params = []): bool
@@ -47,7 +47,7 @@ class Users extends Model
     {
         $params = $this->validator->makeDataSafe($newUserData);
 
-        if (!$this->update("usersTable", $this->fields, $params, "userID")) {
+        if (!$this->update("usersTable", $this->fields, $params, "id")) {
             return false;
         }
 
@@ -56,7 +56,7 @@ class Users extends Model
 
     public function deleteUsers(array $ids): bool
     {
-        if (!$this->delete("userID", $ids, "usersTable")) {
+        if (!$this->delete("id", $ids, "usersTable")) {
             return false;
         }
 
@@ -79,12 +79,12 @@ class Users extends Model
         return true;
     }
 
-    public function &getGenders(): array
+    public function getGenders(): array
     {
         return $this->genders;
     }
 
-    public function &getStatuses(): array
+    public function getStatuses(): array
     {
         return $this->statuses;
     }

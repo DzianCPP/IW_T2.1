@@ -2,21 +2,22 @@
 
 namespace core\controllers;
 
+use core\view\UsersView;
+use core\models\UsersModel;
+
 class UserController extends BaseController
 {
     const PER_PAGE = 5;
-    private UserDataController $userDataController;
 
     public function __construct()
     {
-        $this->userDataController = new UserDataController();
-        $this->setModel();
-        $this->setView();
+        $this->setModel(UsersModel::class);
+        $this->setView(UsersView::class);
     }
 
     public function create(): void
     {
-        $this->userDataController->createUser();
+        $this->model->createUser();
     }
 
     public function new(string $email = '', string $name = ''): void
@@ -24,8 +25,8 @@ class UserController extends BaseController
         $data = [
             'email' => $email,
             'name' => $name,
-            'genders' => $this->users->getGenders(),
-            'statuses' => $this->users->getStatuses(),
+            'genders' => $this->model->getGenders(),
+            'statuses' => $this->model->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
@@ -35,14 +36,14 @@ class UserController extends BaseController
 
     public function show(): void
     {
-        $allUsers =  $this->userDataController->selectUsers();
+        $allUsers =  $this->model->selectUsers();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
         $data = [
             'allUsers' => $allUsers,
-            'GENDERS' => $this->users->getGenders(),
-            'STATUSES' => $this->users->getStatuses(),
+            'GENDERS' => $this->model->getGenders(),
+            'STATUSES' => $this->model->getStatuses(),
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
@@ -67,11 +68,11 @@ class UserController extends BaseController
     {
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $id = ltrim(rtrim($id, '}'), '{');
-        $user = $this->userDataController->selectUser($id);
+        $user = $this->model->selectUser($id);
         $data = [
             'allUsers' => [$user],
-            'GENDERS' => $this->users->getGenders(),
-            'STATUSES' => $this->users->getStatuses(),
+            'GENDERS' => $this->model->getGenders(),
+            'STATUSES' => $this->model->getStatuses(),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP',
             'countUsers' => count([$user])
@@ -84,9 +85,9 @@ class UserController extends BaseController
     {
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $data = [
-            'genders' => $this->users->getGenders(),
-            'statuses' => $this->users->getStatuses(),
-            'user' => $this->userDataController->selectUser($id),
+            'genders' => $this->model->getGenders(),
+            'statuses' => $this->model->getStatuses(),
+            'user' => $this->model->selectUser($id),
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP'
         ];
@@ -95,7 +96,7 @@ class UserController extends BaseController
 
     public function update(): void
     {
-        if (!$this->userDataController->updateUser()) {
+        if (!$this->model->updateUser()) {
             http_response_code(400);
         }
     }
@@ -105,7 +106,7 @@ class UserController extends BaseController
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
-            $this->userDataController->deleteUsers($ids);
+            $this->model->deleteUsers($ids);
         }
     }
 

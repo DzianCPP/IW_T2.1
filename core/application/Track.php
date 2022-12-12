@@ -14,9 +14,6 @@ class Track
         $this->controller = $route['controller'];
         $this->action = $route['action'];
         $this->method = $route['method'];
-        if (array_key_exists('params', $route)) {
-            $this->params = $this->extractParam();
-        }
     }
 
     public function getActionName(): string
@@ -27,15 +24,5 @@ class Track
     public function getControllerName(): string
     {
         return $this->controller;
-    }
-
-    private function extractParam(): string
-    {
-        return filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-    }
-
-    public function getParams(): string
-    {
-        return $this->params;
     }
 }

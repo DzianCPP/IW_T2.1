@@ -43,8 +43,7 @@ return [
     'user' => [
         'controller' => UserController::class,
         'action' => 'showOne',
-        'method' => 'GET',
-        'params' => 'userID'
+        'method' => 'GET'
     ],
 
     'users' => [
@@ -56,15 +55,13 @@ return [
     'user/edit' => [
         'controller' => UserController::class,
         'action' => 'editUser',
-        'method' => 'get',
-        'params' => 'userID'
+        'method' => 'get'
     ],
 
     'user/delete' => [
         'controller' => UserController::class,
         'action' => 'delete',
-        'method' => 'delete',
-        'params' => 'userID'
+        'method' => 'delete'
     ],
 
     'user/update' => [
@@ -77,7 +74,6 @@ return [
         'controller' => UserController::class,
         'action' => 'showById',
         'method' => 'get',
-        'params' => 'userID'
     ],
 
     'test' => [

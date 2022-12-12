@@ -2,11 +2,13 @@
 
 namespace core\controllers;
 
+use core\view\AppView;
+
 class AppController extends BaseController
 {
     public function __construct()
     {
-        $this->setView();
+        $this->setView(AppView::class);
     }
     
     public function index(): void

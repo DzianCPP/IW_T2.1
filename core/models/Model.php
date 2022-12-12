@@ -62,7 +62,7 @@ class Model implements ModelInterface
             WHERE ${colName}={$params[$colName]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        unset($params['userID']);
+        unset($params['id']);
 
         if (!$this->validator->userDataValid($params['email'], $params['name'])) {
             return false;

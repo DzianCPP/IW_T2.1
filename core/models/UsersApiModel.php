@@ -1,10 +1,10 @@
 <?php
 
-namespace core\controllers;
+namespace core\models;
 
 use core\GorestCurlBuilder;
 
-class GorestApiController
+class UsersApiModel
 {
     private $curlHandler;
     private GorestCurlBuilder $gorestCurlBuilder;
@@ -18,7 +18,6 @@ class GorestApiController
     {
         $this->curlHandler = $this->gorestCurlBuilder->setGetCurl($request_uri);
         $result = curl_exec($this->curlHandler);
-        $result = str_replace("id", "userID", $result);
         curl_close($this->curlHandler);
         return json_decode($result, true);
     }
@@ -27,7 +26,6 @@ class GorestApiController
     {
         $this->curlHandler = $this->gorestCurlBuilder->setGetCurl($request_uri . "/${id}");
         $result = curl_exec($this->curlHandler);
-        $result = str_replace("id", "userID", $result);
         curl_close($this->curlHandler);
         return json_decode($result, true);
     }
@@ -35,7 +33,6 @@ class GorestApiController
     public function createRecord(string $request_uri): bool
     {
         $newUserInfo = file_get_contents("php://input");
-        $newUserInfo = str_replace("userID", "id", $newUserInfo);
         $newUserInfo = json_decode($newUserInfo);
         $newUserInfo = http_build_query($newUserInfo);
 
