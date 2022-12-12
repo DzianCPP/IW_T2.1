@@ -25,9 +25,9 @@ class UsersDatabaseModel implements ModelInterface
         $this->validator = new Validator();
     }
 
-    public function getUsers(array $fieldValue = []): array
+    public function getUsers(array $columnValue = []): array
     {
-        return $this->sqlBuilder->select(self::TABLE_NAME, $fieldValue);
+        return $this->sqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
     public function create(): bool
@@ -48,7 +48,7 @@ class UsersDatabaseModel implements ModelInterface
         return true;
     }
 
-    public function update(array $newInfo, mixed $field = NULL): bool
+    public function update(array $newInfo): bool
     {
         $newUserInfo = $this->validator->makeDataSafe($newInfo);
 
@@ -63,7 +63,7 @@ class UsersDatabaseModel implements ModelInterface
         return true;
     }
 
-    public function delete(array $columnValues = []): bool
+    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);

@@ -4,9 +4,8 @@ namespace core\models;
 
 use core\GorestCurlBuilder;
 
-class UsersApiModel //implements ModelInterface
+class UsersApiModel implements ModelInterface
 {
-    private $curlHandler;
     private GorestCurlBuilder $gorestCurlBuilder;
 
     public function __construct()
@@ -14,11 +13,9 @@ class UsersApiModel //implements ModelInterface
         $this->gorestCurlBuilder = new GorestCurlBuilder();
     }
 
-    public function getUsers(int $id = 0): array
+    public function getUsers(array $columnValue = []): array
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "GET", id: $id);
-        $result = curl_exec($this->curlHandler);
-        curl_close($this->curlHandler);
+        $result = $this->gorestCurlBuilder->executeCurl(method: "GET", id: $columnValue['value']);
         return json_decode($result, true);
     }
 
@@ -26,9 +23,7 @@ class UsersApiModel //implements ModelInterface
     {
         $newUserInfo = file_get_contents("php://input");
 
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "POST", json_body: $newUserInfo);
-        $gorest_response = curl_exec($this->curlHandler);
-        curl_close($this->curlHandler);
+        $gorest_response = $this->gorestCurlBuilder->executeCurl(method: "POST", json_body: $newUserInfo);
 
         if ($gorest_response === false) {
             return false;
@@ -37,10 +32,9 @@ class UsersApiModel //implements ModelInterface
         return true;
     }
 
-    public function delete(int $id = 0): bool
+    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "DELETE", id: $id);
-        $result = curl_exec($this->curlHandler);
+        $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $value);
 
         if (!$result) {
             return false;
@@ -49,10 +43,9 @@ class UsersApiModel //implements ModelInterface
         return true;
     }
 
-    public function update(array $newUserInfo, int $id = 0): bool
+    public function update(array $newInfo): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setCurl(method: "PATCH", json_body: json_encode($newUserInfo));
-        $result = curl_exec($this->curlHandler);
+        $result = $this->gorestCurlBuilder->executeCurl(method: "PATCH", json_body: json_encode($newInfo), id: $newInfo['id']);
 
         if ($result === false) {
             return false;

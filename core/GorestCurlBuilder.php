@@ -15,6 +15,16 @@ class GorestCurlBuilder implements CurlBuilderInterface
         $this->curlHandler = curl_init();
     }
 
+    public function __destruct()
+    {
+        curl_close($this->curlHandler);
+    }
+
+    public function executeCurl(string $method, $id = 0, $json_body = "") {
+        $this->setCurl($method, $id, $json_body);
+        return curl_exec($this->curlHandler);
+    }
+
     public function setCurl(string $method, $id = 0, $json_body = "")
     {
         curl_setopt($this->curlHandler, CURLOPT_FRESH_CONNECT, true);

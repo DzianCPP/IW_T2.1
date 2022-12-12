@@ -47,11 +47,11 @@ class UsersModel
     public function selectUser(int $id): array
     {
         if ($_COOKIE['dataSource'] === "gorest") {
-            return $this->usersApiModel->getUsers("/public/v2/users", $id);
+            return $this->usersApiModel->getUsers(["field" => "id", "value" => $id]);
         }
 
         if ($_COOKIE['dataSource']  === "local") {
-            return $this->usersDatabaseModel->getUsers(fieldValue: [
+            return $this->usersDatabaseModel->getUsers(columnValue: [
                 'field' => 'id',
                 'value' => $id
             ])[0];
@@ -65,7 +65,7 @@ class UsersModel
         $newUserInfo = json_decode($newUserInfo, true);
 
         if ($_COOKIE['dataSource'] === "gorest") {
-            if (!$this->usersApiModel->update(newUserInfo: $newUserInfo, id: $newUserInfo['id'])) {
+            if (!$this->usersApiModel->update(newInfo: $newUserInfo)) {
                 return false;
             }
         }
@@ -85,7 +85,7 @@ class UsersModel
         
         if ($_COOKIE['dataSource'] === "gorest") {
             foreach ($ids as $id) {
-                if (!$this->usersApiModel->delete(id: $id)) {
+                if (!$this->usersApiModel->delete(value: $id)) {
                     http_response_code(500);
                     return false;
                 }
