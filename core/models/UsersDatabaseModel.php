@@ -7,10 +7,7 @@ class UsersDatabaseModel extends Model
     protected array $fields = ['email', 'name', 'gender', 'status'];
     private array $genders = [
       'male' => 'Male',
-        'female' => 'Female',
-        'transgender' => 'Transgender',
-        'non-binary' => 'Non-binary',
-        'other' => 'Other',
+        'female' => 'Female'
     ];
 
     private array $statuses = [

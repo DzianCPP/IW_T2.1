@@ -61,8 +61,9 @@ class UsersApiModel
 
     public function updateRecordById(array $newRecordInfo, string $requested_uri): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setPutCurl(json_encode($newRecordInfo), $requested_uri);
+        $this->curlHandler = $this->gorestCurlBuilder->setPatchCurl(json_encode($newRecordInfo), $requested_uri);
         $result = curl_exec($this->curlHandler);
+        $body = $result;
 
         if ($result === false) {
             return false;

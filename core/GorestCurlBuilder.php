@@ -52,11 +52,11 @@ class GorestCurlBuilder implements CurlBuilderInterface
         return $this->curlHandler;
     }
 
-    public function &setPutCurl(string $newRecordInfo, string $requested_uri)
+    public function &setPatchCurl(string $newRecordInfo, string $requested_uri)
     {
         curl_setopt($this->curlHandler, CURLOPT_FRESH_CONNECT, true);
         curl_setopt($this->curlHandler, CURLOPT_HEADER, true);
-        curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, "PATCH");
         curl_setopt($this->curlHandler, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandler, CURLOPT_HTTPHEADER, [
             "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
