@@ -16,7 +16,7 @@ class UsersApiModel
 
     public function getRecords(string $request_uri): array
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setGetCurl($request_uri);
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl("GET", $request_uri);
         $result = curl_exec($this->curlHandler);
         curl_close($this->curlHandler);
         return json_decode($result, true);
@@ -24,7 +24,7 @@ class UsersApiModel
 
     public function getRecordById(int $id, $request_uri): array
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setGetCurl($request_uri . "/${id}");
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl("GET", $request_uri . "/${id}");
         $result = curl_exec($this->curlHandler);
         curl_close($this->curlHandler);
         return json_decode($result, true);
@@ -33,10 +33,8 @@ class UsersApiModel
     public function createRecord(string $request_uri): bool
     {
         $newUserInfo = file_get_contents("php://input");
-        $newUserInfo = json_decode($newUserInfo);
-        $newUserInfo = http_build_query($newUserInfo);
 
-        $this->curlHandler = $this->gorestCurlBuilder->setPostCurl($request_uri, $newUserInfo);
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl("POST", $request_uri, $newUserInfo);
         $gorest_response = curl_exec($this->curlHandler);
         curl_close($this->curlHandler);
 
@@ -49,7 +47,7 @@ class UsersApiModel
 
     public function deleteRecord(int $id, string $request_uri): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setDeleteCurl($request_uri . "/${id}");
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl("DELETE", $request_uri . "/${id}");
         $result = curl_exec($this->curlHandler);
 
         if (!$result) {
@@ -61,9 +59,8 @@ class UsersApiModel
 
     public function updateRecordById(array $newRecordInfo, string $requested_uri): bool
     {
-        $this->curlHandler = $this->gorestCurlBuilder->setPatchCurl(json_encode($newRecordInfo), $requested_uri);
+        $this->curlHandler = $this->gorestCurlBuilder->setCurl("PATCH", $requested_uri, json_encode($newRecordInfo));
         $result = curl_exec($this->curlHandler);
-        $body = $result;
 
         if ($result === false) {
             return false;
