@@ -27,8 +27,7 @@ class UserController extends BaseController
             'name' => $name,
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP'
+            'title' => 'New user'
         ];
 
         $this->view->render("new.html.twig", $data);
@@ -47,8 +46,7 @@ class UserController extends BaseController
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP'
+            'title' => 'All users'
         ];
 
         if (count($allUsers) === 0) {
@@ -73,8 +71,7 @@ class UserController extends BaseController
             'allUsers' => [$user],
             'GENDERS' => $this->model->getGenders(),
             'STATUSES' => $this->model->getStatuses(),
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
+            'title' => 'User' . $user['name'],
             'countUsers' => count([$user])
         ];
 
@@ -88,8 +85,7 @@ class UserController extends BaseController
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
             'user' => $this->model->selectUser($id),
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP'
+            'title' => 'Edit user'
         ];
         $this->view->render("edit.html.twig", $data);
     }
@@ -113,8 +109,7 @@ class UserController extends BaseController
     private function notFound(): void
     {
         $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
+            'title' => 'Not found',
             'message' => '404: page not found'
         ];
         $this->view->render("404.html.twig", $data);
