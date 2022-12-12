@@ -5,7 +5,7 @@ namespace core\models;
 use core\application\Database;
 use PDO;
 
-class Model
+class Model implements ModelInterface
 {
     protected PDO $conn;
     protected Database $database;
@@ -45,7 +45,7 @@ class Model
         return $query->fetchAll();
     }
 
-    protected function getRecordBy(string $colName, $value, string $tableName): array
+    public function getRecordBy(string $colName, $value, string $tableName): array
     {
         $sqlQuery = "SELECT * FROM ${tableName} WHERE ${colName}=${value}";
         $query = $this->conn->prepare($sqlQuery);
@@ -54,7 +54,7 @@ class Model
         return $query->fetchAll();
     }
 
-    protected function update(string $tableName, array $fields, array $params, $colName): bool
+    public function update(string $tableName, array $fields, array $params, $colName): bool
     {
         $sets = $this->getSets($fields);
         $sqlQuery = "UPDATE ${tableName}
@@ -75,7 +75,7 @@ class Model
         return true;
     }
 
-    protected function delete(string $colName, array $values, string $tableName): bool
+    public function delete(string $colName, array $values, string $tableName): bool
     {
         $values = implode(", ", $values);
         $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName} IN (${values})";
