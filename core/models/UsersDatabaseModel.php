@@ -63,7 +63,7 @@ class UsersDatabaseModel implements ModelInterface
         return true;
     }
 
-    public function delete(array $fieldValues = []): bool
+    public function delete(array $columnValues = []): bool
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
@@ -73,7 +73,7 @@ class UsersDatabaseModel implements ModelInterface
         }
         
         if (!$this->sqlBuilder->delete(
-                columnValues: $fieldValues,
+                columnValues: $columnValues,
                 tableName: self::TABLE_NAME)) {
             
             return false;

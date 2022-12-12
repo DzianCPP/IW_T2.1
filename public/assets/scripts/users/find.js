@@ -7,8 +7,5 @@ function findUserById()
     let id = input.value;
     let url = "/user/" + id;
 
-    fetch(url)
-        .then(() => {
-            window.location = url;
-        });
+    window.location = url;
 }

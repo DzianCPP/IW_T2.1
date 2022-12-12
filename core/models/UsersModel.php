@@ -79,8 +79,10 @@ class UsersModel
         return true;
     }
 
-    public function delete(array $ids): bool
+    public function delete(): bool
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        
         if ($_COOKIE['dataSource'] === "gorest") {
             foreach ($ids as $id) {
                 if (!$this->usersApiModel->delete(id: $id)) {
@@ -92,7 +94,7 @@ class UsersModel
         
         if ($_COOKIE['dataSource'] === "local") {
             if (!$this->usersDatabaseModel->delete(
-                fieldValues: [ 'field' => 'id', 'values' => $ids]
+                columnValues: [ 'column' => 'id', 'values' => $ids]
             )) {
                 http_response_code(500);
                 return false;
