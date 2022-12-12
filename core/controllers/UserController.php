@@ -42,7 +42,6 @@ class UserController extends BaseController
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
-        $g = $this->users->getGenders();
         $data = [
             'allUsers' => $allUsers,
             'GENDERS' => $this->users->getGenders(),
