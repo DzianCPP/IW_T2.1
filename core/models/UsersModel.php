@@ -7,55 +7,48 @@ use core\models\UsersDatabaseModel;
 
 class UsersModel
 {
-    private UsersApiModel $usersApiModel;
-    private UsersDatabaseModel $usersDatabaseModel;
+    private $model;
+
+    private array $genders = [
+        'male' => 'Male',
+          'female' => 'Female'
+      ];
+  
+      private array $statuses = [
+          'active' => 'Active',
+          'inactive' => 'Inactive'
+      ];
     
     public function __construct()
     {
-        $this->usersApiModel = new UsersApiModel();
-        $this->usersDatabaseModel = new UsersDatabaseModel();
+        switch($_COOKIE['dataSource']) {
+            case ("gorest"):
+                $modelName = UsersApiModel::class;
+                break;
+            case ("local"):
+            default:
+                $modelName = UsersDatabaseModel::class;
+                break;
+            }
+
+        $this->model = new $modelName();
     }
     
     public function create(): void
     {
-        if ($_COOKIE['dataSource'] === 'gorest') {
-            if (!$this->usersApiModel->create()) {
-                http_response_code(400);
-                return;
-            }
-        }
-
-        if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->create()) {
-                http_response_code(400);
-                return;
-            }
-        }
+       if (!$this->model->create()) {
+            http_response_code(400);
+            return;
+       }
     }
 
-    public function getUsers(): array
+    public function get(int $id = 0): array
     {
-        if ($_COOKIE['dataSource'] === "gorest") {
-            return $this->usersApiModel->getUsers();
-        }
-        
-        if ($_COOKIE['dataSource'] === "local") {
-            return $this->usersDatabaseModel->getUsers();
-        }
-    }
-
-    public function selectUser(int $id): array
-    {
-        if ($_COOKIE['dataSource'] === "gorest") {
-            return $this->usersApiModel->getUsers(["field" => "id", "value" => $id]);
+        if ($id > 0) {
+            return $this->model->get(value: $id);
         }
 
-        if ($_COOKIE['dataSource']  === "local") {
-            return $this->usersDatabaseModel->getUsers(columnValue: [
-                'field' => 'id',
-                'value' => $id
-            ])[0];
-        }
+        return $this->model->get();
     }
 
     public function update(): bool
@@ -64,16 +57,8 @@ class UsersModel
         $newUserInfo = $jsonString;
         $newUserInfo = json_decode($newUserInfo, true);
 
-        if ($_COOKIE['dataSource'] === "gorest") {
-            if (!$this->usersApiModel->update(newInfo: $newUserInfo)) {
-                return false;
-            }
-        }
-        
-        if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->update($newUserInfo)) {
-                return false;
-            }
+        if (!$this->model->update(newInfo: $newUserInfo)) {
+            return false;
         }
 
         return true;
@@ -83,34 +68,18 @@ class UsersModel
     {
         $ids = json_decode(file_get_contents("php://input"), true);
         
-        if ($_COOKIE['dataSource'] === "gorest") {
-            foreach ($ids as $id) {
-                if (!$this->usersApiModel->delete(value: $id)) {
-                    http_response_code(500);
-                    return false;
-                }
-            }
-        }
-        
-        if ($_COOKIE['dataSource'] === "local") {
-            if (!$this->usersDatabaseModel->delete(
-                columnValues: [ 'column' => 'id', 'values' => $ids]
-            )) {
-                http_response_code(500);
-                return false;
-            }
-        }
+        $this->model->delete(...$ids);
 
         return true;
     }
 
     public function getGenders(): array
     {
-        return $this->usersDatabaseModel->getGenders();
+        return $this->genders;
     }
 
     public function getStatuses(): array
     {
-        return $this->usersDatabaseModel->getStatuses();
+        return $this->statuses;
     }
 }

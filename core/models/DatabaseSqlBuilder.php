@@ -31,14 +31,15 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function select(string $tableName, array $columnValue = []): array
+    public function select(string $tableName, string $column = "", int|string $value = NULL): array
     {
         $sqlQuery = "SELECT * FROM $tableName";
-        if ($columnValue != []) {
-            $field = $columnValue['field'];
-            $value = $columnValue['value'];
+        if ($column != "") {
+            $field = $column;
             $sqlQuery .= " WHERE ${field}=${value}";
         }
+
+        $sqlQuery .= " LIMIT 1000";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
         
@@ -61,10 +62,10 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function delete(array $columnValues, string $tableName): bool
+    public function delete(string $column = "", string $tableName = "", array $values): bool
     {
-        $values = implode(", ", $columnValues['values']);
-        $column = $columnValues['column'];
+        $values = implode(", ", $values);
+        $column = $column;
         $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
