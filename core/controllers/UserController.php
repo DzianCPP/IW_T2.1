@@ -36,7 +36,7 @@ class UserController extends BaseController
 
     public function show(): void
     {
-        $allUsers = $this->model->getUsers();
+        $allUsers = $this->model->get();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
@@ -47,6 +47,7 @@ class UserController extends BaseController
             'thisPage' => $page,
             'pages' => $pages,
             'countUsers' => count($allUsers),
+            'PER_PAGE' => self::PER_PAGE,
             'title' => 'All users',
             'message' => 'Users from',
             'dataSource' => $_COOKIE['dataSource']
@@ -67,7 +68,9 @@ class UserController extends BaseController
 
     public function showOne(): void
     {
-        $user = $this->model->selectUser();
+        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $id = (int)ltrim(rtrim($id, '}'), '{');        
+        $user = $this->model->get($id);
         $data = [
             'allUsers' => [$user],
             'GENDERS' => $this->model->getGenders(),
@@ -81,11 +84,10 @@ class UserController extends BaseController
 
     public function editUser(): void
     {
-        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $data = [
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
-            'user' => $this->model->selectUser($id)[0],
+            'user' => $this->model->get()[0],
             'title' => 'Edit user'
         ];
         $this->view->render("edit.html.twig", $data);

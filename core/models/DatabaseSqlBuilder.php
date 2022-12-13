@@ -38,6 +38,8 @@ class DatabaseSqlBuilder
             $field = $column;
             $sqlQuery .= " WHERE ${field}=${value}";
         }
+
+        $sqlQuery .= " LIMIT 1000";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
         

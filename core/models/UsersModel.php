@@ -42,16 +42,13 @@ class UsersModel
        }
     }
 
-    public function getUsers(): array
+    public function get(int $id = 0): array
     {
-        return $this->model->get();
-    }
+        if ($id > 0) {
+            return $this->model->get(value: $id);
+        }
 
-    public function selectUser(): array
-    {
-        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $id = ltrim(rtrim($id, '}'), '{');
-        return $this->model->get(value: $id);
+        return $this->model->get();
     }
 
     public function update(): bool

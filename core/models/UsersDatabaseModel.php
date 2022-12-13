@@ -21,7 +21,7 @@ class UsersDatabaseModel implements ModelInterface
         if ($value) {
             return $this->sqlBuilder->select(self::TABLE_NAME, column: "id", value: $value);
         }
-        
+
         return $this->sqlBuilder->select(self::TABLE_NAME);
     }
 
@@ -31,12 +31,18 @@ class UsersDatabaseModel implements ModelInterface
         $newUserInfo = json_decode($newUserInfo, true);
 
         $newUserInfo = $this->validator->makeDataSafe($newUserInfo);
-
         if (!$this->validator->userDataValid($newUserInfo['email'], $newUserInfo['name'])) {
             return false;
         }
 
-        if (!$this->sqlBuilder->insert(recordInfo: $newUserInfo, fields: $this->fields, tableName: self::TABLE_NAME)) {
+        $columns = [];
+        foreach ($this->fields as $field) {
+            if ($field != 'id') {
+                $columns[] = $field;
+            }
+        }
+
+        if (!$this->sqlBuilder->insert(recordInfo: $newUserInfo, fields: $columns, tableName: self::TABLE_NAME)) {
             return false;
         }
 
