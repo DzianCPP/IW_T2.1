@@ -21,7 +21,7 @@ class UsersApiModel implements ModelInterface
     }
 
     #[OA\Get(
-        path: "/public/v2/users",
+        path: "/public/v2/users/{id}",
         summary: "get list of users",
         operationId: "getListOfUsers",
         responses: [
@@ -38,6 +38,14 @@ class UsersApiModel implements ModelInterface
                 securityScheme: "bearerAuth",
                 type: "http",
                 scheme: "bearer"
+            )
+        ],
+
+        parameters: [
+            new OA\Parameter(
+                name: "user-id",
+                in: "path",
+                required: true
             )
         ]
     )]
@@ -64,16 +72,16 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 500, description: "Internal server error")
         ],
 
+        requestBody: [
+
+        ],
+
         security: [
             new OA\SecurityScheme(
                 securityScheme: "bearerAuth",
                 type: "http",
                 scheme: "bearer"
             )
-        ],
-
-        parameters: [
-            
         ]
     )]
 
@@ -96,6 +104,51 @@ class UsersApiModel implements ModelInterface
         operationId: "deleteUser",
         responses: [
             new OA\Response(response: 200, description: "OK"),
+            new OA\Response(response: 204, description: "No content"),
+            new OA\Response(response: 400, description: "Bad request"),
+            new OA\Response(response: 401, description: "Authentication failed"),
+            new OA\Response(response: 404, description: "Requested resource not found"),
+            new OA\Response(response: 405, description: "Method not allowed"),
+            new OA\Response(response: 422, description: "Data validation failed"),
+            new OA\Response(response: 429, description: "Too many requests"),
+            new OA\Response(response: 500, description: "Internal server error")
+        ],
+
+        security: [
+            new OA\SecurityScheme(
+                securityScheme: "bearerAuth",
+                type: "http",
+                scheme: "bearer"
+            )
+        ],
+
+        parameters: [
+            new OA\Parameter(
+                name: "user-id",
+                in: "path",
+                required: true
+            )
+        ]
+    )]
+
+    public function delete(int ...$ids): bool
+    {
+        foreach ($ids as $id) {
+            $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $id);
+            if (!$result) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    #[OA\Patch(
+        path: "/public/v2/users/{id}",
+        summary: "delete user",
+        operationId: "patchUser",
+        responses: [
+            new OA\Response(response: 200, description: "OK"),
             new OA\Response(response: 201, description: "A resource was successfully created"),
             new OA\Response(response: 400, description: "Bad request"),
             new OA\Response(response: 401, description: "Authentication failed"),
@@ -116,25 +169,12 @@ class UsersApiModel implements ModelInterface
 
         parameters: [
             new OA\Parameter(
-                parameter: "user-id",
                 name: "user-id",
                 in: "path",
                 required: true
             )
         ]
     )]
-
-    public function delete(int ...$ids): bool
-    {
-        foreach ($ids as $id) {
-            $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $id);
-            if (!$result) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public function update(array $newInfo): bool
     {

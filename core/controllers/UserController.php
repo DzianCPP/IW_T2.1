@@ -28,7 +28,8 @@ class UserController extends BaseController
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
             'title' => 'New user',
-            'dataSource' => $_COOKIE['dataSource']
+            'header' => 'Create user',
+            'dataSource' => $this->setDataSource()
         ];
 
         $this->view->render("new.html.twig", $data);
@@ -41,16 +42,15 @@ class UserController extends BaseController
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
         $data = [
-            'allUsers' => $allUsers,
+            'users' => $allUsers,
             'GENDERS' => $this->model->getGenders(),
             'STATUSES' => $this->model->getStatuses(),
-            'thisPage' => $page,
+            'currentPage' => $page,
             'pages' => $pages,
-            'countUsers' => count($allUsers),
             'PER_PAGE' => self::PER_PAGE,
             'title' => 'All users',
-            'message' => 'Users from',
-            'dataSource' => $_COOKIE['dataSource']
+            'header' => 'Users',
+            'dataSource' => $this->setDataSource()
         ];
 
         if (count($allUsers) === 0) {
@@ -72,11 +72,12 @@ class UserController extends BaseController
         $id = (int)ltrim(rtrim($id, '}'), '{');        
         $user = $this->model->get($id);
         $data = [
-            'allUsers' => [$user],
+            'users' => $user,
             'GENDERS' => $this->model->getGenders(),
             'STATUSES' => $this->model->getStatuses(),
-            'title' => 'User' . $user['name'],
-            'countUsers' => count([$user])
+            'title' => 'User - ' . $user['name'],
+            'header' => 'User - ' . $user['name'],
+            'dataSource' => $this->setDataSource()
         ];
 
         $this->view->render("users.html.twig", $data);
@@ -88,7 +89,9 @@ class UserController extends BaseController
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
             'user' => $this->model->get()[0],
-            'title' => 'Edit user'
+            'title' => 'Edit user',
+            'header' => 'Edit user',
+            'dataSource' => $this->setDataSource()
         ];
         $this->view->render("edit.html.twig", $data);
     }
@@ -109,7 +112,7 @@ class UserController extends BaseController
     {
         $data = [
             'title' => 'Not found',
-            'message' => '404: page not found'
+            'header' => '404: page not found'
         ];
         $this->view->render("404.html.twig", $data);
         http_response_code(404);
@@ -141,5 +144,18 @@ class UserController extends BaseController
         }
 
         return $page;
+    }
+
+    private function setDataSource(): string
+    {
+        if (!isset($_COOKIE['dataSource'])) {
+            return "Local DB";
+        }
+
+        if ($_COOKIE['dataSource'] == 'local') {
+            return "Local DB";
+        }
+
+        return "gorest API";
     }
 }

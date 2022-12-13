@@ -4,10 +4,15 @@ info:
   description: 'Free REST API service'
   version: '2.0'
 paths:
-  /public/v2/users:
+  '/public/v2/users/{id}':
     get:
       summary: 'get list of users'
       operationId: getListOfUsers
+      parameters:
+        -
+          name: user-id
+          in: path
+          required: true
       responses:
         '200':
           description: OK
@@ -26,9 +31,14 @@ paths:
           securityScheme: bearerAuth
           type: http
           scheme: bearer
-    post:
-      summary: 'create new user'
-      operationId: createUser
+    delete:
+      summary: 'delete user'
+      operationId: deleteUser
+      parameters:
+        -
+          name: user-id
+          in: path
+          required: true
       responses:
         '200':
           description: OK
@@ -53,16 +63,43 @@ paths:
           securityScheme: bearerAuth
           type: http
           scheme: bearer
-  '/public/v2/users/{id}':
-    delete:
+    patch:
       summary: 'delete user'
-      operationId: deleteUser
+      operationId: patchUser
       parameters:
         -
           parameter: user-id
           name: user-id
           in: path
           required: true
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: 'A resource was successfully created'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Authentication failed'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '422':
+          description: 'Data validation failed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          securityScheme: bearerAuth
+          type: http
+          scheme: bearer
+  /public/v2/users:
+    post:
+      summary: 'create new user'
+      operationId: createUser
       responses:
         '200':
           description: OK
