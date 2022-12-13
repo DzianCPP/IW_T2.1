@@ -7,7 +7,7 @@ paths:
   /public/v2/users:
     get:
       summary: 'get list of users'
-      operationId: 5e1371898e3d916ed2955455eedd8073
+      operationId: getListOfUsers
       responses:
         '200':
           description: OK
@@ -28,7 +28,41 @@ paths:
           scheme: bearer
     post:
       summary: 'create new user'
-      operationId: 20fb4b01f43234fa1a1076dae554e66f
+      operationId: createUser
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: 'A resource was successfully created'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Authentication failed'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '422':
+          description: 'Data validation failed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          securityScheme: bearerAuth
+          type: http
+          scheme: bearer
+  '/public/v2/users/{id}':
+    delete:
+      summary: 'delete user'
+      operationId: deleteUser
+      parameters:
+        -
+          parameter: user-id
+          name: user-id
+          in: path
+          required: true
       responses:
         '200':
           description: OK
