@@ -27,26 +27,43 @@ class GorestCurlBuilder implements CurlBuilderInterface
 
     public function setCurl(string $method, $id = 0, $json_body = "")
     {
-        curl_setopt($this->curlHandler, CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($this->curlHandler, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->curlHandler, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
-            "Content-Type:application/json"
-        ]);
+        curl_setopt_array($this->curlHandler, options: [
+            CURLOPT_FRESH_CONNECT => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
+                "Content-Type:application/json"
+            ]
+            ]);
 
-        $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
-        if ($id != 0 ) {
-            $endpoint .= (string)$id;
-        }
+        $this->setBody($json_body);
+        $this->setCustomMethod($method);
+        $this->setEndpoint($id);
+        return $this->curlHandler;
+    }
 
+    private function setBody(string $json_body): void
+    {
         if ($json_body != "") {
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $json_body);
         }
+    }
+
+    private function setCustomMethod(string $method): void
+    {
         if ($method != "GET") {
             curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, $method);
             curl_setopt($this->curlHandler, CURLOPT_HEADER, true);
         }
+    }
+
+    private function setEndpoint(int $id = 0): void
+    {
+        $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
+
+        if ($id != 0 ) {
+            $endpoint .= (string)$id;
+        }
         curl_setopt($this->curlHandler, CURLOPT_URL, $endpoint);
-        return $this->curlHandler;
     }
 }
