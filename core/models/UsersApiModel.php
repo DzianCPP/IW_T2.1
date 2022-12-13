@@ -13,9 +13,9 @@ class UsersApiModel implements ModelInterface
         $this->gorestCurlBuilder = new GorestCurlBuilder();
     }
 
-    public function getUsers(array $columnValue = []): array
+    public function get(int|string $value = NULL): array
     {
-        $result = $this->gorestCurlBuilder->executeCurl(method: "GET", id: $columnValue['value']);
+        $result = $this->gorestCurlBuilder->executeCurl(method: "GET", id: $value);
         return json_decode($result, true);
     }
 
@@ -32,12 +32,13 @@ class UsersApiModel implements ModelInterface
         return true;
     }
 
-    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
+    public function delete(int ...$ids): bool
     {
-        $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $value);
-
-        if (!$result) {
-            return false;
+        foreach ($ids as $id) {
+            $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $id);
+            if (!$result) {
+                return false;
+            }
         }
 
         return true;

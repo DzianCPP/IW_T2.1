@@ -36,7 +36,7 @@ class UserController extends BaseController
 
     public function show(): void
     {
-        $allUsers =  $this->model->getUsers();
+        $allUsers = $this->model->getUsers();
         $page = $this->getPage();
         $pages = (int)ceil(count($allUsers) / self::PER_PAGE);
         $this->limitUsersRange($allUsers, $page);
@@ -67,9 +67,7 @@ class UserController extends BaseController
 
     public function showOne(): void
     {
-        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $id = ltrim(rtrim($id, '}'), '{');
-        $user = $this->model->selectUser($id);
+        $user = $this->model->selectUser();
         $data = [
             'allUsers' => [$user],
             'GENDERS' => $this->model->getGenders(),
@@ -87,7 +85,7 @@ class UserController extends BaseController
         $data = [
             'genders' => $this->model->getGenders(),
             'statuses' => $this->model->getStatuses(),
-            'user' => $this->model->selectUser($id),
+            'user' => $this->model->selectUser($id)[0],
             'title' => 'Edit user'
         ];
         $this->view->render("edit.html.twig", $data);

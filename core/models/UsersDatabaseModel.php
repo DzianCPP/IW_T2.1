@@ -7,15 +7,6 @@ class UsersDatabaseModel implements ModelInterface
     private const TABLE_NAME = "usersTable";
     protected array $fields = ['email', 'name', 'gender', 'status', 'id'];
     private Validator $validator;
-    private array $genders = [
-      'male' => 'Male',
-        'female' => 'Female'
-    ];
-
-    private array $statuses = [
-        'active' => 'Active',
-        'inactive' => 'Inactive'
-    ];
 
     private DatabaseSqlBuilder $sqlBuilder;
 
@@ -25,9 +16,13 @@ class UsersDatabaseModel implements ModelInterface
         $this->validator = new Validator();
     }
 
-    public function getUsers(array $columnValue = []): array
+    public function get(int|string $value = NULL): array
     {
-        return $this->sqlBuilder->select(self::TABLE_NAME, $columnValue);
+        if ($value) {
+            return $this->sqlBuilder->select(self::TABLE_NAME, column: "id", value: $value);
+        }
+        
+        return $this->sqlBuilder->select(self::TABLE_NAME);
     }
 
     public function create(): bool
@@ -63,7 +58,7 @@ class UsersDatabaseModel implements ModelInterface
         return true;
     }
 
-    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
+    public function delete(int ...$ids): bool
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
@@ -73,7 +68,8 @@ class UsersDatabaseModel implements ModelInterface
         }
         
         if (!$this->sqlBuilder->delete(
-                columnValues: $columnValues,
+                column: "id",    
+                values: $ids,
                 tableName: self::TABLE_NAME)) {
             
             return false;
@@ -96,15 +92,5 @@ class UsersDatabaseModel implements ModelInterface
         }
 
         return true;
-    }
-
-    public function getGenders(): array
-    {
-        return $this->genders;
-    }
-
-    public function getStatuses(): array
-    {
-        return $this->statuses;
     }
 }
