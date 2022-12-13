@@ -16,6 +16,8 @@ class AppController extends BaseController
         $dataSource = "local";
         if (isset($_COOKIE['dataSource'])) {
             $dataSource = $_COOKIE['dataSource'];
+        } else {
+            setcookie('dataSource', 'local', time() + 28800, "/");
         }
         $data = [
             'title' => 'Main Page',
