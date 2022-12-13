@@ -36,7 +36,6 @@ class GorestCurlBuilder implements CurlBuilderInterface
             ]
             ]);
 
-
         if ($json_body != "") {
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $json_body);
         }
@@ -46,7 +45,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
         }
 
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
-        
+
         if ($id != 0 ) {
             $endpoint .= (string)$id;
         }
