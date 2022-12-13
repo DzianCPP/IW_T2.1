@@ -9,7 +9,7 @@
             <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
-    {% for user in allUsers %}
+    {% for user in users %}
         <tr>
             <td><input name="select-user" type="checkbox" value="{{user.id}}"></td>
             <td>{{user.id}}</td>
