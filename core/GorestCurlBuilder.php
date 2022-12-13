@@ -36,20 +36,34 @@ class GorestCurlBuilder implements CurlBuilderInterface
             ]
             ]);
 
+        $this->setBody($json_body);
+        $this->setCustomMethod($method);
+        $this->setEndpoint($id);
+        return $this->curlHandler;
+    }
+
+    private function setBody(string $json_body): void
+    {
         if ($json_body != "") {
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $json_body);
         }
+    }
+
+    private function setCustomMethod(string $method): void
+    {
         if ($method != "GET") {
             curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, $method);
             curl_setopt($this->curlHandler, CURLOPT_HEADER, true);
         }
+    }
 
+    private function setEndpoint(int $id = 0): void
+    {
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
 
         if ($id != 0 ) {
             $endpoint .= (string)$id;
         }
         curl_setopt($this->curlHandler, CURLOPT_URL, $endpoint);
-        return $this->curlHandler;
     }
 }
