@@ -1,5 +1,5 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-Redirect 301 /users/1 /users/
+Redirect 301 /users/1 /users
 RewriteRule . index.php

@@ -2,14 +2,26 @@
 
 namespace core\controllers;
 
+use core\view\AppView;
+
 class AppController extends BaseController
 {
+    public function __construct()
+    {
+        $this->setView(AppView::class);
+    }
+    
     public function index(): void
     {
-        $this->setView();
+        $dataSource = "local";
+        if (isset($_COOKIE['dataSource'])) {
+            $dataSource = $_COOKIE['dataSource'];
+        } else {
+            setcookie('dataSource', 'local', time() + 28800, "/");
+        }
         $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP'
+            'title' => 'Main Page',
+            'dataSource' => $dataSource
         ];
 
         $this->view->render("main.html.twig", $data);
@@ -17,10 +29,8 @@ class AppController extends BaseController
 
     public function notFound(): void
     {
-        $this->setView();
         $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
+            'title' => 'Not found',
             'message' => '404: page not found'
         ];
         http_response_code(404);

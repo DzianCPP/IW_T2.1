@@ -5,6 +5,8 @@
 The goal of the task is to create a simple page with a form to collect data from a user
 (email, full name, gender, and status) and to send it via a POST request.
 
+Important: this project requires <b>PHP 8.1+</b>
+
 Other app's features:
 - Add user
 - View all users

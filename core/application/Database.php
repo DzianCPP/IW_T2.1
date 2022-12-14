@@ -1,6 +1,7 @@
 <?php
 
 namespace core\application;
+
 use PDO;
 
 class Database
@@ -18,12 +19,11 @@ class Database
 
     private function __construct()
     {
-        DotEnver::getDotEnv();
         $dbHostName = $_ENV['DB_HOST_NAME'];
         $dbPassword = $_ENV['DB_PASSWORD'];
         $dbUserName = $_ENV['DB_USER_NAME'];
         $dbName = $_ENV['DB_NAME'];
-        $dsn = "mysql:host=".$dbHostName.";dbname=".$dbName;
+        $dsn = "mysql:host=" . $dbHostName . ";dbname=" . $dbName;
 
         $this->connection = new PDO($dsn, $dbUserName, $dbPassword);
     }

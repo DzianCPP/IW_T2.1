@@ -14,7 +14,7 @@ async function sendPutRequest() {
         name: newName,
         gender: newGender,
         status: newStatus,
-        userID: newUserID
+        id: newUserID
     };
 
     let putRequest = {

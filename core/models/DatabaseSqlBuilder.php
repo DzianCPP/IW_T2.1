@@ -5,7 +5,7 @@ namespace core\models;
 use core\application\Database;
 use PDO;
 
-class Model
+class DatabaseSqlBuilder
 {
     protected PDO $conn;
     protected Database $database;
@@ -14,18 +14,13 @@ class Model
     public function __construct()
     {
         $this->database = Database::getInstance();
-        $this->validator = new Validator();
         $this->conn = $this->database->getConnection();
     }
 
-    public function insert(array $params, array $fields, string $tableName): bool
+    public function insert(array $recordInfo, array $fields, string $tableName): bool
     {
-        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
-            return false;
-        }
-
         $tableFields = $this->getTableFields($fields);
-        $values = $this->getValues($params);
+        $values = $this->getValues($recordInfo);
         $sqlQuery = "INSERT INTO ${tableName} (${tableFields})
                     VALUES (${values})";
         $query = $this->conn->prepare($sqlQuery);
@@ -36,49 +31,42 @@ class Model
         return true;
     }
 
-    public function selectAll(string $tableName): array
+    public function select(string $tableName, string $column = "", int|string $value = NULL): array
     {
         $sqlQuery = "SELECT * FROM $tableName";
+        if ($column != "") {
+            $field = $column;
+            $sqlQuery .= " WHERE ${field}=${value}";
+        }
+
+        $sqlQuery .= " LIMIT 1000";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
         
         return $query->fetchAll();
     }
 
-    protected function getRecordBy(string $colName, $value, string $tableName): array
-    {
-        $sqlQuery = "SELECT * FROM ${tableName} WHERE ${colName}=${value}";
-        $query = $this->conn->prepare($sqlQuery);
-        $query->execute();
-
-        return $query->fetchAll();
-    }
-
-    protected function update(string $tableName, array $fields, array $params, $colName): bool
+    public function update(string $tableName, array $fields, array $recordInfo, $column): bool
     {
         $sets = $this->getSets($fields);
         $sqlQuery = "UPDATE ${tableName}
             SET ${sets}
-            WHERE ${colName}={$params[$colName]}
+            WHERE ${column}={$recordInfo[$column]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        unset($params['userID']);
-
-        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
-            return false;
-        }
         
-        if (!$query->execute($params)) {
+        if (!$query->execute($recordInfo)) {
             return false;
         }
 
         return true;
     }
 
-    protected function delete(string $colName, array $values, string $tableName): bool
+    public function delete(string $column = "", string $tableName = "", array $values): bool
     {
         $values = implode(", ", $values);
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${colName} IN (${values})";
+        $column = $column;
+        $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;

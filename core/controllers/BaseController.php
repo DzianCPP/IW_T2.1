@@ -1,21 +1,23 @@
 <?php
 
 namespace core\controllers;
-use core\view\UsersView;
-use core\models\Users;
 
-class BaseController
+abstract class BaseController
 {
-    protected Users $users;
-    protected UsersView $view;
-
-    protected function setView(): void
+    protected $view;
+    protected $model;
+    
+    protected function setView(string $viewName)
     {
-        $this->view = new UsersView();
+        if (!isset($this->view)) {
+            $this->view = new $viewName();
+        }
     }
 
-    protected function setModel(): void
+    protected function setModel(string $modelName)
     {
-        $this->users = new Users();
+        if (!isset($this->model)) {
+            $this->model = new $modelName();
+        }
     }
 }

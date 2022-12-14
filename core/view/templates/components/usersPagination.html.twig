@@ -4,36 +4,36 @@
     <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
         <nav>
             <ul class="pagination justify-content-center">
-                {% if thisPage > 1 %}
+                {% if currentPage > 1 %}
                 <li class="page-item">
                 {% else %}
                 <li class="page-item disabled">
                 {% endif %}
-                    <a class="page-link" href="/users/{% if thisPage > 2 %}{{ thisPage - 1}}{% endif %}" aria-label="Previous">
+                    <a class="page-link" href="/users/{% if currentPage > 2 %}{{ currentPage - 1}}{% endif %}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only"></span>
                     </a>
                 </li>
-                {% if thisPage > 1 %}
+                {% if currentPage > 1 %}
                     <li class="page-item"><a class="page-link"
-                                             href="/users/{% if thisPage > 2 %}{{ thisPage - 1}}{% endif %}">{{ thisPage - 1 }}</a>
+                                             href="/users/{% if currentPage > 2 %}{{ currentPage - 1}}{% endif %}">{{ currentPage - 1 }}</a>
                     </li>
                 {% endif %}
                 <li class="page-item disabled"><a class="page-link"
-                                         href="/users/{{ thisPage }}">{{ thisPage }}</a>
+                                         href="/users/{{ currentPage }}">{{ currentPage }}</a>
                 </li>
-                {% if thisPage < pages %}
+                {% if currentPage < pages %}
                     <li class="page-item"><a class="page-link"
-                                             href="/users/{{ thisPage + 1 }}">{{ thisPage + 1 }}</a>
+                                             href="/users/{{ currentPage + 1 }}">{{ currentPage + 1 }}</a>
                     </li>
                 {% endif %}
 
-                {% if thisPage < pages %}
+                {% if currentPage < pages %}
                 <li class="page-item">
                 {% else %}
                 <li class="page-item disabled">
                 {% endif %}
-                    <a class="page-link" href="/users/{{ thisPage + 1 }}" aria-label="Previous">
+                    <a class="page-link" href="/users/{{ currentPage + 1 }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only"></span>
                     </a>

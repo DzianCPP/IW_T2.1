@@ -1,7 +1,9 @@
 <?php
 
 namespace system;
+
 use core\application\Database;
+use core\application\DotEnver;
 use PDO;
 use Exception;
 
@@ -12,6 +14,7 @@ class Migrations
 
     public function run(int $databaseVersion = -1): bool
     {
+        DotEnver::getDotEnv();
         $db = Database::getInstance();
         $conn = $db->getConnection();
         $this->migrations = require __DIR__ . "/../bootstrap/migrationsList.php";
@@ -35,7 +38,7 @@ class Migrations
 
         $completedMigrations = $this->getCompletedMigrations($conn);
 
-        if ($databaseVersion < (count($completedMigrations)-1)) {
+        if ($databaseVersion < (count($completedMigrations) - 1)) {
             if ($this->rollback($conn, $databaseVersion, $completedMigrations)) {
                 return true;
             }
@@ -74,7 +77,7 @@ class Migrations
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
-            if ($migrationIndex === $completedMigrations[$i-1]['migrationIndex']) {
+            if ($migrationIndex === $completedMigrations[$i - 1]['migrationIndex']) {
                 continue;
             }
 
@@ -94,8 +97,7 @@ class Migrations
         $sqlQuery = "SELECT 1 FROM migrationHistory LIMIT 1";
         try {
             $result = $conn->query($sqlQuery);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
 

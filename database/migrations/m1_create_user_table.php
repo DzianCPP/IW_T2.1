@@ -13,11 +13,11 @@ class m1_create_user_table extends MigrationsBase
         $conn = $db->getConnection();
 
         $sqlQuery = "CREATE TABLE usersTable(
-                        userID int(20) NOT NULL AUTO_INCREMENT,
+                        id int(20) NOT NULL AUTO_INCREMENT,
                         email varchar(255) NOT NULL,
                         name varchar(255) default NULL,
                         gender varchar(25) NOT NULL,
-                        PRIMARY KEY(userID))";
+                        PRIMARY KEY(id))";
 
         $query = $conn->prepare($sqlQuery);
 

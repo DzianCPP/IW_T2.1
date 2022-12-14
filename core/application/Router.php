@@ -8,7 +8,7 @@ class Router
 
     public function __construct()
     {
-        $routes = require_once "../bootstrap/routes.php";
+        $routes = require_once BASE_PATH . "bootstrap/routes.php";
         $route = $this->setRoute($routes);
         $this->setTrack($routes, $route);
     }
