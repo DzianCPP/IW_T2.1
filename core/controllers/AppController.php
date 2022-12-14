@@ -31,7 +31,7 @@ class AppController extends BaseController
     {
         $data = [
             'title' => 'Not found',
-            'message' => '404: page not found'
+            'header' => '404: page not found'
         ];
         http_response_code(404);
         $this->view->render("404.html.twig", $data);

@@ -1,5 +1,4 @@
-let findButton = document.getElementById("main-page-find-button");
-findButton.addEventListener("click", findUserById);
+document.getElementById("main-page-find-button").addEventListener("click", findUserById);
 
 function findUserById()
 {

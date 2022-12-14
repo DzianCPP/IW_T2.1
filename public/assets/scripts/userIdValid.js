@@ -1,5 +1,4 @@
-let userIdField = document.getElementById("main-input-userID");
-userIdField.addEventListener("keyup", userIdValid);
+document.getElementById("main-input-userID").addEventListener("keyup", userIdValid);
 
 function userIdValid() {
     let userIdInput = document.getElementById("main-input-userID");
