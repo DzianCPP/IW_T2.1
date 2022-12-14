@@ -21,33 +21,14 @@ use OpenApi\Attributes as OA;
                 new OA\JsonContent(
                     type: "string",
                     properties: [
-                        new OA\Property(
-                            property: "email",
-                            type: "string",
-                            description: "Email of the user"
-                        ),
-                        new OA\Property(
-                            property: "name",
-                            type: "string",
-                            description: "Full name of the user"
-                        ),
-                        new OA\Property(
-                            property: "gender",
-                            type: "string",
-                            description: "Gender of the user",
-                            required: ["male", "female"]
-                        ),
-                        new OA\Property(
-                            property: "status",
-                            type: "string",
-                            description: "Status of the user",
-                            required: ["active", "inactive"]
-                        )
+                        new OA\Property(property: "email", type: "string", description: "Email of the user"),
+                        new OA\Property(property: "name", type: "string", description: "Full name of the user"),
+                        new OA\Property(property: "gender", type: "string", description: "Gender of the user", required: ["male", "female"]),
+                        new OA\Property( property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
                     ]
                 )
             ]
         ),
-
         new OA\RequestBody(
             request: "patchUser",
             description: "body to patch a user",
@@ -56,28 +37,10 @@ use OpenApi\Attributes as OA;
                 new OA\JsonContent(
                     type: "string",
                     properties: [
-                        new OA\Property(
-                            property: "email",
-                            type: "string",
-                            description: "Email of the user"
-                        ),
-                        new OA\Property(
-                            property: "name",
-                            type: "string",
-                            description: "Full name of the user"
-                        ),
-                        new OA\Property(
-                            property: "gender",
-                            type: "string",
-                            description: "Gender of the user",
-                            required: ["male", "female"]
-                        ),
-                        new OA\Property(
-                            property: "status",
-                            type: "string",
-                            description: "Status of the user",
-                            required: ["active", "inactive"]
-                        )
+                        new OA\Property(property: "email", type: "string", description: "Email of the user"),
+                        new OA\Property(property: "name", type: "string", description: "Full name of the user"),
+                        new OA\Property( property: "gender", type: "string", description: "Gender of the user", required: ["male", "female"]),
+                        new OA\Property( property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
                     ]
                 )
             ]
@@ -100,20 +63,12 @@ class UsersApiModel implements ModelInterface
         operationId: "getListOfUsers",
 
         security: [
-            new OA\SecurityScheme(
-                securityScheme: "bearerAuth",
-                type: "oauth2",
-                scheme: "bearer"
-            )
+            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
         ],
 
         parameters: [
-            new OA\Parameter(
-                name: "id",
-                in: "path",
-                required: false)
+            new OA\Parameter(name: "id", in: "path", required: false)
             ],
-
             responses: [
                 new OA\Response(response: 200, description: "OK"),
                 new OA\Response(response: 400, description: "Bad request"),
@@ -145,17 +100,9 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 429, description: "Too many requests"),
             new OA\Response(response: 500, description: "Internal server error")
         ],
-
-        requestBody: new OA\RequestBody(
-            ref: "#components/requestBodies/postUser"
-        ),
-
+        requestBody: new OA\RequestBody(ref: "#components/requestBodies/postUser"),
         security: [
-            new OA\SecurityScheme(
-                securityScheme: "bearerAuth",
-                type: "oauth2",
-                scheme: "bearer"
-            )
+            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
         ]
     )]
 
@@ -187,21 +134,11 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 429, description: "Too many requests"),
             new OA\Response(response: 500, description: "Internal server error")
         ],
-
         security: [
-            new OA\SecurityScheme(
-                securityScheme: "bearerAuth",
-                type: "oauth2",
-                scheme: "bearer"
-            )
+            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
         ],
-
         parameters: [
-            new OA\Parameter(
-                name: "id",
-                in: "path",
-                required: true
-            )
+            new OA\Parameter(name: "id", in: "path", required: true)
         ]
     )]
 
@@ -232,26 +169,12 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 429, description: "Too many requests"),
             new OA\Response(response: 500, description: "Internal server error")
         ],
-
         security: [
-            new OA\SecurityScheme(
-                securityScheme: "bearerAuth",
-                type: "oauth2",
-                scheme: "bearer"
-            )
+            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
         ],
-
-
-        requestBody: new OA\RequestBody(
-            ref: "#components/requestBodies/patchUser"
-        ),
-
+        requestBody: new OA\RequestBody(ref: "#components/requestBodies/patchUser"),
         parameters: [
-            new OA\Parameter(
-                name: "id",
-                in: "path",
-                required: true
-            )
+            new OA\Parameter(name: "id", in: "path", required: true)
         ]
     )]
 
