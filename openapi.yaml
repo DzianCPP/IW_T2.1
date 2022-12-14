@@ -10,9 +10,9 @@ paths:
       operationId: getListOfUsers
       parameters:
         -
-          name: user-id
+          name: id
           in: path
-          required: true
+          required: false
       responses:
         '200':
           description: OK
@@ -29,21 +29,21 @@ paths:
       security:
         -
           securityScheme: bearerAuth
-          type: http
+          type: oauth2
           scheme: bearer
     delete:
       summary: 'delete user'
       operationId: deleteUser
       parameters:
         -
-          name: user-id
+          name: id
           in: path
           required: true
       responses:
         '200':
           description: OK
-        '201':
-          description: 'A resource was successfully created'
+        '204':
+          description: 'No content'
         '400':
           description: 'Bad request'
         '401':
@@ -61,17 +61,18 @@ paths:
       security:
         -
           securityScheme: bearerAuth
-          type: http
+          type: oauth2
           scheme: bearer
     patch:
       summary: 'delete user'
       operationId: patchUser
       parameters:
         -
-          parameter: user-id
-          name: user-id
+          name: id
           in: path
           required: true
+      requestBody:
+        $ref: '#components/requestBodies/patchUser'
       responses:
         '200':
           description: OK
@@ -94,12 +95,14 @@ paths:
       security:
         -
           securityScheme: bearerAuth
-          type: http
+          type: oauth2
           scheme: bearer
   /public/v2/users:
     post:
       summary: 'create new user'
       operationId: createUser
+      requestBody:
+        $ref: '#components/requestBodies/postUser'
       responses:
         '200':
           description: OK
@@ -122,5 +125,59 @@ paths:
       security:
         -
           securityScheme: bearerAuth
-          type: http
+          type: oauth2
           scheme: bearer
+components:
+  requestBodies:
+    postUser:
+      description: 'body to create a new user'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                description: 'Email of the user'
+                type: string
+              name:
+                description: 'Full name of the user'
+                type: string
+              gender:
+                description: 'Gender of the user'
+                required:
+                  - male
+                  - female
+                type: string
+              status:
+                description: 'Status of the user'
+                required:
+                  - active
+                  - inactive
+                type: string
+            type: string
+    patchUser:
+      description: 'body to patch a user'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                description: 'Email of the user'
+                type: string
+              name:
+                description: 'Full name of the user'
+                type: string
+              gender:
+                description: 'Gender of the user'
+                required:
+                  - male
+                  - female
+                type: string
+              status:
+                description: 'Status of the user'
+                required:
+                  - active
+                  - inactive
+                type: string
+            type: string

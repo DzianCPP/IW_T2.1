@@ -11,6 +11,80 @@ use OpenApi\Attributes as OA;
     version: "2.0")
 ]
 
+#[OA\Components(
+    requestBodies: [
+        new OA\RequestBody(
+            request: "postUser",
+            description: "body to create a new user",
+            required: true,
+            content: [
+                new OA\JsonContent(
+                    type: "string",
+                    properties: [
+                        new OA\Property(
+                            property: "email",
+                            type: "string",
+                            description: "Email of the user"
+                        ),
+                        new OA\Property(
+                            property: "name",
+                            type: "string",
+                            description: "Full name of the user"
+                        ),
+                        new OA\Property(
+                            property: "gender",
+                            type: "string",
+                            description: "Gender of the user",
+                            required: ["male", "female"]
+                        ),
+                        new OA\Property(
+                            property: "status",
+                            type: "string",
+                            description: "Status of the user",
+                            required: ["active", "inactive"]
+                        )
+                    ]
+                )
+            ]
+        ),
+
+        new OA\RequestBody(
+            request: "patchUser",
+            description: "body to patch a user",
+            required: true,
+            content: [
+                new OA\JsonContent(
+                    type: "string",
+                    properties: [
+                        new OA\Property(
+                            property: "email",
+                            type: "string",
+                            description: "Email of the user"
+                        ),
+                        new OA\Property(
+                            property: "name",
+                            type: "string",
+                            description: "Full name of the user"
+                        ),
+                        new OA\Property(
+                            property: "gender",
+                            type: "string",
+                            description: "Gender of the user",
+                            required: ["male", "female"]
+                        ),
+                        new OA\Property(
+                            property: "status",
+                            type: "string",
+                            description: "Status of the user",
+                            required: ["active", "inactive"]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+)]
+
 class UsersApiModel implements ModelInterface
 {
     private GorestCurlBuilder $gorestCurlBuilder;
@@ -24,30 +98,30 @@ class UsersApiModel implements ModelInterface
         path: "/public/v2/users/{id}",
         summary: "get list of users",
         operationId: "getListOfUsers",
-        responses: [
-            new OA\Response(response: 200, description: "OK"),
-            new OA\Response(response: 400, description: "Bad request"),
-            new OA\Response(response: 404, description: "Requested resource not found"),
-            new OA\Response(response: 405, description: "Method not allowed"),
-            new OA\Response(response: 429, description: "Too many requests"),
-            new OA\Response(response: 500, description: "Internal server error")
-        ],
 
         security: [
             new OA\SecurityScheme(
                 securityScheme: "bearerAuth",
-                type: "http",
+                type: "oauth2",
                 scheme: "bearer"
             )
         ],
 
         parameters: [
             new OA\Parameter(
-                name: "user-id",
+                name: "id",
                 in: "path",
-                required: true
-            )
-        ]
+                required: false)
+            ],
+
+            responses: [
+                new OA\Response(response: 200, description: "OK"),
+                new OA\Response(response: 400, description: "Bad request"),
+                new OA\Response(response: 404, description: "Requested resource not found"),
+                new OA\Response(response: 405, description: "Method not allowed"),
+                new OA\Response(response: 429, description: "Too many requests"),
+                new OA\Response(response: 500, description: "Internal server error")
+            ]
     )]
 
     public function get(int|string $value = NULL): array
@@ -72,14 +146,14 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 500, description: "Internal server error")
         ],
 
-        requestBody: [
-
-        ],
+        requestBody: new OA\RequestBody(
+            ref: "#components/requestBodies/postUser"
+        ),
 
         security: [
             new OA\SecurityScheme(
                 securityScheme: "bearerAuth",
-                type: "http",
+                type: "oauth2",
                 scheme: "bearer"
             )
         ]
@@ -117,14 +191,14 @@ class UsersApiModel implements ModelInterface
         security: [
             new OA\SecurityScheme(
                 securityScheme: "bearerAuth",
-                type: "http",
+                type: "oauth2",
                 scheme: "bearer"
             )
         ],
 
         parameters: [
             new OA\Parameter(
-                name: "user-id",
+                name: "id",
                 in: "path",
                 required: true
             )
@@ -162,14 +236,19 @@ class UsersApiModel implements ModelInterface
         security: [
             new OA\SecurityScheme(
                 securityScheme: "bearerAuth",
-                type: "http",
+                type: "oauth2",
                 scheme: "bearer"
             )
         ],
 
+
+        requestBody: new OA\RequestBody(
+            ref: "#components/requestBodies/patchUser"
+        ),
+
         parameters: [
             new OA\Parameter(
-                name: "user-id",
+                name: "id",
                 in: "path",
                 required: true
             )
