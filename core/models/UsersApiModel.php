@@ -9,11 +9,22 @@ use OpenApi\Attributes as OA;
     OA\Info(
         title: "gorest API",
         description: "Free REST API service",
+        termsOfService: "https://gorest.co.in/",
         version: "2.0"
     )
 ]
 
+#[OA\Server(url: "https://gorest.co.in", description: "gorest API server")]
+
 #[OA\Components(
+    securitySchemes: [
+        new OA\SecurityScheme(
+            securityScheme: "bearerAuth",
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT"
+        )
+    ],
     requestBodies: [
         new OA\RequestBody(
             request: "postUser",
@@ -60,16 +71,37 @@ class UsersApiModel implements ModelInterface
     }
 
     #[OA\Get(
-        path: "/public/v2/users/{id}",
+        path: "/public/v2/users/",
         summary: "get list of users",
         operationId: "getListOfUsers",
-
         security: [
-            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
+            new OA\SecurityScheme(ref: "#/components/securitySchemes/bearerAuth", securityScheme: "bearerAuth")
         ],
+        responses: [
+            new OA\Response(response: 200, description: "OK"),
+            new OA\Response(response: 400, description: "Bad request"),
+            new OA\Response(response: 404, description: "Requested resource not found"),
+            new OA\Response(response: 405, description: "Method not allowed"),
+            new OA\Response(response: 429, description: "Too many requests"),
+            new OA\Response(response: 500, description: "Internal server error")
+        ]
+    )]
 
+    #[OA\Get(
+        path: "/public/v2/users/{id}",
+        summary: "get one user",
+        operationId: "getOneUser",
+        security: [
+            new OA\SecurityScheme(ref: "#/components/securitySchemes/bearerAuth", securityScheme: "bearerAuth")
+        ],
         parameters: [
-            new OA\Parameter(name: "id", in: "path", required: false)
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                description: "User ID to receive only one user",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
         ],
         responses: [
             new OA\Response(response: 200, description: "OK"),
@@ -102,11 +134,11 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 429, description: "Too many requests"),
             new OA\Response(response: 500, description: "Internal server error")
         ],
-        requestBody: new OA\RequestBody(ref: "#components/requestBodies/postUser"),
+        requestBody: new OA\RequestBody(ref: "#/components/requestBodies/postUser"),
         security: [
-            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
+            new OA\SecurityScheme(ref: "#/components/securitySchemes/bearerAuth", securityScheme: "bearerAuth")
         ]
-    )]
+        )]
 
     public function create(): bool
     {
@@ -136,11 +168,17 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 429, description: "Too many requests"),
             new OA\Response(response: 500, description: "Internal server error")
         ],
-        security: [
-            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
-        ],
         parameters: [
-            new OA\Parameter(name: "id", in: "path", required: true)
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                description: "User ID to delete",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        security: [
+            new OA\SecurityScheme(ref: "#/components/securitySchemes/bearerAuth", securityScheme: "bearerAuth")
         ]
     )]
 
@@ -172,12 +210,18 @@ class UsersApiModel implements ModelInterface
             new OA\Response(response: 500, description: "Internal server error")
         ],
         security: [
-            new OA\SecurityScheme(securityScheme: "bearerAuth", type: "oauth2", scheme: "bearer")
+            new OA\SecurityScheme(ref: "#/components/securitySchemes/bearerAuth", securityScheme: "bearerAuth")
         ],
-        requestBody: new OA\RequestBody(ref: "#components/requestBodies/patchUser"),
+        requestBody: new OA\RequestBody(ref: "#/components/requestBodies/patchUser"),
         parameters: [
-            new OA\Parameter(name: "id", in: "path", required: true)
-        ]
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                description: "User ID to patch",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
     )]
 
     public function update(array $newInfo): bool
