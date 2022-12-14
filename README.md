@@ -1,4 +1,4 @@
-<b>Task 2.2</b>
+<b>Add User App</b>
 
 <b>Description:</b>
 
@@ -16,6 +16,11 @@ Other app's features:
 
 Tech stack:
 HTML, CSS, php, js, json
+
+Data sources:
+ - Local database
+ - gorest API
+ * to pick a data source simply choose the one on the main page of the app and click "Choose" button. By default, Local database is chosen
 
 <b>How to launch the project:</b>
 
