@@ -10,7 +10,7 @@ class AppController extends BaseController
     {
         $this->setView(AppView::class);
     }
-    
+
     public function index(): void
     {
         $dataSource = "local";

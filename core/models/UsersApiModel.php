@@ -5,10 +5,12 @@ namespace core\models;
 use core\GorestCurlBuilder;
 use OpenApi\Attributes as OA;
 
-#[OA\Info(
-    title: "gorest API",
-    description: "Free REST API service",
-    version: "2.0")
+#[
+    OA\Info(
+        title: "gorest API",
+        description: "Free REST API service",
+        version: "2.0"
+    )
 ]
 
 #[OA\Components(
@@ -24,7 +26,7 @@ use OpenApi\Attributes as OA;
                         new OA\Property(property: "email", type: "string", description: "Email of the user"),
                         new OA\Property(property: "name", type: "string", description: "Full name of the user"),
                         new OA\Property(property: "gender", type: "string", description: "Gender of the user", required: ["male", "female"]),
-                        new OA\Property( property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
+                        new OA\Property(property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
                     ]
                 )
             ]
@@ -39,8 +41,8 @@ use OpenApi\Attributes as OA;
                     properties: [
                         new OA\Property(property: "email", type: "string", description: "Email of the user"),
                         new OA\Property(property: "name", type: "string", description: "Full name of the user"),
-                        new OA\Property( property: "gender", type: "string", description: "Gender of the user", required: ["male", "female"]),
-                        new OA\Property( property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
+                        new OA\Property(property: "gender", type: "string", description: "Gender of the user", required: ["male", "female"]),
+                        new OA\Property(property: "status", type: "string", description: "Status of the user", required: ["active", "inactive"])
                     ]
                 )
             ]
@@ -68,15 +70,15 @@ class UsersApiModel implements ModelInterface
 
         parameters: [
             new OA\Parameter(name: "id", in: "path", required: false)
-            ],
-            responses: [
-                new OA\Response(response: 200, description: "OK"),
-                new OA\Response(response: 400, description: "Bad request"),
-                new OA\Response(response: 404, description: "Requested resource not found"),
-                new OA\Response(response: 405, description: "Method not allowed"),
-                new OA\Response(response: 429, description: "Too many requests"),
-                new OA\Response(response: 500, description: "Internal server error")
-            ]
+        ],
+        responses: [
+            new OA\Response(response: 200, description: "OK"),
+            new OA\Response(response: 400, description: "Bad request"),
+            new OA\Response(response: 404, description: "Requested resource not found"),
+            new OA\Response(response: 405, description: "Method not allowed"),
+            new OA\Response(response: 429, description: "Too many requests"),
+            new OA\Response(response: 500, description: "Internal server error")
+        ]
     )]
 
     public function get(int|string $value = NULL): array

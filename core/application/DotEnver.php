@@ -1,6 +1,7 @@
 <?php
 
 namespace core\application;
+
 use Dotenv\Dotenv;
 
 class DotEnver

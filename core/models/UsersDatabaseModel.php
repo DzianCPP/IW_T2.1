@@ -70,14 +70,15 @@ class UsersDatabaseModel implements ModelInterface
         $ids = json_decode($jsonString, true);
 
         if (count($ids) < 1) {
-            return false; 
+            return false;
         }
-        
+
         if (!$this->sqlBuilder->delete(
-                column: "id",    
-                values: $ids,
-                tableName: self::TABLE_NAME)) {
-            
+            column: "id",
+            values: $ids,
+            tableName: self::TABLE_NAME
+        )) {
+
             return false;
         }
 
@@ -87,7 +88,7 @@ class UsersDatabaseModel implements ModelInterface
     public function seedUsers(array $data): bool
     {
         $userInfo = [
-                'email' => $data['email'],
+            'email' => $data['email'],
             'name' => $data['name'],
             'gender' => $data['gender'],
             'status' => $data['status']

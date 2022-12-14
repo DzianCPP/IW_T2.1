@@ -42,7 +42,7 @@ class DatabaseSqlBuilder
         $sqlQuery .= " LIMIT 1000";
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
-        
+
         return $query->fetchAll();
     }
 
@@ -54,7 +54,7 @@ class DatabaseSqlBuilder
             WHERE ${column}={$recordInfo[$column]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        
+
         if (!$query->execute($recordInfo)) {
             return false;
         }
@@ -82,7 +82,7 @@ class DatabaseSqlBuilder
 
     private function getValues(array $params): string
     {
-        foreach($params as &$param) {
+        foreach ($params as &$param) {
             $param = "'" . $param . "'";
         }
 
@@ -94,7 +94,7 @@ class DatabaseSqlBuilder
         foreach ($fields as &$field) {
             $field = $field . "=:" . $field;
         }
-        
+
         return implode(",", $fields);
     }
 }

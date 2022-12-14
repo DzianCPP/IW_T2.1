@@ -16,4 +16,5 @@ $oa = (new \OpenApi\Generator($logger))
     ->generate(
         sources: ['../core/models/UsersApiModel.php'],
         validate: $validate,
-        analysis: new \OpenApi\Analysis());
+        analysis: new \OpenApi\Analysis()
+    );

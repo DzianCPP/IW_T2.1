@@ -69,7 +69,7 @@ class UserController extends BaseController
     public function showOne(): void
     {
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $id = (int)ltrim(rtrim($id, '}'), '{');        
+        $id = (int)ltrim(rtrim($id, '}'), '{');
         $user = $this->model->get($id);
         $data = [
             'users' => $user,
