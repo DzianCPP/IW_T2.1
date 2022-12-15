@@ -1,6 +1,11 @@
 $(document).ready(function() {
     let deleteBtns = document.getElementsByName("delete");
-    let ids = deleteBtns.values;
+    for (deleteBtn of deleteBtns) {
+        let id = deleteBtn.id;
+        deleteBtn.onclick = () => {
+            sendDeleteRequest(id);
+        }
+    }
 })
 
 function sendDeleteRequest(_id) {
