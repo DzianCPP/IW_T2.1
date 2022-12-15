@@ -4,11 +4,6 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: './src/assets/jquery/index.js',
-    module: {
-        rules: [
-          { test: /\.(js)$/, use: 'babel-loader' }
-        ]
-      },
     output: {
         path: path.resolve(__dirname, './public/assets/jquery'),
         filename: 'jquery.js'
@@ -22,5 +17,5 @@ module.exports = {
         })
     ],
 
-    mode: "production"
-}
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
+  }
