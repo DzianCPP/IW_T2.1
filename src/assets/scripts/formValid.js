@@ -1,8 +1,9 @@
-document.getElementById("email").addEventListener("keyup", formValid);
-document.getElementById("name").addEventListener("keyup", formValid);
-document.getElementById("gender").addEventListener("click", formValid);
-document.getElementById("status").addEventListener("click", formValid);
-
+$(document).ready(function() {
+    $("#email").keyup(formValid);
+    $("#name").keyup(formValid);
+    $("#gender").change(formValid);
+    $("#status").change(formValid);
+})
 
 function formValid() {
     let errorField = document.getElementById("error-field");

@@ -1,4 +1,6 @@
-document.getElementById("main-input-userID").addEventListener("keyup", userIdValid);
+$(document).ready(function() {
+    $("#main-input-userID").keyup(userIdValid);
+});
 
 function userIdValid() {
     let userIdInput = document.getElementById("main-input-userID");

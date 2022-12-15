@@ -40,7 +40,6 @@ class GorestCurlBuilder implements CurlBuilderInterface
         $this->setBody($json_body);
         $this->setCustomMethod($method);
         $this->setEndpoint($id);
-        return $this->curlHandler;
     }
 
     private function setBody(string $json_body): void
@@ -58,7 +57,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
         }
     }
 
-    private function setEndpoint(int $id = 0): void
+    private function setEndpoint($id = 0): void
     {
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
 

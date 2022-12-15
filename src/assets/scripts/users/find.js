@@ -1,4 +1,6 @@
-document.getElementById("main-page-find-button").addEventListener("click", findUserById);
+$(document).ready(function() {
+    $("#main-page-find-button").click(findUserById);
+})
 
 function findUserById()
 {

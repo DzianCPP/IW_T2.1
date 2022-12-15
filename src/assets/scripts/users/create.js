@@ -1,4 +1,6 @@
-document.getElementById("submit-button").addEventListener("click", sendPostRequest);
+$(document).ready(function(){
+    $('#submit-button').click(sendPostRequest);
+})
 
 async function sendPostRequest() {
     let setEmail = document.getElementById("email").value;
