@@ -20,7 +20,9 @@
   "homepage": "https://github.com/DzianCPP/phpNativeMVC#readme",
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "jquery": "^3.6.2"
+    "jquery": "^3.6.2",
+    "webpack": "^5.75.0",
+    "webpack-dev": "^1.1.1"
   },
   "devDependencies": {
     "sass": "^1.56.2"
