@@ -77,6 +77,7 @@ class UserController extends BaseController
             'STATUSES' => $this->model->getStatuses(),
             'title' => 'User - ' . $user['name'],
             'header' => 'User - ' . $user['name'],
+
             'dataSource' => $this->setDataSource()
         ];
 

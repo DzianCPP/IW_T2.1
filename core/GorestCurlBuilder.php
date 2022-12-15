@@ -61,8 +61,8 @@ class GorestCurlBuilder implements CurlBuilderInterface
     private function setEndpoint(int $id = 0): void
     {
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
-
-        if ($id != 0) {
+        
+        if ($id != 0 ) {
             $endpoint .= (string)$id;
         }
         curl_setopt($this->curlHandler, CURLOPT_URL, $endpoint);
