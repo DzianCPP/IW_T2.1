@@ -2,7 +2,7 @@
   "name": "htdocs",
   "version": "1.0.0",
   "description": "<b>Add User App</b>",
-  "private": true,
+  "main": "webpack.config.js",
   "scripts": {
     "sass-dev": "sass --watch --update --style=expanded src/assets/scss:public/assets/css",
     "sass-prod": "sass --no-source-map --style=compressed src/assets/scss:public/assets/css",
@@ -20,11 +20,9 @@
   "homepage": "https://github.com/DzianCPP/phpNativeMVC#readme",
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "jquery": "^3.6.2",
-    "sass": "^1.56.2"
+    "jquery": "^3.6.2"
   },
   "devDependencies": {
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "sass": "^1.56.2"
   }
 }
