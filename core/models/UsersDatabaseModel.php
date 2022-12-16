@@ -25,10 +25,9 @@ class UsersDatabaseModel implements ModelInterface
         return $this->sqlBuilder->select(self::TABLE_NAME);
     }
 
-    public function create(): bool
+    public function create(string $newRecordInfo = NULL): bool
     {
-        $newUserInfo = file_get_contents("php://input");
-        $newUserInfo = json_decode($newUserInfo, true);
+        $newUserInfo = json_decode($newRecordInfo, true);
 
         $newUserInfo = $this->validator->makeDataSafe($newUserInfo);
         if (!$this->validator->userDataValid($newUserInfo['email'], $newUserInfo['name'])) {

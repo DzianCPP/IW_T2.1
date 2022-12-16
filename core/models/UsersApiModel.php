@@ -140,13 +140,10 @@ class UsersApiModel implements ModelInterface
         ]
         )]
 
-    public function create(): bool
+    public function create(string $newRecordInfo = NULL): bool
     {
-        $newUserInfo = file_get_contents("php://input");
-
-        $gorest_response = $this->gorestCurlBuilder->executeCurl(method: "POST", json_body: $newUserInfo);
-
-        if ($gorest_response === false) {
+        $result = $this->gorestCurlBuilder->executeCurl(method: "POST", json_body: $newRecordInfo);
+        if ($this->responseBad($result)) {
             return false;
         }
 
@@ -186,7 +183,7 @@ class UsersApiModel implements ModelInterface
     {
         foreach ($ids as $id) {
             $result = $this->gorestCurlBuilder->executeCurl(method: "DELETE", id: $id);
-            if (!$result) {
+            if ($this->responseBad($result)) {
                 return false;
             }
         }
@@ -228,10 +225,28 @@ class UsersApiModel implements ModelInterface
     {
         $result = $this->gorestCurlBuilder->executeCurl(method: "PATCH", json_body: json_encode($newInfo), id: $newInfo['id']);
 
-        if ($result === false) {
+        if ($this->responseBad($result)) {
             return false;
         }
 
         return true;
+    }
+
+    private function responseBad($response): bool
+    {
+        $badResponses = ["400", "401", "404", "405", "422", "429", "500"];
+        $responseLine = $this->getResponseFirstLine($response);
+        foreach($badResponses as $badResponse) {
+            if (str_contains($responseLine, $badResponse)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getResponseFirstLine(string $response): string
+    {
+        return substr($response, 0, strpos($response, "\n", 0));
     }
 }
