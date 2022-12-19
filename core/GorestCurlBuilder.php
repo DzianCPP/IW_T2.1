@@ -10,13 +10,13 @@ class GorestCurlBuilder implements CurlBuilderInterface
     private const API_ENDPOINT = "/public/v2/users/";
     private $curlHandler;
 
-    public function executeCurl(string $method, $id = 0, $json_body = "")
+    public function executeCurl(string $method, $id = 0, $json_body = ""): array|string
     {
         $this->setCurl($method, $id, $json_body);
         return curl_exec($this->curlHandler);
     }
 
-    public function setCurl(string $method, $id = 0, $json_body = "")
+    public function setCurl(string $method, $id = 0, $json_body = ""): void
     {
         $this->curlHandler = curl_init();
         curl_setopt_array($this->curlHandler, options: [
@@ -33,14 +33,14 @@ class GorestCurlBuilder implements CurlBuilderInterface
         $this->setEndpoint($id);
     }
 
-    private function setBody(string $json_body): void
+    public function setBody(string $json_body): void
     {
         if ($json_body != "") {
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $json_body);
         }
     }
 
-    private function setCustomMethod(string $method): void
+    public function setCustomMethod(string $method): void
     {
         if ($method != "GET") {
             curl_setopt($this->curlHandler, CURLOPT_CUSTOMREQUEST, $method);
@@ -48,7 +48,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
         }
     }
 
-    private function setEndpoint($id = 0): void
+    public function setEndpoint($id = 0): void
     {
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
 

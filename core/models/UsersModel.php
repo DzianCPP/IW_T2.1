@@ -21,17 +21,8 @@ class UsersModel
 
     public function __construct()
     {
-        switch ($_COOKIE['dataSource']) {
-            case ("gorest"):
-                $modelName = UsersApiModel::class;
-                break;
-            case ("local"):
-            default:
-                $modelName = UsersDatabaseModel::class;
-                break;
-        }
-
-        $this->model = new $modelName();
+        $dataSourceFactory = new DataSourceFactory();
+        $this->model = $dataSourceFactory->getModel();
     }
 
     public function create(): void

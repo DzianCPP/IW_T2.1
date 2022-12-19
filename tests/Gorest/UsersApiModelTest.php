@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace tests\Unit;
 
+use core\GorestCurlBuilder;
 use PHPUnit\Framework\TestCase;
 use core\models\UsersApiModel;
 
@@ -14,7 +15,7 @@ class UsersApiModelTest extends TestCase
 
     protected function setUp(): void
     {
-        self::$usersApiModel = new UsersApiModel();
+        self::$usersApiModel = new UsersApiModel(new GorestCurlBuilder());
         self::$newUser = [
             'email' => 'eronplaze@gmail.com',
             'name' => 'Json Statham',

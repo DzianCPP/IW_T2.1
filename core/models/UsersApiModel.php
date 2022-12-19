@@ -63,12 +63,12 @@ use OpenApi\Attributes as OA;
 
 class UsersApiModel implements ModelInterface
 {
-    private GorestCurlBuilder $gorestCurlBuilder;
+    private $gorestCurlBuilder;
     private int $createdUserId;
 
-    public function __construct()
+    public function __construct(GorestCurlBuilder $gorestCurlBuilder)
     {
-        $this->gorestCurlBuilder = new GorestCurlBuilder();
+        $this->gorestCurlBuilder = $gorestCurlBuilder;
     }
 
     #[OA\Get(
