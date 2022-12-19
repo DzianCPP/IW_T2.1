@@ -10,13 +10,13 @@ use core\models\UsersApiModel;
 
 class UsersApiModelTest extends TestCase
 {
-    private $usersApiModel;
+    private static $usersApiModel;
 
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->usersApiModel = new UsersApiModel();
-        DotEnver::getDotEnv();
         require __DIR__ . "/../../bootstrap/base-paths.php";
+        DotEnver::getDotEnv();
+        self::$usersApiModel = new UsersApiModel();
     }
     
     public function testGetReturnsArray(): array
