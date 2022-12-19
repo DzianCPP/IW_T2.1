@@ -5,15 +5,23 @@ declare(strict_types=1);
 namespace tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use core\application\DotEnver;
+use core\models\UsersApiModel;
 
 class UsersApiModelTest extends TestCase
 {
+    private $usersApiModel;
+
+    protected function setUp(): void
+    {
+        $this->usersApiModel = new UsersApiModel();
+        DotEnver::getDotEnv();
+        require __DIR__ . "/../../bootstrap/base-paths.php";
+    }
+    
     public function testGetReturnsArray(): array
     {
-        require __DIR__ . "/../../bootstrap/base-paths.php";
-        \core\application\DotEnver::getDotEnv();
-        $usersApiModel = new \core\models\UsersApiModel();
-        $actual = $usersApiModel->get();
+        $actual = $this->usersApiModel->get();
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -33,19 +41,17 @@ class UsersApiModelTest extends TestCase
     /** @depends testGetReturnsArray */
     public function testUpdateReturnsTrue(array $users): void
     {
-        $usersApiModel = new \core\models\UsersApiModel();
         $user = $users[0];
         $user['name'] .= ' Jr.';
-        $result = $usersApiModel->update($user);
+        $result = $this->usersApiModel->update($user);
         $this->assertSame(true, $result);
     }
 
     /** @depends testGetReturnsArray */
     public function testGetReturnsOneUser(array $users): array
     {
-        $usersApiModel = new \core\models\UsersApiModel();
         $user = $users[0];
-        $actual = $usersApiModel->get($user['id']);
+        $actual = $this->usersApiModel->get($user['id']);
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -63,18 +69,16 @@ class UsersApiModelTest extends TestCase
     /** @depends testGetReturnsOneUser */
     public function testCreateReturnsTrue(array $user): void
     {
-        $usersApiModel = new \core\models\UsersApiModel();
         unset($user['id']);
         $user['name'] .= "";
 
-        $result = $usersApiModel->create(json_encode($user));
+        $result = $this->usersApiModel->create(json_encode($user));
         $this->assertSame(true, $result);
     }
 
     /** @depends testGetReturnsArray */
     public function testDeleteReturnsTrue(array $users): void
     {
-        $usersApiModel = new \core\models\UsersApiModel();
         $ids = [];
         $i = 0;
         foreach ($users as $user) {
@@ -84,7 +88,12 @@ class UsersApiModelTest extends TestCase
                 break;
             }
         }
-        $actual = $usersApiModel->delete(...$ids);
+        $actual = $this->usersApiModel->delete(...$ids);
         $this->assertSame(true, $actual);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->usersApiModel = null;
     }
 }
