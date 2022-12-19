@@ -21,7 +21,7 @@ class UsersApiModelTest extends TestCase
     
     public function testGetReturnsArray(): array
     {
-        $actual = $this->usersApiModel->get();
+        $actual = self::$usersApiModel->get();
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -43,7 +43,7 @@ class UsersApiModelTest extends TestCase
     {
         $user = $users[0];
         $user['name'] .= ' Jr.';
-        $result = $this->usersApiModel->update($user);
+        $result = self::$usersApiModel->update($user);
         $this->assertSame(true, $result);
     }
 
@@ -51,7 +51,7 @@ class UsersApiModelTest extends TestCase
     public function testGetReturnsOneUser(array $users): array
     {
         $user = $users[0];
-        $actual = $this->usersApiModel->get($user['id']);
+        $actual = self::$usersApiModel->get($user['id']);
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -72,7 +72,7 @@ class UsersApiModelTest extends TestCase
         unset($user['id']);
         $user['name'] .= "";
 
-        $result = $this->usersApiModel->create(json_encode($user));
+        $result = self::$usersApiModel->create(json_encode($user));
         $this->assertSame(true, $result);
     }
 
@@ -88,12 +88,12 @@ class UsersApiModelTest extends TestCase
                 break;
             }
         }
-        $actual = $this->usersApiModel->delete(...$ids);
+        $actual = self::$usersApiModel->delete(...$ids);
         $this->assertSame(true, $actual);
     }
 
-    protected function tearDown(): void
+    public static function tearDownAfterClass(): void
     {
-        $this->usersApiModel = null;
+        self::$usersApiModel = null;
     }
 }
