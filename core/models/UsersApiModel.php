@@ -64,6 +64,7 @@ use OpenApi\Attributes as OA;
 class UsersApiModel implements ModelInterface
 {
     private GorestCurlBuilder $gorestCurlBuilder;
+    private int $createdUserId;
 
     public function __construct()
     {
@@ -146,6 +147,8 @@ class UsersApiModel implements ModelInterface
         if ($this->responseBad($result)) {
             return false;
         }
+
+        $this->setCreatedUserId($result);
 
         return true;
     }
@@ -248,5 +251,19 @@ class UsersApiModel implements ModelInterface
     private function getResponseFirstLine(string $response): string
     {
         return substr($response, 0, strpos($response, "\n", 0));
+    }
+
+    private function setCreatedUserId(string $response): void
+    {
+        $response = substr($response, strpos($response, "location", 0));
+        $response = substr($response, 0, strpos($response, "\n", 0));
+        $slashpos = strrpos($response, "/", 0) + 1;
+        $response = (int)substr($response, $slashpos);
+        $this->createdUserId = $response;
+    }
+
+    public function getCreatedUserId(): int
+    {
+        return $this->createdUserId;
     }
 }

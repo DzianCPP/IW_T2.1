@@ -5,26 +5,43 @@ declare(strict_types=1);
 namespace tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use core\application\DotEnver;
 use core\models\UsersApiModel;
 
 class UsersApiModelTest extends TestCase
 {
     private static $usersApiModel;
+    private static $newUser;
 
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        require __DIR__ . "/../../bootstrap/base-paths.php";
-        DotEnver::getDotEnv();
         self::$usersApiModel = new UsersApiModel();
+        self::$newUser = [
+            'email' => 'eronplaze@gmail.com',
+            'name' => 'Json Statham',
+            'gender' => 'male',
+            'status' => 'active'
+        ];
     }
-    
+
+    protected function tearDown(): void
+    {
+        self::$usersApiModel = null;
+    }
+
     public function testGetReturnsArray(): array
     {
         $actual = self::$usersApiModel->get();
         $this->assertIsArray($actual);
         return $actual;
     }
+
+    public function testCreateReturnsTrue(): int
+    {
+        $result = self::$usersApiModel->create(json_encode(self::$newUser));
+        $this->assertSame(true, $result);
+        return self::$usersApiModel->getCreatedUserId();
+    }
+
 
     /** @depends testGetReturnsArray */
     public function testUsersArrayHasRightKeys(array $users): void
@@ -39,19 +56,9 @@ class UsersApiModelTest extends TestCase
     }
 
     /** @depends testGetReturnsArray */
-    public function testUpdateReturnsTrue(array $users): void
-    {
-        $user = $users[0];
-        $user['name'] .= ' Jr.';
-        $result = self::$usersApiModel->update($user);
-        $this->assertSame(true, $result);
-    }
-
-    /** @depends testGetReturnsArray */
     public function testGetReturnsOneUser(array $users): array
     {
-        $user = $users[0];
-        $actual = self::$usersApiModel->get($user['id']);
+        $actual = self::$usersApiModel->get((string)$users[0]['id']);
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -66,34 +73,19 @@ class UsersApiModelTest extends TestCase
         $this->assertArrayHasKey('id', $user);
     }
 
-    /** @depends testGetReturnsOneUser */
-    public function testCreateReturnsTrue(array $user): void
+    /** @depends testCreateReturnsTrue */
+    public function testUpdateReturnsTrue(int $id): void
     {
-        unset($user['id']);
-        $user['name'] .= "";
-
-        $result = self::$usersApiModel->create(json_encode($user));
+        self::$newUser['id'] = $id;
+        self::$newUser['name'] .= " Stupid";
+        $result = self::$usersApiModel->update(self::$newUser);
         $this->assertSame(true, $result);
     }
 
-    /** @depends testGetReturnsArray */
-    public function testDeleteReturnsTrue(array $users): void
+    /** @depends testCreateReturnsTrue */
+    public function testDeleteReturnsTrue(int $id): void
     {
-        $ids = [];
-        $i = 0;
-        foreach ($users as $user) {
-            $ids[] = $user['id'];
-            $i++;
-            if ($i > 5) {
-                break;
-            }
-        }
-        $actual = self::$usersApiModel->delete(...$ids);
+        $actual = self::$usersApiModel->delete($id);
         $this->assertSame(true, $actual);
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        self::$usersApiModel = null;
     }
 }

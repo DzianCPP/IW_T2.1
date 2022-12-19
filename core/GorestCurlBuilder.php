@@ -10,16 +10,6 @@ class GorestCurlBuilder implements CurlBuilderInterface
     private const API_ENDPOINT = "/public/v2/users/";
     private $curlHandler;
 
-    public function __construct()
-    {
-        $this->curlHandler = curl_init();
-    }
-
-    public function __destruct()
-    {
-        curl_close($this->curlHandler);
-    }
-
     public function executeCurl(string $method, $id = 0, $json_body = "")
     {
         $this->setCurl($method, $id, $json_body);
@@ -28,6 +18,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
 
     public function setCurl(string $method, $id = 0, $json_body = "")
     {
+        $this->curlHandler = curl_init();
         curl_setopt_array($this->curlHandler, options: [
             CURLOPT_FRESH_CONNECT => true,
             CURLOPT_RETURNTRANSFER => true,
