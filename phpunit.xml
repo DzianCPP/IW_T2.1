@@ -5,4 +5,17 @@
             <directory>tests/Gorest</directory>
         </testsuite>
     </testsuites>
+
+    <coverage includeUncoveredFiles="false">
+        <include>
+            <directory suffix=".php">core/models/</directory>
+            <directory suffix=".php">core/</directory>
+        </include>
+        <exclude>
+            <directory>core/application/</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="coverage/"></html>
+        </report>
+    </coverage>
 </phpunit>

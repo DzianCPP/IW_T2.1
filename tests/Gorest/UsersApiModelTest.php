@@ -10,13 +10,13 @@ use core\models\UsersApiModel;
 
 class UsersApiModelTest extends TestCase
 {
-    private static $usersApiModel;
-    private static $newUser;
+    private $usersApiModel;
+    private $newUser;
 
     protected function setUp(): void
     {
-        self::$usersApiModel = new UsersApiModel(new GorestCurlBuilder());
-        self::$newUser = [
+        $this->usersApiModel = new UsersApiModel(new GorestCurlBuilder());
+        $this->newUser = [
             'email' => 'eronplaze@gmail.com',
             'name' => 'Json Statham',
             'gender' => 'male',
@@ -26,21 +26,27 @@ class UsersApiModelTest extends TestCase
 
     protected function tearDown(): void
     {
-        self::$usersApiModel = null;
+        $this->usersApiModel = null;
     }
 
     public function testGetReturnsArray(): array
     {
-        $actual = self::$usersApiModel->get();
+        $actual = $this->usersApiModel->get();
         $this->assertIsArray($actual);
         return $actual;
     }
 
     public function testCreateReturnsTrue(): int
     {
-        $result = self::$usersApiModel->create(json_encode(self::$newUser));
+        $result = $this->usersApiModel->create(json_encode($this->newUser));
         $this->assertSame(true, $result);
-        return self::$usersApiModel->getCreatedUserId();
+        return $this->usersApiModel->getCreatedUserId();
+    }
+
+    public function testCreateReturnsFalse(): void
+    {
+        $result = $this->usersApiModel->create(json_encode($this->newUser));
+        $this->assertSame(false, $result);
     }
 
 
@@ -59,7 +65,7 @@ class UsersApiModelTest extends TestCase
     /** @depends testGetReturnsArray */
     public function testGetReturnsOneUser(array $users): array
     {
-        $actual = self::$usersApiModel->get((string)$users[0]['id']);
+        $actual = $this->usersApiModel->get((string)$users[0]['id']);
         $this->assertIsArray($actual);
         return $actual;
     }
@@ -77,16 +83,30 @@ class UsersApiModelTest extends TestCase
     /** @depends testCreateReturnsTrue */
     public function testUpdateReturnsTrue(int $id): void
     {
-        self::$newUser['id'] = $id;
-        self::$newUser['name'] .= " Stupid";
-        $result = self::$usersApiModel->update(self::$newUser);
+        $this->newUser['id'] = $id;
+        $this->newUser['name'] .= " Stupid";
+        $result = $this->usersApiModel->update($this->newUser);
         $this->assertSame(true, $result);
+    }
+
+    public function testUpdateReturnsFalse(): void
+    {
+        $this->newUser['id'] = 0;
+        $this->newUser['name'] .= " Stupid";
+        $result = $this->usersApiModel->update($this->newUser);
+        $this->assertSame(false, $result);
     }
 
     /** @depends testCreateReturnsTrue */
     public function testDeleteReturnsTrue(int $id): void
     {
-        $actual = self::$usersApiModel->delete($id);
+        $actual = $this->usersApiModel->delete($id);
         $this->assertSame(true, $actual);
+    }
+
+    public function testDeleteReturnsFalse(): void
+    {
+        $actual = $this->usersApiModel->delete(0);
+        $this->assertSame(false, $actual);
     }
 }
