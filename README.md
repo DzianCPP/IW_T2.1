@@ -8,7 +8,7 @@ The goal of the task is to create a simple page with a form to collect data from
 Important: this project requires <b>PHP 8.1+</b>
 
 Other app's features:
-- Add user
+- Add user 
 - View all users
 - View one user (by ID)
 - Edit users' information

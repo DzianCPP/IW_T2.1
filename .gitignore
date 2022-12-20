@@ -5,4 +5,4 @@
 .env
 /core/view/cache
 /node_modules/
-/coverage
+/coverage/
