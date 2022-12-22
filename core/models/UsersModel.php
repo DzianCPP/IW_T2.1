@@ -11,17 +11,17 @@ class UsersModel
 
     private array $genders = [
         'male' => 'Male',
-          'female' => 'Female'
-      ];
-  
-      private array $statuses = [
-          'active' => 'Active',
-          'inactive' => 'Inactive'
-      ];
-    
+        'female' => 'Female'
+    ];
+
+    private array $statuses = [
+        'active' => 'Active',
+        'inactive' => 'Inactive'
+    ];
+
     public function __construct()
     {
-        switch($_COOKIE['dataSource']) {
+        switch ($_COOKIE['dataSource']) {
             case ("gorest"):
                 $modelName = UsersApiModel::class;
                 break;
@@ -29,17 +29,17 @@ class UsersModel
             default:
                 $modelName = UsersDatabaseModel::class;
                 break;
-            }
+        }
 
         $this->model = new $modelName();
     }
-    
+
     public function create(): void
     {
-       if (!$this->model->create()) {
+        if (!$this->model->create()) {
             http_response_code(400);
             return;
-       }
+        }
     }
 
     public function get(int $id = 0): array
@@ -67,7 +67,7 @@ class UsersModel
     public function delete(): bool
     {
         $ids = json_decode(file_get_contents("php://input"), true);
-        
+
         $this->model->delete(...$ids);
 
         return true;

@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: 'gorest API'
+  description: 'Free REST API service'
+  termsOfService: 'https://gorest.co.in/'
+  version: '2.0'
+servers:
+  -
+    url: 'https://gorest.co.in'
+    description: 'gorest API server'
+paths:
+  /public/v2/users/:
+    get:
+      summary: 'get list of users'
+      operationId: getListOfUsers
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          $ref: '#/components/securitySchemes/bearerAuth'
+  '/public/v2/users/{id}':
+    get:
+      summary: 'get one user'
+      operationId: getOneUser
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'User ID to receive only one user'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          $ref: '#/components/securitySchemes/bearerAuth'
+    delete:
+      summary: 'delete user'
+      operationId: deleteUser
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'User ID to delete'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: 'No content'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Authentication failed'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '422':
+          description: 'Data validation failed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          $ref: '#/components/securitySchemes/bearerAuth'
+    patch:
+      summary: 'delete user'
+      operationId: patchUser
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'User ID to patch'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/patchUser'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: 'A resource was successfully created'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Authentication failed'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '422':
+          description: 'Data validation failed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          $ref: '#/components/securitySchemes/bearerAuth'
+  /public/v2/users:
+    post:
+      summary: 'create new user'
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/postUser'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: 'A resource was successfully created'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Authentication failed'
+        '404':
+          description: 'Requested resource not found'
+        '405':
+          description: 'Method not allowed'
+        '422':
+          description: 'Data validation failed'
+        '429':
+          description: 'Too many requests'
+        '500':
+          description: 'Internal server error'
+      security:
+        -
+          $ref: '#/components/securitySchemes/bearerAuth'
+components:
+  requestBodies:
+    postUser:
+      description: 'body to create a new user'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                description: 'Email of the user'
+                type: string
+              name:
+                description: 'Full name of the user'
+                type: string
+              gender:
+                description: 'Gender of the user'
+                required:
+                  - male
+                  - female
+                type: string
+              status:
+                description: 'Status of the user'
+                required:
+                  - active
+                  - inactive
+                type: string
+            type: string
+    patchUser:
+      description: 'body to patch a user'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                description: 'Email of the user'
+                type: string
+              name:
+                description: 'Full name of the user'
+                type: string
+              gender:
+                description: 'Gender of the user'
+                required:
+                  - male
+                  - female
+                type: string
+              status:
+                description: 'Status of the user'
+                required:
+                  - active
+                  - inactive
+                type: string
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer

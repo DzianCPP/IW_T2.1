@@ -2,7 +2,6 @@
 
 namespace core\view;
 
-use Exception;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 

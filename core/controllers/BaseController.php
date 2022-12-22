@@ -6,7 +6,7 @@ abstract class BaseController
 {
     protected $view;
     protected $model;
-    
+
     protected function setView(string $viewName)
     {
         if (!isset($this->view)) {

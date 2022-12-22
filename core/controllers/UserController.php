@@ -69,14 +69,15 @@ class UserController extends BaseController
     public function showOne(): void
     {
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $id = (int)ltrim(rtrim($id, '}'), '{');        
+        $id = (int)ltrim(rtrim($id, '}'), '{');
         $user = $this->model->get($id);
         $data = [
             'users' => $user,
             'GENDERS' => $this->model->getGenders(),
             'STATUSES' => $this->model->getStatuses(),
-            'title' => 'User - ' . $user[0]['name'],
-            'header' => 'User - ' . $user[0]['name'],
+            'title' => 'User - ' . $user['name'],
+            'header' => 'User - ' . $user['name'],
+
             'dataSource' => $this->setDataSource()
         ];
 

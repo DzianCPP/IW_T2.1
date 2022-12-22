@@ -20,7 +20,8 @@ class GorestCurlBuilder implements CurlBuilderInterface
         curl_close($this->curlHandler);
     }
 
-    public function executeCurl(string $method, $id = 0, $json_body = "") {
+    public function executeCurl(string $method, $id = 0, $json_body = "")
+    {
         $this->setCurl($method, $id, $json_body);
         return curl_exec($this->curlHandler);
     }
@@ -34,7 +35,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
                 "Authorization: Bearer " . $_ENV['API_AUTH_TOKEN'],
                 "Content-Type:application/json"
             ]
-            ]);
+        ]);
 
         $this->setBody($json_body);
         $this->setCustomMethod($method);
@@ -60,7 +61,7 @@ class GorestCurlBuilder implements CurlBuilderInterface
     private function setEndpoint(int $id = 0): void
     {
         $endpoint = self::API_BASE_URI . self::API_ENDPOINT;
-
+        
         if ($id != 0 ) {
             $endpoint .= (string)$id;
         }
