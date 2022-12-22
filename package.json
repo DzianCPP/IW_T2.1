@@ -1,0 +1,31 @@
+{
+  "name": "htdocs",
+  "version": "1.0.0",
+  "description": "<b>Add User App</b>",
+  "main": "webpack.config.js",
+  "scripts": {
+    "sass-dev": "sass --watch --update --style=expanded src/assets/scss:public/assets/css",
+    "sass-prod": "sass --no-source-map --style=compressed src/assets/scss:public/assets/css",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DzianCPP/phpNativeMVC.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DzianCPP/phpNativeMVC/issues"
+  },
+  "homepage": "https://github.com/DzianCPP/phpNativeMVC#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.2",
+    "webpack": "^5.75.0",
+    "webpack-dev": "^1.1.1"
+  },
+  "devDependencies": {
+    "sass": "^1.56.2",
+    "webpack-cli": "^5.0.1"
+  }
+}

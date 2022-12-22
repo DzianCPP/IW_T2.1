@@ -1,0 +1,10 @@
+import 'jquery';
+import './assets/scripts/users/create.js';
+import './assets/scripts/users/delete.js';
+import './assets/scripts/users/deleteAll.js';
+import './assets/scripts/users/edit.js';
+import './assets/scripts/users/find.js';
+import './assets/scripts/users/selectAll.js';
+import './assets/scripts/formValid.js';
+import './assets/scripts/setCookie.js';
+import './assets/scripts/userIdValid.js';

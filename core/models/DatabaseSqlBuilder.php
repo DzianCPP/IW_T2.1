@@ -66,7 +66,7 @@ class DatabaseSqlBuilder
     {
         $values = implode(", ", $values);
         $column = $column;
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
+        $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} = (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;

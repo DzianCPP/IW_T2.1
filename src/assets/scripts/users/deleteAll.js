@@ -1,5 +1,6 @@
-let deleteAllBtn = document.getElementById("delete-all");
-deleteAllBtn.addEventListener("click", deleteAll);
+$(document).ready(function(){
+    $("#delete-all").click(deleteAll);
+});
 
 function deleteAll() {
     let allCheckboxes = document.getElementsByName("select-user");
