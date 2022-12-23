@@ -93,7 +93,14 @@ class UsersDatabaseModel implements ModelInterface
             'status' => $data['status']
         ];
 
-        if (!$this->sqlBuilder->insert($userInfo, $this->fields, self::TABLE_NAME)) {
+        $columns = [];
+        foreach ($this->fields as $field) {
+            if ($field != 'id') {
+                $columns[] = $field;
+            }
+        }
+
+        if (!$this->sqlBuilder->insert($userInfo, $columns, self::TABLE_NAME)) {
             return false;
         }
 

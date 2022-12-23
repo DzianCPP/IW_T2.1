@@ -62,7 +62,7 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function delete(string $column = "", string $tableName = "", array $values): bool
+    public function delete(array $values, string $column = "", string $tableName = ""): bool
     {
         $values = implode(", ", $values);
         $column = $column;
