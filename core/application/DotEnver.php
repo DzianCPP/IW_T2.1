@@ -14,7 +14,7 @@ class DotEnver
             return false;
         }
 
-        $dotenv = Dotenv::createImmutable(BASE_PATH);
+        $dotenv = Dotenv::createImmutable(DOCKER_PATH);
         $dotenv->safeLoad();
 
         return true;
