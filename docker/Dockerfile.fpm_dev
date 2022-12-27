@@ -8,7 +8,7 @@ COPY ./composer.* ./
 RUN composer install
 COPY ./ .
 RUN composer dump-autoload --optimize
-RUN chown -R www-data:www-data ./core/view
+RUN chown -R 1000:1000 ./core/view
 FROM app as app_dev
 ENV XDEBUG_MODE=off
 COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
