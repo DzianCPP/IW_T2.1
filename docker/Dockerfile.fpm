@@ -1,27 +1,11 @@
-FROM php:8.1-fpm-alpine as php
+FROM php:8.1-fpm-alpine as app
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN set -eux; \
     install-php-extensions pdo pdo_mysql;
 ENV COMPOSER_ALLOW_SUPERUSER=1
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 COPY ./composer.* ./
 RUN composer install
+COPY ./ .
 RUN composer dump-autoload --optimize
-FROM php as php_dev
-ENV XDEBUG=off
-COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-RUN set -eux; \
-    install-php-extensions
-
-
-# FROM composer:latest AS composer
-# FROM php:8.1-fpm
-# COPY --from=composer usr/bin/composer /usr/bin/composer
-# RUN pecl install xdebug \
-# && docker-php-ext-enable xdebug \
-# && docker-php-ext-install pdo pdo_mysql
-# RUN adduser phpcomposeruser
-# USER phpcomposeruser
-# RUN whoami
-# RUN id
-# WORKDIR  /code
+RUN chown -R www-data:www-data ./core/view
