@@ -21,22 +21,14 @@ class UsersModel
 
     public function __construct()
     {
-        switch ($_COOKIE['dataSource']) {
-            case ("gorest"):
-                $modelName = UsersApiModel::class;
-                break;
-            case ("local"):
-            default:
-                $modelName = UsersDatabaseModel::class;
-                break;
-        }
-
-        $this->model = new $modelName();
+        $dataSourceFactory = new DataSourceFactory();
+        $this->model = $dataSourceFactory->getModel();
     }
 
     public function create(): void
     {
-        if (!$this->model->create()) {
+        $newUserInfo = file_get_contents("php://input");
+        if (!$this->model->create($newUserInfo)) {
             http_response_code(400);
             return;
         }
@@ -67,7 +59,6 @@ class UsersModel
     public function delete(): bool
     {
         $ids = json_decode(file_get_contents("php://input"), true);
-
         $this->model->delete(...$ids);
 
         return true;

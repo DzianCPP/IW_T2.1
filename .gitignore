@@ -5,3 +5,5 @@
 .env
 /core/view/cache
 /node_modules/
+/coverage/
+.phpunit.result.cache
