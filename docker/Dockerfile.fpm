@@ -9,3 +9,8 @@ RUN composer install
 COPY ./ .
 RUN composer dump-autoload --optimize
 RUN chown -R www-data:www-data ./core/view
+FROM app as app_dev
+ENV XDEBUG_MODE=off
+COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+RUN set -eux; \
+    install-php-extensions xdebug;

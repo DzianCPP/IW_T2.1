@@ -9,6 +9,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile.fpm
+      target: app_dev
     env_file: .env
     environment:
       MYSQL_HOST: mysql
@@ -16,10 +17,14 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER_NAME}
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    extra_hosts:
+      - host.docker.internal:host-gateway
   mysql:
     image: mariadb:latest
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
     ports:
       - ${DB_PORT}:${DB_PORT}
     environment:
