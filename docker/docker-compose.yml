@@ -4,24 +4,36 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../:/code
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ../:/var/www/html
 
   php:
     build:
-      context: .
-      dockerfile: Dockerfile.fpm
+      context: ../
+      dockerfile: ./docker/Dockerfile.fpm
     volumes:
-      - ../:/code
-      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/zz-docker-php-ext-xdebug.ini
-      - ./php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+      - ../:/var/www/html
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: ${DB_PORT}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER_NAME}
+    expose:
+      - 9004
 
   mysql:
     image: mariadb:10
     environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: UsersDatabase
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
     volumes:
-      - ../data:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
     ports:
-      - 3306:3306
+      - ${DB_PORT}:${DB_PORT}
+
+volumes:
+  mysqldata:
