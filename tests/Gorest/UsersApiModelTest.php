@@ -15,7 +15,8 @@ class UsersApiModelTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->usersApiModel = new UsersApiModel(new GorestCurlBuilder());
+        $gorestCurlBuilder = new GorestCurlBuilder();
+        $this->usersApiModel = new UsersApiModel($gorestCurlBuilder);
         $this->newUser = [
             'email' => 'eronplaze@gmail.com',
             'name' => 'Json Statham',
