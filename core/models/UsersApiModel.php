@@ -117,6 +117,10 @@ class UsersApiModel implements ModelInterface
     public function get(int|string $value = NULL): array
     {
         $result = $this->gorestCurlBuilder->executeCurl(method: "GET", id: $value);
+        if ($value != NULL) {
+        return [json_decode($result, true)];
+        }
+
         return json_decode($result, true);
     }
 

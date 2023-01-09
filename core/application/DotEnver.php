@@ -8,13 +8,13 @@ class DotEnver
 {
     public static function getDotEnv(): bool
     {
-        if (!file_exists(BASE_PATH . ".env")) {
+        if (!file_exists(DOCKER_PATH . ".env")) {
             echo "Internal server error";
             http_response_code(500);
             return false;
         }
 
-        $dotenv = Dotenv::createImmutable(BASE_PATH);
+        $dotenv = Dotenv::createImmutable(DOCKER_PATH);
         $dotenv->safeLoad();
 
         return true;
